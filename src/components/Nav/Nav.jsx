@@ -1,46 +1,60 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import LogOutButton from '../LogOutButton/LogOutButton';
-import './Nav.css';
-import { useSelector } from 'react-redux';
+import React from "react";
+import { Link, NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import LogOutButton from "../LogOutButton/LogOutButton";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
 function Nav() {
   const user = useSelector((store) => store.user);
 
   return (
-    <div className="nav">
-      <Link to="/home">
-        <h2 className="nav-title">Prime Solo Project</h2>
-      </Link>
-      <div>
-        {/* If no user is logged in, show these links */}
-        {!user.id && (
-          // If there's no user, show login/registration links
-          <Link className="navLink" to="/login">
-            Login / Register
+    <AppBar position="static">
+      <Toolbar>
+        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+          <Link to="/home" style={{ textDecoration: "none", color: "inherit" }}>
+            Can Do Canines
           </Link>
-        )}
+        </Typography>
 
-        {/* If a user is logged in, show these links */}
-        {user.id && (
+        {/* Show links depending on user role or authentication status */}
+        {!user.id ? (
+          // If there's no user logged in, show login/registration links
           <>
-            <Link className="navLink" to="/user">
+            <Button color="inherit" component={NavLink} to="/login">
+              Login
+            </Button>
+            <Button color="inherit" component={NavLink} to="/registration">
+              Register
+            </Button>
+          </>
+        ) : (
+          // If a user is logged in, show links based on their role
+          <>
+            <Button color="inherit" component={NavLink} to="/user">
               Home
-            </Link>
-
-            <Link className="navLink" to="/info">
-              Info Page
-            </Link>
-
+            </Button>
+            {user.role === "admin" && (
+              <Button color="inherit" component={NavLink} to="/admin-home">
+                Admin Home
+              </Button>
+            )}
+            {user.role === "sitter" && (
+              <Button color="inherit" component={NavLink} to="/sitter-home">
+                Sitter Home
+              </Button>
+            )}
             <LogOutButton className="navLink" />
           </>
         )}
 
-        <Link className="navLink" to="/about">
+        <Button color="inherit" component={NavLink} to="/about">
           About
-        </Link>
-      </div>
-    </div>
+        </Button>
+      </Toolbar>
+    </AppBar>
   );
 }
 

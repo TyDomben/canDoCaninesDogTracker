@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import './LandingPage.css';
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import "./LandingPage.css";
 
 // CUSTOM COMPONENTS
-import RegisterForm from '../RegisterForm/RegisterForm';
+import RegisterForm from "../RegisterForm/RegisterForm";
 
 function LandingPage() {
-  const [heading, setHeading] = useState('Welcome');
+  const [heading, setHeading] = useState("Welcome");
   const history = useHistory();
 
   const onLogin = (event) => {
-    history.push('/login');
+    history.push("/login");
   };
 
   return (
@@ -67,3 +67,95 @@ function LandingPage() {
 }
 
 export default LandingPage;
+
+// This code creates a centered login box with username and password fields and 'Sign In' and 'Register' buttons. The handleSubmit function is where you would implement the logic to verify the user's credentials.
+// //import React from 'react';
+// import { Container, Box, TextField, Button, Typography, Grid } from '@mui/material';
+// import { styled } from '@mui/material/styles';
+
+// const LoginContainer = styled(Container)({
+//   height: '100vh',
+//   display: 'flex',
+//   alignItems: 'center',
+//   justifyContent: 'center',
+// });
+
+// const Logo = styled('div')({
+//   textAlign: 'center',
+//   marginBottom: '20px',
+// });
+
+// const LoginBox = styled(Box)({
+//   width: '100%',
+//   maxWidth: '400px',
+//   padding: '20px',
+//   border: '1px solid #ccc',
+//   borderRadius: '4px',
+// });
+
+// const LoginPage = () => {
+//   const handleSubmit = (event) => {
+//     event.preventDefault();
+//     // Handle login logic here
+//   };
+
+//   return (
+//     <LoginContainer>
+//       <LoginBox>
+//         <Logo>
+//           {/* You can replace this with an actual image tag if you have a logo */}
+//           <Typography variant="h4" gutterBottom>
+//             Can Do Canines
+//           </Typography>
+//         </Logo>
+//         <Box component="form" onSubmit={handleSubmit} noValidate>
+//           <TextField
+//             margin="normal"
+//             required
+//             fullWidth
+//             id="username"
+//             label="Username"
+//             name="username"
+//             autoComplete="username"
+//             autoFocus
+//           />
+//           <TextField
+//             margin="normal"
+//             required
+//             fullWidth
+//             name="password"
+//             label="Password"
+//             type="password"
+//             id="password"
+//             autoComplete="current-password"
+//           />
+//           <Grid container spacing={2}>
+//             <Grid item xs={6}>
+//               <Button
+//                 type="submit"
+//                 fullWidth
+//                 variant="contained"
+//                 color="primary"
+//               >
+//                 Sign In
+//               </Button>
+//             </Grid>
+//             <Grid item xs={6}>
+//               <Button
+//                 fullWidth
+//                 variant="outlined"
+//                 color="secondary"
+//                 // Implement the navigation to the User Registration page here
+//                 onClick={() => { console.log('Go to registration'); }}
+//               >
+//                 Register
+//               </Button>
+//             </Grid>
+//           </Grid>
+//         </Box>
+//       </LoginBox>
+//     </LoginContainer>
+//   );
+// };
+
+// export default LoginPage;
