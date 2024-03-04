@@ -1,8 +1,11 @@
 import React from 'react';
 import { Card, CardContent, Typography, Avatar, Box } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
-const UserProfile = ({ user }) => {
+function UserProfile () {
   // You can pass a user object as a prop to this component
+  const user = useSelector((store) => store.user);
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardContent>
