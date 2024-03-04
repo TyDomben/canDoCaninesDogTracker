@@ -40,7 +40,7 @@ function App() {
           <Redirect exact from="/" to="/home" />
           <Route exact path="/about"><AboutPage /></Route>
           
-          // Add the new ProtectedRoutes here
+          {/* Add the new ProtectedRoutes here */}
           <ProtectedRoute exact path="/sitter-home"><SitterHomePage /></ProtectedRoute>
           <ProtectedRoute exact path="/admin-home"><AdminHome /></ProtectedRoute>
           <ProtectedRoute exact path="/all-dog-cards"><DogCards /></ProtectedRoute>
