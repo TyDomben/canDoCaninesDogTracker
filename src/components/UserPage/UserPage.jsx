@@ -14,13 +14,13 @@ function UserProfile () {
             sx={{ width: 56, height: 56, marginRight: 2 }}
             src="/path-to-your-image.jpg" // Replace with path to user's image
           />
-          <Typography variant="h5">Your Profile</Typography>
+          <Typography variant="h5">{user.name}</Typography>
         </Box>
         <Typography variant="subtitle1" color="textSecondary">
-          Name:
+          Username:
         </Typography>
         <Typography variant="body1" gutterBottom>
-          {user.name}
+          {user.username}
         </Typography>
 
         <Typography variant="subtitle1" color="textSecondary">
@@ -31,25 +31,19 @@ function UserProfile () {
         </Typography>
 
         <Typography variant="subtitle1" color="textSecondary">
-          Children:
+          Phone #:
         </Typography>
         <Typography variant="body1" gutterBottom>
-          {user.children || 'None'}
+          {user.phone || 'None'}
         </Typography>
 
         <Typography variant="subtitle1" color="textSecondary">
-          Other Pets:
+          Address:
         </Typography>
         <Typography variant="body1" gutterBottom>
-          {user.otherPets ? 'Yes' : 'No'}
+          {user.address}
         </Typography>
 
-        <Typography variant="subtitle1" color="textSecondary">
-          Type:
-        </Typography>
-        <Typography variant="body1">
-          {user.petTypes.join(', ')} {/* Assuming petTypes is an array */}
-        </Typography>
       </CardContent>
     </Card>
   );
