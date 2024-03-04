@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import { TextField, Button, Card, CardContent, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
-const UserProfileEdit = ({ user, onSave }) => {
+const UserProfileEdit = () => {
+  const user = useSelector((store) => store.user);
+  const history = useHistory();
   const [profile, setProfile] = useState({
     name: user.name,
+    username: user.username,
+    phone: user.phone,
+    address: user.address,
     email: user.email,
-    children: user.children,
-    otherPets: user.otherPets,
-    petTypes: user.petTypes.join(', ') // Assuming petTypes is an array
+    
   });
 
   const handleChange = (event) => {
@@ -20,7 +25,8 @@ const UserProfileEdit = ({ user, onSave }) => {
 
   const handleSave = () => {
     // Implement the save logic here
-    onSave(profile);
+    //onSave(profile);
+    history.push("/user")
   };
 
   return (
@@ -38,33 +44,33 @@ const UserProfileEdit = ({ user, onSave }) => {
           fullWidth
         />
         <TextField
+          label="username"
+          name="username"
+          value={profile.username}
+          onChange={handleChange}
+          margin="normal"
+          fullWidth
+        />
+        <TextField
+          label="phone"
+          name="phone"
+          value={profile.phone}
+          onChange={handleChange}
+          margin="normal"
+          fullWidth
+        />
+        <TextField
+          label="address"
+          name="address"
+          value={profile.address}
+          onChange={handleChange}
+          margin="normal"
+          fullWidth
+        />
+        <TextField
           label="Email"
           name="email"
           value={profile.email}
-          onChange={handleChange}
-          margin="normal"
-          fullWidth
-        />
-        <TextField
-          label="Children"
-          name="children"
-          value={profile.children}
-          onChange={handleChange}
-          margin="normal"
-          fullWidth
-        />
-        <TextField
-          label="Other Pets"
-          name="otherPets"
-          value={profile.otherPets}
-          onChange={handleChange}
-          margin="normal"
-          fullWidth
-        />
-        <TextField
-          label="Type"
-          name="petTypes"
-          value={profile.petTypes}
           onChange={handleChange}
           margin="normal"
           fullWidth

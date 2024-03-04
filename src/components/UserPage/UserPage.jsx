@@ -1,11 +1,12 @@
 import React from 'react';
-import { Card, CardContent, Typography, Avatar, Box } from '@mui/material';
+import { Card, CardContent, Typography, Avatar, Box, Button} from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 function UserProfile () {
   // You can pass a user object as a prop to this component
   const user = useSelector((store) => store.user);
+  const history = useHistory();
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardContent>
@@ -43,13 +44,16 @@ function UserProfile () {
         <Typography variant="body1" gutterBottom>
           {user.address}
         </Typography>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => history.push('/user-edit')}
+          sx={{ marginTop: 2 }}
+        >
+          Edit Information
+        </Button>
 
-        <Typography variant="subtitle1" color="textSecondary">
-          Type:
-        </Typography>
-        <Typography variant="body1">
-          {/* {user.petTypes.join(', ')}  */}
-        </Typography>
+        
       </CardContent>
     </Card>
   );
