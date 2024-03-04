@@ -15,6 +15,7 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import UserProfileEdit from '../UserProfileEdit/UserProfileEdit';
 
 // Import the new pages
 import SitterHomePage from '../SitterHome/SitterHome';
@@ -45,7 +46,7 @@ function App() {
           <ProtectedRoute exact path="/admin-home"><AdminHome /></ProtectedRoute>
           <ProtectedRoute exact path="/all-dog-cards"><DogCards /></ProtectedRoute>
           <ProtectedRoute exact path="/data-grid"><DataGrid /></ProtectedRoute>
-
+          <ProtectedRoute exact path="/user-edit"><UserProfileEdit /> </ProtectedRoute>
           <ProtectedRoute exact path="/user"><UserPage /></ProtectedRoute>
           <ProtectedRoute exact path="/info"><InfoPage /></ProtectedRoute>
 
