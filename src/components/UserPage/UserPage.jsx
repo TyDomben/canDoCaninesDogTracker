@@ -44,6 +44,12 @@ function UserProfile () {
           {user.address}
         </Typography>
 
+        <Typography variant="subtitle1" color="textSecondary">
+          Type:
+        </Typography>
+        <Typography variant="body1">
+          {user.petTypes.join(', ')} {/* Assuming petTypes is an array */}
+        </Typography>
       </CardContent>
     </Card>
   );
