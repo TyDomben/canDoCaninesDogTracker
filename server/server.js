@@ -25,7 +25,7 @@ app.use(passport.session());
 
 // Routes
 app.use('/api/user', userRouter);
-app.dog('/api/dog', dogRouter);
+app.use('/api/dog', dogRouter);
 
 // Listen Server & Port
 app.listen(PORT, () => {

@@ -48,7 +48,7 @@ function UserProfile () {
           Type:
         </Typography>
         <Typography variant="body1">
-          {user.petTypes.join(', ')} {/* Assuming petTypes is an array */}
+          {/* {user.petTypes.join(', ')}  */}
         </Typography>
       </CardContent>
     </Card>
