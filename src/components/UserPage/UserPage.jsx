@@ -55,7 +55,7 @@ function UserProfile () {
 
 
         
-main
+        
       </CardContent>
     </Card>
   );
