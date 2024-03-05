@@ -22,7 +22,9 @@ import SitterHomePage from '../SitterHome/SitterHome';
 import AdminHome from '../AdminHome/AdminHome';
 import DogCards from '../AllDogForm/AllDogForm';
 import DataGrid from '../DataGrid/DataGrid';
+
 import DogProfile from '../DogProfile/DogProfile';
+
 
 import './App.css';
 
@@ -50,7 +52,9 @@ function App() {
           <ProtectedRoute exact path="/user-edit"><UserProfileEdit /> </ProtectedRoute>
           <ProtectedRoute exact path="/user"><UserPage /></ProtectedRoute>
           <ProtectedRoute exact path="/info"><InfoPage /></ProtectedRoute>
+
      
+
 
           <Route exact path="/login">
             {user.id ? <Redirect to="/user" /> : <LoginPage />}
