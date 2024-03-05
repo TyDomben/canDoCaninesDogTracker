@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { 
   Card, 
   CardContent, 
@@ -14,8 +17,21 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-const DogProfileCard = ({ dogData, onGoBack, onDelete, onEdit, onRequestCareDates }) => {
+const DogProfile = ({ dogSaga, onGoBack, onDelete, onEdit, onRequestCareDates }) => {
   // You would replace the `dogData` with actual data pulled from your backend or state management
+
+  let history = useHistory();
+  let dispatch = useDispatch();
+  const dogProfile = useSelector((store) => store.dogProfile);
+  const {dogId} = useParams();
+
+  useEffect(() => {
+    dispatch({ type: "FETCH_DOG_PROFILE"});
+  }, []);
+
+  // const dog = dogProfile.find((dogs) => dogs.id === Number(dogId));
+  // console.log("dog", dog)
+
   const handleDelete = () => {
     // Confirm deletion and call onDelete
   };
@@ -61,9 +77,9 @@ const DogProfileCard = ({ dogData, onGoBack, onDelete, onEdit, onRequestCareDate
             alt="Dog"
           />
           {/* Display the rest of the dog's information here */}
-          <Typography variant="body1">Name: {dogData.name}</Typography>
-          <Typography variant="body1">Date of Birth: {dogData.dateOfBirth}</Typography>
-          <Typography variant="body1">Breed: {dogData.breed}</Typography>
+          <Typography variant="body1">Name: {dogSaga.name}</Typography>
+          <Typography variant="body1">Date of Birth: {dogSaga.dateOfBirth}</Typography>
+          <Typography variant="body1">Breed: {dogSaga.breed}</Typography>
           {/* ... other dog details */}
         </CardContent>
         <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
@@ -82,4 +98,4 @@ const DogProfileCard = ({ dogData, onGoBack, onDelete, onEdit, onRequestCareDate
   );
 };
 
-export default DogProfileCard;
+export default DogProfile;

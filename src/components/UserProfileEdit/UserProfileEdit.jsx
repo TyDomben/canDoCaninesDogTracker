@@ -27,7 +27,6 @@ const UserProfileEdit = () => {
 
   const handleSave = () => {
     dispatch({ type: 'UPDATE_USER', payload: { userId: user.id, updates: profile } });
-
     history.push("/user");
   };
 
