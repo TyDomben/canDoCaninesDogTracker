@@ -1,17 +1,9 @@
+
 import React, { useState } from 'react';
 import { TextField, Button, Card, CardContent, Typography } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import React, { useState } from "react";
-import {
-  TextField,
-  Button,
-  Card,
-  CardContent,
-  Typography,
-} from "@mui/material";
-import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
 
 const UserProfileEdit = () => {
   const dispatch = useDispatch();
@@ -34,10 +26,12 @@ const UserProfileEdit = () => {
   };
 
   const handleSave = () => {
+<<<<<<<<< Temporary merge branch 1
+    dispatch({ type: 'UPDATE_USER', payload: { userId: user.id, updates: profile } });
+=========
     // Implement the save logic here
     //onSave(profile);
-    history.push("/user");
-    dispatch({ type: 'UPDATE_USER', payload: { userId: user.id, updates: profile } });
+>>>>>>>>> Temporary merge branch 2
     history.push("/user");
   };
 
