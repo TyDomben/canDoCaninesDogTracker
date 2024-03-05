@@ -26,11 +26,46 @@ CREATE TABLE IF NOT EXISTS "user" (
     "role_id" INT,
     FOREIGN KEY ("role_id") REFERENCES "roles"("id")
 );
+
+
+---------------------------------------------------------------- BEHAVIOR TABLE ----------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS "behavior" (
+    "id" SERIAL PRIMARY KEY,
+    "behavior_category_name" VARCHAR(255) NOT NULL
+);
+INSERT INTO "behavior" ("behavior_category_name")
+VALUES ('rowdy'), ('barks a lot'), ('calm');
+
+---------------------------------------------------------------- EXERCISE LIMITATION TABLE ------------------------------------------------------
+
+
+CREATE TABLE IF NOT EXISTS "exercise_limitations" (
+    "id" SERIAL PRIMARY KEY,
+    "exercise_limitations" VARCHAR(255) NOT NULL
+);
+
+INSERT INTO "exercise_limitations" ("exercise_limitations")
+VALUES ('no running more than 15 minutes');
+
+---------------------------------------------------------------- EXERCISE EQUIPMENT TABLE ------------------------------------------------------
+
+
+CREATE TABLE IF NOT EXISTS "exercise_equipment" (
+    "id" SERIAL PRIMARY KEY,
+    "exercise_equipment" VARCHAR(255) NOT NULL
+);
+
+INSERT INTO "exercise_equipment" ("exercise_equipment")
+VALUES ('treadmill');
+
+
+
 ---------------------------------------------------------------- DOGS TABLE ----------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS "dogs" (
     "id" SERIAL PRIMARY KEY,
-    "user_id" SERIAL NOT NULL,
+    "user_id" INT REFERENCES "user"("id") NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "age" INT NOT NULL,
     "breed" VARCHAR(255) NOT NULL,
@@ -42,7 +77,7 @@ CREATE TABLE IF NOT EXISTS "dogs" (
     "medical_conditions" VARCHAR(255) NOT NULL,
     "recovering_from_surgery" BOOLEAN NOT NULL,
     "medications" VARCHAR(255) NOT NULL,
-    "in_heat" INT NOT NULL,
+    "in_heat" BOOLEAN NOT NULL,
     "potty_routine" VARCHAR(255) NOT NULL,
     "potty_habits_notes" VARCHAR(255) NOT NULL,
     "exercise_limitations" INT NOT NULL,
@@ -51,8 +86,8 @@ CREATE TABLE IF NOT EXISTS "dogs" (
     "house_manners" VARCHAR(255) NOT NULL,
     "living_with_other_dogs" BOOLEAN NOT NULL,
     "living_with_cats" BOOLEAN NOT NULL,
-    "living_with_children_>_ten" BOOLEAN NOT NULL,
-    "living_with_children_<_ten" BOOLEAN NOT NULL,
+    "living_with_children_older_ten" BOOLEAN NOT NULL,
+    "living_with_children_younger_ten" BOOLEAN NOT NULL,
     "living_with_adults" BOOLEAN NOT NULL,
     "living_with_small_animals" BOOLEAN NOT NULL,
     "living_with_large_animals" BOOLEAN NOT NULL,
@@ -68,6 +103,7 @@ CREATE TABLE IF NOT EXISTS "dogs" (
     
 );
 INSERT INTO "dogs" (
+	"user_id",
     "name",
     "age",
     "breed",
@@ -88,15 +124,15 @@ INSERT INTO "dogs" (
     "house_manners",
     "living_with_other_dogs",
     "living_with_cats",
-    "living_with_children_>_ten",
-    "living_with_children_<_ten",
+    "living_with_children_older_ten",
+    "living_with_children_younger_ten",
     "living_with_adults",
     "living_with_small_animals",
     "living_with_large_animals",
     "behavior_with_other_dogs",
     "behavior_with_cats",
     "behavior_with_children")
-VALUES ('Loki', '2', 'Labrador Retriever', true, 'Blue Buffalo', '1 cup', '3', '6 am', 'none', false, 'none', '1', 'every 3 hours', 'takes a long time', '1', '1', 'feels safe in crate', 'gets on the couch', true, true, false, false, true, true, true, '1', '1', '1');
+VALUES ('1','Loki', '2', 'Labrador Retriever', true, 'Blue Buffalo', '1 cup', '3', '6 am', 'none', false, 'none', '1', 'every 3 hours', 'takes a long time', '1', '1', 'feels safe in crate', 'gets on the couch', true, true, false, false, true, true, true, '1', '1', '1');
 
 ---------------------------------------------------------------- DOG HOSTING TABLE ----------------------------------------------------------------
 
@@ -128,51 +164,14 @@ VALUES('1', '1', '4-1-2024', '4-7-2024', 'Vacation to Hawaii', 'no appointments'
 --admin_id is not doing anything.. is there supposed to be an admin table with confirm and deny = 1 or 2 --
 
 
----------------------------------------------------------------- BEHAVIOR TABLE ----------------------------------------------------------------
-
-CREATE TABLE IF NOT EXISTS "behavior" (
-    "id" SERIAL PRIMARY KEY,
-    "behavior_category_name" VARCHAR(255) NOT NULL
-);
-INSERT INTO "behavior" ("behavior_category_name")
-VALUES ('rowdy'), ('barks a lot'), ('calm');
 
 
-CREATE TABLE IF NOT EXISTS "dog_behavior" (
-    "dog_id" INT NOT NULL,
-    "behavior_id" INT NOT NULL,
-    PRIMARY KEY ("dog_id", "behavior_id"),
-    FOREIGN KEY ("dog_id") REFERENCES "dogs"("id"),
-    FOREIGN KEY ("behavior_id") REFERENCES "behavior"("id")
-);
-
-INSERT INTO "dog_behavior" ("dog_id", "behavior_id")
-VALUES('1','1');
 
 
----------------------------------------------------------------- EXERCISE EQUIPMENT TABLE ------------------------------------------------------
-
-
-CREATE TABLE IF NOT EXISTS "exercise_equipment" (
-    "id" SERIAL PRIMARY KEY,
-    "exercise_equipment" VARCHAR(255) NOT NULL
-);
-
-INSERT INTO "exercise_equipment" ("exercise_equipment")
-VALUES ('treadmill');
-
----------------------------------------------------------------- EXERCISE LIMITATION TABLE ------------------------------------------------------
-
-
-CREATE TABLE IF NOT EXISTS "exercise_limitations" (
-    "id" SERIAL PRIMARY KEY,
-    "exercise_limitations" VARCHAR(255) NOT NULL
-);
-
-INSERT INTO "exercise_limitations" ("exercise_limitations")
-VALUES ('no running more than 15 minutes');
 
 -------------------------------- QUERIES --------------------------
+
+------------ GET --------------
 SELECT
 	"dogs"."user_id",
     "dogs"."name", 
@@ -220,3 +219,37 @@ JOIN
 WHERE
 	"dog_hosting"."user_id" = 4;
 ;
+
+------------ POST --------------
+
+INSERT INTO "dogs" (
+                "user_id",
+                "name",
+                "age",
+                "breed",
+                "spayed_neutered",
+                "food_type",
+                "food_amount",
+                "meals_per_day",
+                "eating_times",
+                "medical_conditions",
+                "recovering_from_surgery",
+                "medications",
+                "in_heat",
+                "potty_routine",
+                "potty_habits_notes",
+                "exercise_limitations",
+                "exercise_equipment",
+                "crate_manners",
+                "house_manners",
+                "living_with_other_dogs",
+                "living_with_cats",
+                "living_with_children_older_ten",
+                "living_with_children_younger_ten",
+                "living_with_adults",
+                "living_with_small_animals",
+                "living_with_large_animals",
+                "behavior_with_other_dogs",
+                "behavior_with_cats",
+                "behavior_with_children")
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29);

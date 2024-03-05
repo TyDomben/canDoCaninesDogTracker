@@ -1,4 +1,5 @@
 const express = require('express');
+const { User } = require('../modules');
 const {
   rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
@@ -50,5 +51,7 @@ router.post('/logout', (req, res) => {
   req.logout();
   res.sendStatus(200);
 });
+
+
 
 module.exports = router;
