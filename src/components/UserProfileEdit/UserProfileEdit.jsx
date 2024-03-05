@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
-import { TextField, Button, Card, CardContent, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import React, { useState } from "react";
+import {
+  TextField,
+  Button,
+  Card,
+  CardContent,
+  Typography,
+} from "@mui/material";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const UserProfileEdit = () => {
   const user = useSelector((store) => store.user);
@@ -12,25 +18,24 @@ const UserProfileEdit = () => {
     phone: user.phone,
     address: user.address,
     email: user.email,
-    
   });
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setProfile(prevState => ({
+    setProfile((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSave = () => {
     // Implement the save logic here
     //onSave(profile);
-    history.push("/user")
+    history.push("/user");
   };
 
   return (
-    <Card sx={{ maxWidth: 345, margin: 'auto' }}>
+    <Card sx={{ maxWidth: 345, margin: "auto" }}>
       <CardContent>
         <Typography variant="h5" gutterBottom>
           Edit Your Profile

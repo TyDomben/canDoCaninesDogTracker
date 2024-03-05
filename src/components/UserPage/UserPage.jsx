@@ -1,9 +1,16 @@
-import React from 'react';
-import { Card, CardContent, Typography, Avatar, Box, Button} from '@mui/material';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import React from "react";
+import {
+  Card,
+  CardContent,
+  Typography,
+  Avatar,
+  Box,
+  Button,
+} from "@mui/material";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-function UserProfile () {
+function UserProfile() {
   // You can pass a user object as a prop to this component
   const user = useSelector((store) => store.user);
   const history = useHistory();
@@ -35,7 +42,7 @@ function UserProfile () {
           Phone #:
         </Typography>
         <Typography variant="body1" gutterBottom>
-          {user.phone || 'None'}
+          {user.phone || "None"}
         </Typography>
 
         <Typography variant="subtitle1" color="textSecondary">
@@ -47,19 +54,15 @@ function UserProfile () {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => history.push('/user-edit')}
+          onClick={() => history.push("/user-edit")}
           sx={{ marginTop: 2 }}
         >
           Edit Information
         </Button>
-
-
-        
-main
       </CardContent>
     </Card>
   );
-};
+}
 
 export default UserProfile;
 

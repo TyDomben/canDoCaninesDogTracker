@@ -2,16 +2,6 @@
 -- You must use double quotes in every query that user is in:
 -- ex. SELECT * FROM "user";
 -- Otherwise you will have errors!
----------------------------------------------------------------- ROLES TABLE ----------------------------------------------------------------
-
-CREATE TABLE IF NOT EXISTS "roles" (
-    "id" SERIAL PRIMARY KEY,
-    "role_name" VARCHAR(255)
-);
-INSERT INTO "roles" ("id", "role_name")
-VALUES ('1', 'admin'),
-('2', 'raiser'),
-('3', 'sitter');
 ---------------------------------------------------------------- USER TABLE ----------------------------------------------------------------
 
 
@@ -23,19 +13,16 @@ CREATE TABLE IF NOT EXISTS "user" (
     "phone" VARCHAR(255),
     "address" VARCHAR(255),
     "email" VARCHAR(255),
-    "role_id" INT,
-    FOREIGN KEY ("role_id") REFERENCES "roles"("id")
+    "admin" BOOLEAN
 );
 
-
 ---------------------------------------------------------------- BEHAVIOR TABLE ----------------------------------------------------------------
-
 CREATE TABLE IF NOT EXISTS "behavior" (
     "id" SERIAL PRIMARY KEY,
     "behavior_category_name" VARCHAR(255) NOT NULL
 );
 INSERT INTO "behavior" ("behavior_category_name")
-VALUES ('rowdy'), ('barks a lot'), ('calm');
+VALUES ('unknown'), ('comfortable'), ('indefferent'), ('uncomfortable');
 
 ---------------------------------------------------------------- EXERCISE LIMITATION TABLE ------------------------------------------------------
 
@@ -46,7 +33,8 @@ CREATE TABLE IF NOT EXISTS "exercise_limitations" (
 );
 
 INSERT INTO "exercise_limitations" ("exercise_limitations")
-VALUES ('no running more than 15 minutes');
+VALUES ('limit water'), ('limit toy play'), ('may destroy toys(watch carefully)'), ('may injest toys'),
+('plays keep away'), ('does not share toys with other dogs');
 
 ---------------------------------------------------------------- EXERCISE EQUIPMENT TABLE ------------------------------------------------------
 
@@ -57,8 +45,27 @@ CREATE TABLE IF NOT EXISTS "exercise_equipment" (
 );
 
 INSERT INTO "exercise_equipment" ("exercise_equipment")
-VALUES ('treadmill');
+VALUES ('gentle leader'), ('halti head caller'), ('collar only(unless pulling)'), ('no pull front clip harness'), ('walks not recommended for exercise');
 
+---------------------------------------------------------------- Food Type ------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS "food_type" (
+    "id" SERIAL PRIMARY KEY,
+    "food_type" VARCHAR(255) NOT NULL
+);
+
+INSERT INTO "food_type" ("food_type")
+VALUES ('Purina Pro Plan Large Breed Puppy'), ('Purina Pro Plan Large Breed Adult'), ('Purina Pro Plan Sensitive Skin and Stomach'), ('Purina Pro Plan Sport 30/20'), ('Other');
+
+---------------------------------------------------------------- Breed ------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS "breed" (
+    "id" SERIAL PRIMARY KEY,
+    "breed" VARCHAR(255) NOT NULL
+);
+
+INSERT INTO "breed" ("breed")
+VALUES ('Labrador'), ('Golden Retriever'), ('Labrador Mix'), ('Golden Retriever Mix'), ('Poodle/Poodle Mix'), ('Collie'), ('I Dont Know');
 
 
 ---------------------------------------------------------------- DOGS TABLE ----------------------------------------------------------------
@@ -68,9 +75,9 @@ CREATE TABLE IF NOT EXISTS "dogs" (
     "user_id" INT REFERENCES "user"("id") NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "age" INT NOT NULL,
-    "breed" VARCHAR(255) NOT NULL,
+    "breed" INT NOT NULL,
     "spayed_neutered" BOOLEAN NOT NULL,
-    "food_type" VARCHAR(255) NOT NULL,
+    "food_type" INT NOT NULL,
     "food_amount" VARCHAR(255) NOT NULL,
     "meals_per_day" INT NOT NULL,
     "eating_times" VARCHAR(255) NOT NULL,
@@ -99,7 +106,9 @@ CREATE TABLE IF NOT EXISTS "dogs" (
     FOREIGN KEY ("exercise_equipment") REFERENCES "exercise_equipment"("id"),
     FOREIGN KEY ("behavior_with_other_dogs") REFERENCES "behavior"("id"),
     FOREIGN KEY ("behavior_with_cats") REFERENCES "behavior"("id"),
-    FOREIGN KEY ("behavior_with_children") REFERENCES "behavior"("id")
+    FOREIGN KEY ("behavior_with_children") REFERENCES "behavior"("id"),
+    FOREIGN KEY ("food_type") REFERENCES "food_type"("id"),
+    FOREIGN KEY ("breed") REFERENCES "breed"("id")
     
 );
 INSERT INTO "dogs" (
@@ -132,7 +141,7 @@ INSERT INTO "dogs" (
     "behavior_with_other_dogs",
     "behavior_with_cats",
     "behavior_with_children")
-VALUES ('1','Loki', '2', 'Labrador Retriever', true, 'Blue Buffalo', '1 cup', '3', '6 am', 'none', false, 'none', '1', 'every 3 hours', 'takes a long time', '1', '1', 'feels safe in crate', 'gets on the couch', true, true, false, false, true, true, true, '1', '1', '1');
+VALUES ('1','Loki', '2', '1', true, '1', '1 cup', '3', '6 am', 'none', false, 'none', '1', 'every 3 hours', 'takes a long time', '1', '1', 'feels safe in crate', 'gets on the couch', true, true, false, false, true, true, true, '1', '1', '1');
 
 ---------------------------------------------------------------- DOG HOSTING TABLE ----------------------------------------------------------------
 
@@ -145,7 +154,6 @@ CREATE TABLE IF NOT EXISTS "dog_hosting" (
     "date_comments" VARCHAR(255) NOT NULL,
     "appointments" VARCHAR(255) NOT NULL,
     "status" VARCHAR(50) NOT NULL,
-    "admin_id" INT NOT NULL,
     FOREIGN KEY ("dog_id") REFERENCES "dogs"("id"),
     FOREIGN KEY ("user_id") REFERENCES "user"("id")
 );
@@ -157,17 +165,10 @@ INSERT INTO "dog_hosting" (
     "end_date",
     "date_comments",
     "appointments",
-    "status",
-    "admin_id"
+    "status"
 )
-VALUES('1', '1', '4-1-2024', '4-7-2024', 'Vacation to Hawaii', 'no appointments', 'not confirmed', '1');
+VALUES('1', '1', '4-1-2024', '4-7-2024', 'Vacation to Hawaii', 'no appointments', 'not confirmed');
 --admin_id is not doing anything.. is there supposed to be an admin table with confirm and deny = 1 or 2 --
-
-
-
-
-
-
 
 -------------------------------- QUERIES --------------------------
 
@@ -253,3 +254,4 @@ INSERT INTO "dogs" (
                 "behavior_with_cats",
                 "behavior_with_children")
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29);
+
