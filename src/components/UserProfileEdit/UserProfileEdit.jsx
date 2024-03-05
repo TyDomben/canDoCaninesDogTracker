@@ -1,3 +1,7 @@
+import React, { useState } from 'react';
+import { TextField, Button, Card, CardContent, Typography } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import React, { useState } from "react";
 import {
   TextField,
@@ -10,6 +14,7 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const UserProfileEdit = () => {
+  const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
   const history = useHistory();
   const [profile, setProfile] = useState({
@@ -31,6 +36,8 @@ const UserProfileEdit = () => {
   const handleSave = () => {
     // Implement the save logic here
     //onSave(profile);
+    history.push("/user");
+    dispatch({ type: 'UPDATE_USER', payload: { userId: user.id, updates: profile } });
     history.push("/user");
   };
 
@@ -57,6 +64,14 @@ const UserProfileEdit = () => {
           fullWidth
         />
         <TextField
+          label="Email"
+          name="email"
+          value={profile.email}
+          onChange={handleChange}
+          margin="normal"
+          fullWidth
+        />
+        <TextField
           label="phone"
           name="phone"
           value={profile.phone}
@@ -68,14 +83,6 @@ const UserProfileEdit = () => {
           label="address"
           name="address"
           value={profile.address}
-          onChange={handleChange}
-          margin="normal"
-          fullWidth
-        />
-        <TextField
-          label="Email"
-          name="email"
-          value={profile.email}
           onChange={handleChange}
           margin="normal"
           fullWidth
