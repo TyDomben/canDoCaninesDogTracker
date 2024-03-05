@@ -1,83 +1,143 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-// import { Link } from "@mui/material";
 import { useSelector } from "react-redux";
 import LogOutButton from "../LogOutButton/LogOutButton";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
-// import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
 
+// The Header creates links that can be used to navigate
+// between routes.
 function Nav() {
   const user = useSelector((store) => store.user);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
+  // Drawer toggle function
+  const toggleDrawer = (open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+    setDrawerOpen(open);
+  };
+// Nav links
+  const navLinks = [
+    { text: "About", path: "/about" },
+    { text: "Data Grid", path: "/data-grid" },
+    { text: "All Dog Cards", path: "/all-dog-cards" },
+    { text: "Login", path: "/login" },
+    { text: "Register", path: "/registration" },
+    { text: "Sitter Home", path: "/sitter-home" },
+    { text: "User Home", path: "/user-home" },
+    { text: "Admin Home", path: "/admin-home" },
+    { text: "User Edit", path: "/user-edit" },
+    { text: "User", path: "/user" },
+    { text: "Info", path: "/info" },
+  ];
+// Nav bar 
   return (
     <AppBar position="static">
+      {/* Drawer */}
       <Toolbar>
-        {/* ... other components */}
-        {user.id && (
-          // Only show these links if a user is logged in
+        {/* Hamburger Menu */}
+        <IconButton
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          onClick={toggleDrawer(true)}
+        >
+          <MenuIcon />
+        </IconButton>
+        {/* Drawer */}
+        <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
+          {/* Drawer List */}
+          <List>
+            {user.id && (
+              <>
+                <ListItem
+                  button
+                  component={NavLink}
+                  to="/user-home"
+                  onClick={toggleDrawer(false)}
+                >
+                  <ListItemText primary="User Home" />
+                </ListItem>
+                {user.role === "admin" && (
+                  <ListItem
+                    button
+                    component={NavLink}
+                    to="/admin-home"
+                    onClick={toggleDrawer(false)}
+                  >
+                    <ListItemText primary="Admin" />
+                  </ListItem>
+                )}
+                {user.role === "raiser" && (
+                  <ListItem
+                    button
+                    component={NavLink}
+                    to="/raiser-dog-page"
+                    onClick={toggleDrawer(false)}
+                  >
+                    <ListItemText primary="Raiser" />
+                  </ListItem>
+                )}
+                {user.role === "sitter" && (
+                  <ListItem
+                    button
+                    component={NavLink}
+                    to="/sitter-home"
+                    onClick={toggleDrawer(false)}
+                  >
+                    <ListItemText primary="Sitter" />
+                  </ListItem>
+                )}
+              </>
+            )}
+            {navLinks.map((link) => (
+              <ListItem
+                key={link.path}
+                button
+                component={NavLink}
+                to={link.path}
+                onClick={toggleDrawer(false)}
+              >
+                <ListItemText primary={link.text} />
+              </ListItem>
+            ))}
+            {user.id && (
+              <ListItem button onClick={toggleDrawer(false)}>
+                <LogOutButton />
+              </ListItem>
+            )}
+          </List>
+        </Drawer>
+        <Button color="inherit" component={NavLink} to="/">
+          Home
+        </Button>
+        {!user.id && (
           <>
-            <Button color="inherit" component={NavLink} to="/user-home">
-              User Home
+            <Button color="inherit" component={NavLink} to="/login">
+              Login
             </Button>
-            {user.role === "admin" && (
-              // Only show this link for admins
-              <Button color="inherit" component={NavLink} to="/admin-home">
-                Admin
-              </Button>
-            )}
-            {user.role === "raiser" && (
-              // Only show this link for raisers
-              <Button color="inherit" component={NavLink} to="/raiser-dog-page">
-                Raiser
-              </Button>
-            )}
-            {user.role === "sitter" && (
-              // Only show this link for sitters
-              <Button color="inherit" component={NavLink} to="/sitter-home">
-                Sitter
-              </Button>
-            )}
-            {/* ... other links for different roles */}
+            <Button color="inherit" component={NavLink} to="/registration">
+              Register
+            </Button>
           </>
         )}
-        <Button color="inherit" component={NavLink} to="/about">
-          About
-        </Button>
-        <Button color="inherit" component={NavLink} to="/data-grid">
-          Data Grid
-        </Button>
-        <Button color="inherit" component={NavLink} to="/all-dog-cards">
-          All Dog Cards
-        </Button>
-        <Button color="inherit" component={NavLink} to="/login">
-          Login
-        </Button>
-        <Button color="inherit" component={NavLink} to="/registration">
-          Register
-        </Button>
-        <Button color="inherit" component={NavLink} to="/sitter-home">
-          Sitter Home
-        </Button>
-        <Button color="inherit" component={NavLink} to="/user-home">
-          User Home
-        </Button>
-        <Button color="inherit" component={NavLink} to="/admin-home">
-          Admin Home
-        </Button>
-        <Button color="inherit" component={NavLink} to="/user-edit">
-          User Edit
-        </Button>
-        <Button color="inherit" component={NavLink} to="/user">
-          User
-        </Button>
-        <Button color="inherit" component={NavLink} to="/info">
-          Info
-        </Button>
-
-        {/* Include the logout button only if a user is logged in */}
-        {user.id && <LogOutButton className="navLink" />}
+        {user.id && (
+          <Button color="inherit" component={NavLink} to="/user">
+            Profile
+          </Button>
+        )}
       </Toolbar>
     </AppBar>
   );
