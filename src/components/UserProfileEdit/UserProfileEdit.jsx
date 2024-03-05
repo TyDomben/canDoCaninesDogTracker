@@ -26,12 +26,7 @@ const UserProfileEdit = () => {
   };
 
   const handleSave = () => {
-<<<<<<<<< Temporary merge branch 1
     dispatch({ type: 'UPDATE_USER', payload: { userId: user.id, updates: profile } });
-=========
-    // Implement the save logic here
-    //onSave(profile);
->>>>>>>>> Temporary merge branch 2
     history.push("/user");
   };
 
