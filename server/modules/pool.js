@@ -1,8 +1,8 @@
 /* the only line you likely need to change is
 
- database: 'testing_app',
+//  database: 'can_do_canines',
 
- change `testing_app` to the name of your database, and you should be all set!
+ change `can_do_canines` to the name of your database, and you should be all set!
 */
 
 const pg = require('pg');
@@ -12,7 +12,7 @@ let pool;
 // we'll use the DATABASE_URL environment variable
 // to set the connection info: web address, username/password, db name
 // eg: 
-//  DATABASE_URL=postgresql://jDoe354:secretPw123@some.db.com/testing_app
+//  DATABASE_URL=postgresql://jDoe354:secretPw123@some.db.com/can_do_canines
 if (process.env.DATABASE_URL) {
     pool = new pg.Pool({
         connectionString: process.env.DATABASE_URL,
