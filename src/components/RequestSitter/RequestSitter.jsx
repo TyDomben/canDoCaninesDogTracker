@@ -1,19 +1,39 @@
-import React from 'react';
-import { 
-  Card, 
-  CardContent, 
-  CardMedia, 
-  Typography, 
-  Button, 
-  Container, 
-  AppBar, 
-  Toolbar, 
-  IconButton 
+import React, { useEffect, useState } from 'react';
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  Button,
+  Container,
+  AppBar,
+  Toolbar,
+  IconButton
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import MenuIcon from '@mui/icons-material/Menu';
+import axios from 'axios';
 
-const RequestSitterProfileCard = ({ dog, onGoBack, onVolunteer }) => {
+const RequestSitterProfileCard = ({ sitterId, onGoBack, onVolunteer }) => {
+  const [sitter, setSitter] = useState(null);
+
+  useEffect(() => {
+    const fetchSitterData = async () => {
+      try {
+        const response = await axios.get(`/api/sitter/${sitterId}`);
+        setSitter(response.data);
+      } catch (error) {
+        console.error('Error fetching sitter data:', error);
+      }
+    };
+
+    fetchSitterData();
+  }, [sitterId]);
+
+  if (!sitter) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Container maxWidth="sm">
       <AppBar position="static">
@@ -38,19 +58,18 @@ const RequestSitterProfileCard = ({ dog, onGoBack, onVolunteer }) => {
             Go Back
           </Button>
           <Typography gutterBottom variant="h5" component="div" align="center">
-            {dog.name}'s Profile
+            {sitter.name}'s Profile
           </Typography>
           <CardMedia
             component="img"
             height="140"
-            image="/static/images/dog-placeholder.jpg" // Replace with actual image path
-            alt={dog.name}
+            image={sitter.profileImage}
+            alt={sitter.name}
           />
-          <Typography variant="body1" color="text.secondary" align="center">
-            {dog.startDate} - {dog.endDate}
-          </Typography>
-          <Typography variant="body1">Date of Birth: {dog.dateOfBirth}</Typography>
-          <Typography variant="body1">Breed: {dog.breed}</Typography>
+          <Typography variant="body1">Username: {sitter.username}</Typography>
+          <Typography variant="body1">Phone: {sitter.phone}</Typography>
+          <Typography variant="body1">Address: {sitter.address}</Typography>
+          <Typography variant="body1">Email: {sitter.email}</Typography>
         </CardContent>
         <Button fullWidth variant="contained" onClick={onVolunteer}>
           Volunteer to Sit
