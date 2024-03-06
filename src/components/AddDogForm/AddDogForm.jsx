@@ -1,31 +1,56 @@
 import React, { useState } from 'react';
-import { Container, TextField, Button, Typography, Box, AppBar, Toolbar, IconButton } from '@mui/material';
+import { Container, TextField, Button, Typography, Box, AppBar, Toolbar, IconButton, Stepper, Step, StepLabel } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+
+
 
 const AddDogForm = () => {
+  const history = useHistory();
   const [formValues, setFormValues] = useState({
     hostName: '',
     hostEmail: '',
-    startDate: '',
-    endDate: '',
-    dateComments: '',
     dogName: '',
     dogAge: '',
     breed: '',
     intact: '',
-    vetAppointments: '',
+    // vetAppointments: '',
     foodType: '',
     feedingFrequency: '',
     feedingAmount: '',
-    medicalAppointments: '',
-    medicalConcerns: '',
+    // medicalAppointments: '',
+    medicalConditions: '',
+    surguryRecovery: '',
+    currentMedications: '',
+    inHeat: '',
+    //pottyHabitis
     pottyFrequency: '',
     pottyIndicators: '',
+    pottyComments: '',
+    //excercise
     exerciseRestrictions: '',
     exerciseEquipment: '',
+    //crating
     cratingHabits: '',
+    //houseManners
     houseManners: '',
-    environmentalPreferences: '',
+    //preferences
+    //lives with ?
+    // environmentalPreferences: '',
+    living_with_other_dogs: '',
+    living_with_cats: '',
+    living_with_children_younger_ten: '',
+    living_with_adults: '',
+    living_with_small_animals: '',
+    living_with_large_animals: '',
+    behavior_with_other_dogs: '',
+    behavior_with_cats: '',
+    behavior_with_cats: ''
+
+
+
+
+
     // ... other fields as needed
   });
 
@@ -35,16 +60,25 @@ const AddDogForm = () => {
       ...formValues,
       [name]: value,
     });
+
+    // console.log('formValues:', formValues)
   };
 
-  const handleSave = () => {
+  const handleSave = (event) => {
+    console.log('in postDogForm Save')
     // Save the data
+
+      event.preventDefault();
+      // dispatch({ type: "POST_DOG", payload: formValues })
+      // history.push('/reviewemployees')
+  }
     // Show confirmation alert
-  };
+  
 
   const handleGoBack = () => {
     // Confirm if the user wants to go back without saving
     // Redirect to home page
+    history.push('/raiser-home')
   };
 
   return (
