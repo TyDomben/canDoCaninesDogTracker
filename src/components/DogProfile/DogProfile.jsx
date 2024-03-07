@@ -79,7 +79,7 @@ function DogProfile() {
 // Navigate to Request Care Dates
   const handleRequestCareDates = () => {
     console.log("button for request care dates was pushed for dog Id:", dogId);
-    history.push(`/`)
+    history.push(`/RequestSitterForm`)
 
   };
 
@@ -139,9 +139,9 @@ function DogProfile() {
           <Button variant="outlined" onClick={handleEdit} sx={{ mx: 1 }}>
             Edit Profile
           </Button>
-          {/* <Button variant="contained" color="primary" onClick={handleRequestCareDates}>
+          <Button variant="contained" color="primary" onClick={handleRequestCareDates}>
             Request Care Dates
-          </Button> */}
+          </Button>
         </Box>
       </Card>
     </Container>
@@ -150,5 +150,3 @@ function DogProfile() {
 
 export default DogProfile;
 
-
-// fetchonedog, onGoBack, onDelete, onEdit, onRequestCareDates
