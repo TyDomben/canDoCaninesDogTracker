@@ -61,9 +61,9 @@ const DogProfileCard = ({ dogData, onGoBack, onDelete, onEdit, onRequestCareDate
             alt="Dog"
           />
           {/* Display the rest of the dog's information here */}
-          <Typography variant="body1">Name: {dogData.name}</Typography>
+          {/* <Typography variant="body1">Name: {dogData.name}</Typography>
           <Typography variant="body1">Date of Birth: {dogData.dateOfBirth}</Typography>
-          <Typography variant="body1">Breed: {dogData.breed}</Typography>
+          <Typography variant="body1">Breed: {dogData.breed}</Typography> */}
           {/* ... other dog details */}
         </CardContent>
         <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>

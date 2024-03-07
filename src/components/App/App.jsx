@@ -16,6 +16,9 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import UserProfileEdit from '../UserProfileEdit/UserProfileEdit';
+import AddDogForm from '../AddDogForm/AddDogForm';
+import RaiserDogPage from '../RaiserDogPage/RaiserDogPage';
+import DogProfile from '../DogProfile/DogProfile';
 
 // Import the new pages
 import SitterHomePage from '../SitterHome/SitterHome';
@@ -49,6 +52,9 @@ function App() {
           <ProtectedRoute exact path="/user-edit"><UserProfileEdit /> </ProtectedRoute>
           <ProtectedRoute exact path="/user"><UserPage /></ProtectedRoute>
           <ProtectedRoute exact path="/info"><InfoPage /></ProtectedRoute>
+          <ProtectedRoute exact path="/home"><RaiserDogPage /></ProtectedRoute>
+          <ProtectedRoute exact path="/add-dog"><AddDogForm /></ProtectedRoute>
+          <ProtectedRoute exact path="/dog-profile"><DogProfile /></ProtectedRoute>
 
           <Route exact path="/login">
             {user.id ? <Redirect to="/user" /> : <LoginPage />}
