@@ -8,12 +8,19 @@ import {
   Toolbar,
   IconButton,
   Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const RequestCareForm = ({ onGoBack, onSave }) => {
   const [dates, setDates] = useState({ startDate: '', endDate: '' });
+  const [openDialog, setOpenDialog] = useState(false);
+  const [dialogContent, setDialogContent] = useState('');
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -22,13 +29,22 @@ const RequestCareForm = ({ onGoBack, onSave }) => {
 
   const handleSave = () => {
     onSave(dates);
-    // Show confirmation alert
+    setDialogContent('Your request has been saved successfully!');
+    setOpenDialog(true);
   };
 
   const handleGoBack = () => {
-    // Confirm if the user wants to go back without saving
+    setDialogContent('Are you sure you want to go back without saving?');
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
+  const handleConfirmGoBack = () => {
     onGoBack();
-    // Show confirmation alert
+    setOpenDialog(false);
   };
 
   return (
@@ -41,8 +57,9 @@ const RequestCareForm = ({ onGoBack, onSave }) => {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
+            onClick={handleGoBack}
           >
-            <MenuIcon />
+            <ArrowBackIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Can Do Canines
@@ -80,8 +97,14 @@ const RequestCareForm = ({ onGoBack, onSave }) => {
             shrink: true,
           }}
         />
+
+
+
+
+
+        
         <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', mt: 2 }}>
-          <Button variant="outlined" color="secondary" onClick={handleGoBack}>
+          <Button variant="outlined" color="secondary" onClick={handleConfirmGoBack}>
             Go Back
           </Button>
           <Button variant="contained" color="primary" onClick={handleSave}>
@@ -89,6 +112,25 @@ const RequestCareForm = ({ onGoBack, onSave }) => {
           </Button>
         </Box>
       </Box>
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Confirmation"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {dialogContent}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Cancel</Button>
+          <Button onClick={handleConfirmGoBack} autoFocus>
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };
