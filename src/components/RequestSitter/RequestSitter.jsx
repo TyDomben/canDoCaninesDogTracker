@@ -14,7 +14,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import MenuIcon from '@mui/icons-material/Menu';
 import axios from 'axios';
 
-const RequestSitterProfileCard = ({ sitterId, onGoBack, onVolunteer }) => {
+const RequestSitterForm = ({ sitterId, onGoBack, onVolunteer }) => {
   const [sitter, setSitter] = useState(null);
 
   useEffect(() => {
@@ -79,4 +79,4 @@ const RequestSitterProfileCard = ({ sitterId, onGoBack, onVolunteer }) => {
   );
 };
 
-export default RequestSitterProfileCard;
+export default RequestSitterForm;

@@ -28,7 +28,7 @@ function Nav() {
     }
     setDrawerOpen(open);
   };
-// Nav links
+  // Nav links
   const navLinks = [
     { text: "About", path: "/about" },
     { text: "Data Grid", path: "/data-grid" },
@@ -41,8 +41,13 @@ function Nav() {
     { text: "User Edit", path: "/user-edit" },
     { text: "User", path: "/user" },
     { text: "Info", path: "/info" },
+    { text: "Request Sitter", path: "/RequestSitterForm" },
+    {
+      text: "Request Sitter Profile Card",
+      path: "/request-sitter-profile-card",
+    },
   ];
-// Nav bar 
+  // Nav bar
   return (
     <AppBar position="static">
       {/* Drawer */}
