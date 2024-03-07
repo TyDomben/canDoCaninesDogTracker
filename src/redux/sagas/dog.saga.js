@@ -10,8 +10,6 @@ function* dogSaga() {
   yield takeLatest("FETCH_USER_DOGS", fetchDogs);
 }
 
-export default dogSaga;
-
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
