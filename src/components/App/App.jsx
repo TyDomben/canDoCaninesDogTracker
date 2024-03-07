@@ -53,19 +53,19 @@ function App() {
             <AboutPage />
           </Route>
           {/* Add the new ProtectedRoutes here */}
-          <ProtectedRoute exact path="/sitter-home">
+          <ProtectedRoute exact path="/sitterHome">
             <SitterHomePage />
           </ProtectedRoute>
-          <ProtectedRoute exact path="/admin-home">
+          <ProtectedRoute exact path="/adminHome">
             <AdminHome />
           </ProtectedRoute>
-          <ProtectedRoute exact path="/all-dog-cards">
+          <ProtectedRoute exact path="/allDogCards">
             <DogCards />
           </ProtectedRoute>
-          <ProtectedRoute exact path="/data-grid">
+          <ProtectedRoute exact path="/dataGrid">
             <DataGrid />
           </ProtectedRoute>
-          <ProtectedRoute exact path="/user-edit">
+          <ProtectedRoute exact path="/userEdit">
             <UserProfileEdit />
           </ProtectedRoute>
           <ProtectedRoute exact path="/user">
@@ -74,7 +74,7 @@ function App() {
           <ProtectedRoute exact path="/info">
             <InfoPage />
           </ProtectedRoute>
-          <ProtectedRoute exact path="/dog-profile/:id">
+          <ProtectedRoute exact path="/dogProfile/:id">
             <DogProfile />
           </ProtectedRoute>
           {/* <ProtectedRoute exact path="/request-sitter-profile-card">
@@ -83,7 +83,7 @@ function App() {
           <ProtectedRoute exact path="/RequestSitterForm">
             <RequestSitterForm />
           </ProtectedRoute>
-          <ProtectedRoute exact path="/request-care-form">
+          <ProtectedRoute exact path="/requestCareForm">
             <RequestCareForm />
           </ProtectedRoute>
           <Route exact path="/login">
@@ -95,7 +95,7 @@ function App() {
           <Route exact path="/home">
             {user.id ? <Redirect to="/user" /> : <LandingPage />}
           </Route>
-          <Route path="/dogprofile/:dogId" component={DogProfile} />
+          <Route path="/dogProfile/:dogId" component={DogProfile} />
           <Route>
             <h1>404 - Page Not Found</h1>
           </Route>
