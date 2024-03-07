@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, TextField, Button, Typography, Box, AppBar, Toolbar, IconButton, Stepper, Step, StepLabel } from '@mui/material';
+import { Container, TextField, Button, Typography, Box, AppBar, Toolbar, IconButton, Stepper, Step, StepLabel, Paper } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useDispatch } from 'react-redux';
@@ -8,6 +8,8 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import Checkbox from '@mui/material/Checkbox';
+import FormGroup from '@mui/material/FormGroup';
 
 
 
@@ -17,13 +19,13 @@ const AddDogForm = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [activeStep, setActiveStep] = useState(0);
-  const steps = ['Dog Information', 'Meals', 'Medical Information', 'Potty Habits','Exercise Routine','Crating','Manners','Behavioral Information'];
+  const steps = ['Dog Information', 'Meals', 'Medical Information', 'Potty Habits', 'Exercise Routine', 'Crating', 'Manners', 'Behavioral Information'];
   const [formValues, setFormValues] = useState({
     //dog basic information
-    dogName: '',
-    dogAge: '',
+    name: '',
+    age: '',
     breed: '',
-    intact: '',
+    spayed_neutered: '',
     // vetAppointments: '',
     //food info
     foodType: '',
@@ -42,7 +44,7 @@ const AddDogForm = () => {
     exerciseRestrictions: '',
     exerciseEquipment: '',
     //crating
-    cratingHabits: '',
+    crate_manners: '',
     //houseManners
     houseManners: '',
     //preferences
@@ -81,10 +83,10 @@ const AddDogForm = () => {
     event.preventDefault();
     dispatch({ type: "POST_DOG", payload: formValues });
     // setFormValues({
-    //   dogName: '',
-    //   dogAge: '',
+    //    dog_name: '',
+    //   age: '',
     //   breed: '',
-    //   intact: '',
+    //   spayed_neutered: '',
     //   // vetAppointments: '',
     //   foodType: '',
     //   feedingFrequency: '',
@@ -102,7 +104,7 @@ const AddDogForm = () => {
     //   exerciseRestrictions: '',
     //   exerciseEquipment: '',
     //   //crating
-    //   cratingHabits: '',
+    //   crating_manners: '',
     //   //houseManners
     //   houseManners: '',
     //   //preferences
@@ -142,10 +144,10 @@ const AddDogForm = () => {
             <TextField
               fullWidth
               margin="normal"
-              required id="dogName"
-              name="dogName"
+              required id="dog_name"
+              name="dog_name"
               label="Dog Name"
-              value={formValues.dogName}
+              value={formValues.name}
               onChange={handleChange}
               variant="outlined"
             />
@@ -153,10 +155,10 @@ const AddDogForm = () => {
             <TextField
               fullWidth
               margin="normal"
-              id="dogAge"
-              name="dogAge"
+              id="age"
+              name="age"
               label="Dog Age"
-              value={formValues.dogAge}
+              value={formValues.age}
               onChange={handleChange}
               variant="outlined"
             />
@@ -183,11 +185,11 @@ const AddDogForm = () => {
             </FormControl>
 
             <FormControl>
-              <FormLabel id="intact">Is the dog spayed or neutered?</FormLabel>
+              <FormLabel id="spayed_neutered">Is the dog spayed or neutered?</FormLabel>
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
                 defaultValue=" "
-                name="intact-radio-buttons-group"
+                name="spayed_neutered-radio-buttons-group"
               >
                 <FormControlLabel value="true" control={<Radio />} label="Yes" />
                 <FormControlLabel value="false" control={<Radio />} label="No" />
@@ -199,23 +201,22 @@ const AddDogForm = () => {
         );
       case 1:
         return (
-          <>
-            <FormControl>
-              <FormLabel id="food-label">Dog Breed</FormLabel>
-              <RadioGroup
-                aria-labelledby="food-label"
-                defaultValue="1"
-                name="food-radio-buttons-group"
-              >
-                <FormControlLabel value={1} control={<Radio />} label="Purina Pro Plan Large Breed PUPPY" />
-                <FormControlLabel value={2} control={<Radio />} label="Purina Pro Plan Large Breed ADULT" />
-                <FormControlLabel value={3} control={<Radio />} label="Purina Pro Plan Sensitive Skin & Stomach" />
-                <FormControlLabel value={4} control={<Radio />} label="Purina Pro Plan Sport 30/20" />
-                <FormControlLabel value={5} control={<Radio />} label="Other" />
 
-              </RadioGroup>
-            </FormControl>
-          
+          <FormControl>
+            <FormLabel id="food-label">Food Informations</FormLabel>
+            <RadioGroup
+              aria-labelledby="food-label"
+              defaultValue="1"
+              name="food-radio-buttons-group"
+            >
+              <FormControlLabel value={1} control={<Radio />} label="Purina Pro Plan Large Breed PUPPY" />
+              <FormControlLabel value={2} control={<Radio />} label="Purina Pro Plan Large Breed ADULT" />
+              <FormControlLabel value={3} control={<Radio />} label="Purina Pro Plan Sensitive Skin & Stomach" />
+              <FormControlLabel value={4} control={<Radio />} label="Purina Pro Plan Sport 30/20" />
+              <FormControlLabel value={5} control={<Radio />} label="Other" />
+
+            </RadioGroup>
+
             <TextField
               fullWidth
               margin="normal"
@@ -227,13 +228,26 @@ const AddDogForm = () => {
               variant="outlined"
             />
 
+            <TextField
+              fullWidth
+              margin="normal"
+              id="foodAmount"
+              name="foodFrequency"
+              label="Number of meals PER DAY?"
+              value={formValues.food_frequency}
+              onChange={handleChange}
+              variant="outlined"
+            />
+
+          </FormControl>
 
 
-          </>
+
         );
       case 2:
         return (
-          <>
+
+          <FormControl>
             <TextField
               fullWidth
               margin="normal"
@@ -244,17 +258,16 @@ const AddDogForm = () => {
               onChange={handleChange}
               variant="outlined"
             />
-            <FormControl>
-              <FormLabel id="">Is this dog currently recovering from a surgery or medical concern?</FormLabel>
-              <RadioGroup
-                aria-labelledby="surgery-radio-buttons-group-label"
-                defaultValue="false "
-                name="surgery-radio-buttons-group"
-              >
-                <FormControlLabel value="true" control={<Radio />} label="Yes" />
-                <FormControlLabel value="false" control={<Radio />} label="No" />
-              </RadioGroup>
-            </FormControl>
+            <FormLabel id="">Is this dog currently recovering from a surgery or medical concern?</FormLabel>
+            <RadioGroup
+              aria-labelledby="surgery-radio-buttons-group-label"
+              defaultValue="false "
+              name="surgery-radio-buttons-group"
+            >
+              <FormControlLabel value="true" control={<Radio />} label="Yes" />
+              <FormControlLabel value="false" control={<Radio />} label="No" />
+            </RadioGroup>
+
 
 
             <TextField
@@ -268,25 +281,218 @@ const AddDogForm = () => {
               variant="outlined"
             />
 
-            {/* ... other medical fields ... */}
-          </>
+            <FormLabel id="">If you're fostering an spayed_neutered female are they in heat?</FormLabel>
+            <RadioGroup
+              aria-labelledby="heat-radio-buttons-group-label"
+              defaultValue="3"
+              name="surgery-radio-buttons-group"
+            >
+              <FormControlLabel value={1} control={<Radio />} label="Yes" />
+              <FormControlLabel value={2} control={<Radio />} label="No" />
+              <FormControlLabel value={3} control={<Radio />} label="Unknown" />
+
+            </RadioGroup>
+          </FormControl>
+
+
         );
       case 3:
         return (
-          <>
-            <TextField
-              fullWidth
-              margin="normal"
-              id="houseManners"
-              name="houseManners"
-              label="House Manners"
-              value={formValues.houseManners}
-              onChange={handleChange}
-              variant="outlined"
-            />
-            {/* ... other behavioral fields ... */}
-          </>
+
+          <FormControl>
+
+            <Box
+              component="form"
+              sx={{
+                '& .MuiTextField-root': { m: 1, width: '1' },
+              }}
+              noValidate
+              autoComplete="off"
+            >
+              <p>Please describe the dog's daily potty routine as well as how the dog indicates it has to go.
+              </p>
+              <TextField
+                id="outlined-multiline-static"
+                label="pottyRoutine"
+                multiline
+                rows={12}
+                value={formValues.pottyFrequency}
+                onChange={handleChange}
+              />
+              <p>Is there anything else that fosters should know about this dog's potty habits?
+              </p>
+              <TextField
+                id="outlined-multiline-static"
+                label="pottyComments"
+                multiline
+                rows={12}
+                value={formValues.pottyComments}
+                onChange={handleChange}
+              />
+            </Box>
+          </FormControl>
+
         );
+      case 4:
+        return (
+
+          <FormControl>
+            <p>Are there things we should about regarding this dog and exercise or play?</p>
+            <FormGroup>
+              <Paper elevation={5}>
+                <FormControlLabel required control={<Checkbox />} label="Limit water" />
+                <FormControlLabel required control={<Checkbox />} label="Limit toy play" />
+                <FormControlLabel required control={<Checkbox />} label="May destroy toys (watch carefully)" />
+                <FormControlLabel required control={<Checkbox />} label="May ingest toys" />
+                <FormControlLabel required control={<Checkbox />} label='Plays "Keep Away" ' />
+                <FormControlLabel required control={<Checkbox />} label="Does not share toys wiht other dogs?" />
+              </Paper>
+
+
+            </FormGroup>
+
+            <p>Please indicate what equipment this dog uses for walks.</p>
+            <RadioGroup
+              aria-labelledby="food-label"
+              defaultValue="1"
+              name="food-radio-buttons-group"
+            >
+              <Paper elevation={5}>
+                <FormControlLabel value={1} control={<Radio />} label="Gentle leader" />
+                <FormControlLabel value={2} control={<Radio />} label="Halti Headcollar" />
+                <FormControlLabel value={3} control={<Radio />} label="Collar only (unless pulling)" />
+                <FormControlLabel value={4} control={<Radio />} label='"No pull" front front clip harness' />
+                <FormControlLabel value={5} control={<Radio />} label="Walks not reccomended for exercise" />
+              </Paper>
+            </RadioGroup>
+
+          </FormControl>
+
+        );
+      case 5:
+        return (
+
+          <FormControl>
+            <p>Please describe this dogs crate manners and habits.                    </p>
+            <Box
+              component="form"
+              sx={{
+                '& .MuiTextField-root': { m: 1, width: '1' },
+              }}
+              noValidate
+              autoComplete="off"
+            >
+
+              <TextField
+                id="outlined-multiline-static"
+                label="pottyRoutine"
+                multiline
+                rows={12}
+                value={formValues.crate_habits}
+                onChange={handleChange}
+              />
+
+            </Box>
+          </FormControl>
+
+        );
+      case 6:
+        return (
+
+          <FormControl>
+            <p>Please describe this dog's house manners, including any less-than-desirable behaviors. </p>
+            <Box
+              component="form"
+              sx={{
+                '& .MuiTextField-root': { m: 1, width: '1' },
+              }}
+              noValidate
+              autoComplete="off"
+            >
+
+              <TextField
+                id="crate_manners"
+                label="Type here.."
+                multiline
+                rows={12}
+                value={formValues.crate_manners}
+                onChange={handleChange}
+              />
+
+            </Box>
+          </FormControl>
+
+        );
+      case 7:
+        return (
+
+          <FormControl>
+            <box>
+              <p>This dog lives with:</p>
+              <FormGroup>
+                <FormControlLabel required control={<Checkbox />} label="Other dogs" />
+                <FormControlLabel required control={<Checkbox />} label="Cats" />
+                <FormControlLabel required control={<Checkbox />} label="Childred (under 10)" />
+                <FormControlLabel required control={<Checkbox />} label="Children (10 and over)" />
+                <FormControlLabel required control={<Checkbox />} label='Adults" ' />
+                <FormControlLabel required control={<Checkbox />} label="Small Animals" />
+                <FormControlLabel required control={<Checkbox />} label="Large Animals" />
+
+
+
+
+              </FormGroup>
+            </box>
+            <box>
+              <FormLabel id="Behavior1">How does this dog behave around other dogs?</FormLabel>
+              <RadioGroup
+                aria-labelledby="behavior type"
+                defaultValue="1"
+                name="Other-Dogs-behavior-button-group"
+              >
+                <FormControlLabel value={1} control={<Radio />} label="Unknown" />
+                <FormControlLabel value={2} control={<Radio />} label="Comfortable" />
+                <FormControlLabel value={3} control={<Radio />} label="Indifferent" />
+                <FormControlLabel value={4} control={<Radio />} label="Uncomfortable" />
+
+              </RadioGroup>
+            </box>
+            <box>
+              <FormLabel id="Behavior1">How does this dog behave around cats?</FormLabel>
+              <RadioGroup
+                aria-labelledby="behavior type"
+                defaultValue="1"
+                name="Other-Dogs-behavior-button-group"
+              >
+                <FormControlLabel value={1} control={<Radio />} label="Unknown" />
+                <FormControlLabel value={2} control={<Radio />} label="Comfortable" />
+                <FormControlLabel value={3} control={<Radio />} label="Indifferent" />
+                <FormControlLabel value={4} control={<Radio />} label="Uncomfortable" />
+              </RadioGroup>
+            </box>
+
+            <box>
+              <FormLabel id="Behavior1">How does this dog behave around children</FormLabel>
+              <RadioGroup
+                aria-labelledby="behavior type"
+                defaultValue="1"
+                name="Other-Dogs-behavior-button-group"
+              >
+                <FormControlLabel value={1} control={<Radio />} label="Unknown" />
+                <FormControlLabel value={2} control={<Radio />} label="Comfortable" />
+                <FormControlLabel value={3} control={<Radio />} label="Indifferent" />
+                <FormControlLabel value={4} control={<Radio />} label="Uncomfortable" />
+              </RadioGroup>
+            </box>
+
+
+
+
+
+          </FormControl>
+
+        );
+
       default:
         return null;
     }
