@@ -76,9 +76,12 @@ function DogProfile() {
     history.push(`/editdogprofile/${dogId}`)
   };
 
-  // const handleRequestCareDates = () => {
-  //   // Navigate to Request Care Dates
-  // };
+// Navigate to Request Care Dates
+  const handleRequestCareDates = () => {
+    console.log("button for request care dates was pushed for dog Id:", dogId);
+    history.push(`/`)
+
+  };
 
   return (
     <Container maxWidth="sm">
