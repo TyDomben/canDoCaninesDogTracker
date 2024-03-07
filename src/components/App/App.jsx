@@ -14,6 +14,18 @@ import Nav from "../Nav/Nav";
 import Footer from "../Footer/Footer";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
+
+import AboutPage from '../AboutPage/AboutPage';
+import UserPage from '../UserPage/UserPage';
+import InfoPage from '../InfoPage/InfoPage';
+import LandingPage from '../LandingPage/LandingPage';
+import LoginPage from '../LoginPage/LoginPage';
+import RegisterPage from '../RegisterPage/RegisterPage';
+import UserProfileEdit from '../UserProfileEdit/UserProfileEdit';
+import AddDogForm from '../AddDogForm/AddDogForm';
+import RaiserDogPage from '../RaiserDogPage/RaiserDogPage';
+import DogProfile from '../DogProfile/DogProfile';
+
 import AboutPage from "../AboutPage/AboutPage";
 import UserPage from "../UserPage/UserPage";
 import InfoPage from "../InfoPage/InfoPage";
@@ -24,6 +36,7 @@ import UserProfileEdit from "../UserProfileEdit/UserProfileEdit";
 import RequestSitterForm from "../RequestSitter/RequestSitter";
 // import RequestSitterForm from "../RequestSitterForm/RequestSitterForm";
 import RequestCareForm from "../RequestCareForm/RequestCareForm";
+
 
 // Import the new pages
 import SitterHomePage from "../SitterHome/SitterHome";
@@ -55,6 +68,16 @@ function App() {
             <AboutPage />
           </Route>
           {/* Add the new ProtectedRoutes here */}
+
+          <ProtectedRoute exact path="/sitter-home"><SitterHomePage /></ProtectedRoute>
+          <ProtectedRoute exact path="/admin-home"><AdminHome /></ProtectedRoute>
+          <ProtectedRoute exact path="/all-dog-cards"><DogCards /></ProtectedRoute>
+          <ProtectedRoute exact path="/data-grid"><DataGrid /></ProtectedRoute>
+          <ProtectedRoute exact path="/user-edit"><UserProfileEdit /> </ProtectedRoute>
+          <ProtectedRoute exact path="/user"><UserPage /></ProtectedRoute>
+          <ProtectedRoute exact path="/info"><InfoPage /></ProtectedRoute>
+          <ProtectedRoute exact path="/home"><RaiserDogPage /></ProtectedRoute>
+
           <ProtectedRoute exact path="/sitterHome">
             <SitterHomePage />
           </ProtectedRoute>
@@ -90,6 +113,7 @@ function App() {
           <ProtectedRoute exact path="/requestcareform/:dogId">
             <RequestCareForm />
           </ProtectedRoute>
+
           <Route exact path="/login">
             {user.id ? <Redirect to="/user" /> : <LoginPage />}
           </Route>
@@ -100,6 +124,7 @@ function App() {
             {user.id ? <Redirect to="/user" /> : <LandingPage />}
           </Route>
           <Route path="/dogProfile/:dogId" component={DogProfile} />
+          <Route path="/editdogprofile/:id" component={EditDogProfile} />
           <Route>
             <h1>404 - Page Not Found</h1>
           </Route>
