@@ -16,13 +16,13 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const HomePage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const doggos = useSelector((store) => store.dogs);
+  const doggos = useSelector((store) => store.raiserDogReducer);
   console.log(doggos);
 
   // State and functions for handling the menu
@@ -84,8 +84,8 @@ const HomePage = () => {
           {/* Map your dog data to these cards */}
           {doggos.map((dog) => (
             <Grid item xs={12} sm={6} md={4}>
-              {/* <Card key={dog.id} onClick={() => history.push('/dog-profile')}> */}
-              <Card key={dog.id} onClick={() => console.log(dog)}>
+              <Card key={dog.id} onClick={() => history.push('/dog-profile')}>
+              {/* <Card key={dog.id} onClick={() => console.log(dog)}> */}
                 <CardMedia
                   component="img"
                   height="140"
