@@ -79,7 +79,7 @@ function DogProfile() {
 // Navigate to Request Care Dates
   const handleRequestCareDates = () => {
     console.log("button for request care dates was pushed for dog Id:", dogId);
-    history.push(`/RequestSitterForm`)
+    history.push(`/requestcareform/:dogId`)
 
   };
 

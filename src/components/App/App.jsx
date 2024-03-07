@@ -87,7 +87,7 @@ function App() {
           <ProtectedRoute exact path="/RequestSitterForm">
             <RequestSitterForm />
           </ProtectedRoute>
-          <ProtectedRoute exact path="/requestCareForm">
+          <ProtectedRoute exact path="/requestcareform/:dogId">
             <RequestCareForm />
           </ProtectedRoute>
           <Route exact path="/login">
