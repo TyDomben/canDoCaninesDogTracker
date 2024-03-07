@@ -76,9 +76,11 @@ function App() {
           <ProtectedRoute exact path="/info">
             <InfoPage />
           </ProtectedRoute>
-          <ProtectedRoute exact path="/dogProfile/:id">
+         
+          {/* <ProtectedRoute exact path="/dogprofile/:dogId">
             <DogProfile />
-          </ProtectedRoute>
+          </ProtectedRoute> */}
+          
           {/* <ProtectedRoute exact path="/request-sitter-profile-card">
             <RequestSitterForm />
           </ProtectedRoute>           */}
