@@ -176,3 +176,64 @@ router.post("/request", async (req, res) => {
     res.sendStatus(403);
   }
 });
+/**
+ * GET route to retrieve all sitter requests
+ */
+router.get("/requests", async (req, res) => {
+  console.log("/sitter/requests GET route");
+  console.log("is authenticated?", req.isAuthenticated());
+  if (req.isAuthenticated()) {
+    let connection;
+    try {
+      connection = await pool.connect();
+      const userId = req.user.id;
+      const query = `
+        SELECT * FROM "dog_hosting"
+        WHERE "user_id" = $1;
+      `;
+      const result = await connection.query(query, [userId]);
+      res.json(result.rows);
+    } catch (error) {
+      console.error("Error in GET /sitter/requests", error);
+      res.sendStatus(500);
+    } finally {
+      if (connection) {
+        connection.release();
+      }
+    }
+  } else {
+    res.sendStatus(403);
+  }
+});
+
+/**
+ * DELETE route to cancel a sitter request
+ */
+router.delete("/request/:id", async (req, res) => {
+  console.log("/sitter/request DELETE route");
+  console.log("is authenticated?", req.isAuthenticated());
+  if (req.isAuthenticated()) {
+    let connection;
+    try {
+      connection = await pool.connect();
+      const hostingId = req.params.id;
+      const userId = req.user.id;
+      const query = `
+        DELETE FROM "dog_hosting"
+        WHERE "id" = $1 AND "user_id" = $2;
+      `;
+      await connection.query(query, [hostingId, userId]);
+      res.sendStatus(204);
+    } catch (error) {
+      console.error("Error in DELETE /sitter/request", error);
+      res.sendStatus(500);
+    } finally {
+      if (connection) {
+        connection.release();
+      }
+    }
+  } else {
+    res.sendStatus(403);
+  }
+});
+module.exports = router;
