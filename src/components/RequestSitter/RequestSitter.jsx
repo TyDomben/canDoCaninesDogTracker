@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -8,31 +8,64 @@ import {
   Container,
   AppBar,
   Toolbar,
-  IconButton
-} from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import MenuIcon from '@mui/icons-material/Menu';
-import axios from 'axios';
+  IconButton,
+  // TextField,
+  // MenuItem,
+  // Select,
+  // FormControl,
+  // InputLabel,
+} from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import MenuIcon from "@mui/icons-material/Menu";
+import axios from "axios";
 
-const RequestSitterForm = ({ sitterId, onGoBack, onVolunteer }) => {
-  const [sitter, setSitter] = useState(null);
+const RequestSitterForm = ({ userId, dogId, onGoBack, onVolunteer }) => {
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchSitterData = async () => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      setError(null);
+
+      let url = "";
+      if (userId) {
+        url = `/api/user/${userId}`;
+      } else if (dogId) {
+        url = `/api/dog/${dogId}`;
+      }
+
       try {
-        const response = await axios.get(`/api/sitter/${sitterId}`);
-        setSitter(response.data);
+        const response = await axios.get(url);
+        setData(response.data);
       } catch (error) {
-        console.error('Error fetching sitter data:', error);
+        console.error("Error fetching data:", error);
+        setError("Failed to fetch data. Please try again later.");
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    fetchSitterData();
-  }, [sitterId]);
+    fetchData();
+  }, [userId, dogId]);
 
-  if (!sitter) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (!data) {
+    return <div>No data found</div>;
+  }
+
+  // Conditional rendering based on what data is available
+  const isUserData = !!userId;
+  const name = isUserData ? data.name : data.dogName;
+  const image = isUserData ? data.profileImage : data.dogImage;
 
   return (
     <Container maxWidth="sm">
@@ -58,18 +91,23 @@ const RequestSitterForm = ({ sitterId, onGoBack, onVolunteer }) => {
             Go Back
           </Button>
           <Typography gutterBottom variant="h5" component="div" align="center">
-            {sitter.name}'s Profile
+            {name}'s Profile
           </Typography>
-          <CardMedia
-            component="img"
-            height="140"
-            image={sitter.profileImage}
-            alt={sitter.name}
-          />
-          <Typography variant="body1">Username: {sitter.username}</Typography>
-          <Typography variant="body1">Phone: {sitter.phone}</Typography>
-          <Typography variant="body1">Address: {sitter.address}</Typography>
-          <Typography variant="body1">Email: {sitter.email}</Typography>
+          <CardMedia component="img" height="140" image={image} alt={name} />
+          {/* Display additional details based on whether it's user or dog data */}
+          {isUserData ? (
+            <>
+              <Typography variant="body1">Username: {data.username}</Typography>
+              <Typography variant="body1">Phone: {data.phone}</Typography>
+              <Typography variant="body1">Address: {data.address}</Typography>
+              <Typography variant="body1">Email: {data.email}</Typography>
+            </>
+          ) : (
+            <>
+              <Typography variant="body1">Breed: {data.breed}</Typography>
+              <Typography variant="body1">Age: {data.age}</Typography>
+            </>
+          )}
         </CardContent>
         <Button fullWidth variant="contained" onClick={onVolunteer}>
           Volunteer to Sit
