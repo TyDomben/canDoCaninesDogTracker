@@ -100,6 +100,7 @@ function App() {
             {user.id ? <Redirect to="/user" /> : <LandingPage />}
           </Route>
           <Route path="/dogProfile/:dogId" component={DogProfile} />
+          <Route path="/editdogprofile/:id" component={EditDogProfile} />
           <Route>
             <h1>404 - Page Not Found</h1>
           </Route>
