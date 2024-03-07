@@ -31,21 +31,18 @@ function Nav() {
   // Nav links
   const navLinks = [
     { text: "About", path: "/about" },
-    { text: "Data Grid", path: "/data-grid" },
-    { text: "All Dog Cards", path: "/all-dog-cards" },
+    { text: "Data Grid", path: "/dataGrid" },
+    { text: "All Dog Cards", path: "/allDogCards" },
     { text: "Login", path: "/login" },
     { text: "Register", path: "/registration" },
-    { text: "Sitter Home", path: "/sitter-home" },
-    { text: "User Home", path: "/user-home" },
-    { text: "Admin Home", path: "/admin-home" },
-    { text: "User Edit", path: "/user-edit" },
+    { text: "Sitter Home", path: "/sitterHome" },
+    { text: "User Home", path: "/userHome" },
+    { text: "Admin Home", path: "/adminHome" },
+    { text: "User Edit", path: "/userEdit" },
     { text: "User", path: "/user" },
     { text: "Info", path: "/info" },
-    { text: "Request Sitter", path: "/RequestSitterForm" },
-    {
-      text: "Request Sitter Profile Card",
-      path: "/request-sitter-profile-card",
-    },
+    { text: "Request Sitter", path: "/requestSitterForm" },
+    { text: "Request Care", path: "/requestCareForm" },
   ];
   // Nav bar
   return (
