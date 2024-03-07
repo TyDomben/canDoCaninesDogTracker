@@ -32,6 +32,8 @@ import DogCards from "../AllDogForm/AllDogForm";
 import DataGrid from "../DataGrid/DataGrid";
 
 import DogProfile from "../DogProfile/DogProfile";
+import EditDogProfile from '../EditDogProfile/EditDogProfile';
+
 
 import "./App.css";
 
