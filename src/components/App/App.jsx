@@ -24,6 +24,7 @@ import DogCards from '../AllDogForm/AllDogForm';
 import DataGrid from '../DataGrid/DataGrid';
 
 import DogProfile from '../DogProfile/DogProfile';
+import EditDogProfile from '../EditDogProfile/EditDogProfile';
 
 
 import './App.css';
@@ -52,6 +53,8 @@ function App() {
           <ProtectedRoute exact path="/user-edit"><UserProfileEdit /> </ProtectedRoute>
           <ProtectedRoute exact path="/user"><UserPage /></ProtectedRoute>
           <ProtectedRoute exact path="/info"><InfoPage /></ProtectedRoute>
+          <ProtectedRoute exact path="/edit-dog"><EditDogProfile /></ProtectedRoute>
+
 
      
 
