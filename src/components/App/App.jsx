@@ -52,9 +52,8 @@ function App() {
           <ProtectedRoute exact path="/user-edit"><UserProfileEdit /> </ProtectedRoute>
           <ProtectedRoute exact path="/user"><UserPage /></ProtectedRoute>
           <ProtectedRoute exact path="/info"><InfoPage /></ProtectedRoute>
-
+          <ProtectedRoute exact path="/dog-profile/:id"><DogProfile /></ProtectedRoute>
      
-
 
           <Route exact path="/login">
             {user.id ? <Redirect to="/user" /> : <LoginPage />}
@@ -68,9 +67,7 @@ function App() {
             {user.id ? <Redirect to="/user" /> : <LandingPage />}
           </Route>
 
-          <Route exact path="/dog-profile">
-            <DogProfile />
-          </Route>
+          <Route path="/dogprofile/:dogId" component={DogProfile} />
 
           <Route><h1>404 - Page Not Found</h1></Route>
         </Switch>
