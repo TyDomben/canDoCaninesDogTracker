@@ -102,6 +102,8 @@ function DogProfile() {
             image="/public/images/sample4.jpeg" 
             alt="Dog"
           />
+
+
 <Typography variant="body1">Name: {dogProfile?.name}</Typography>
 <Typography variant="body1">Age: {dogProfile?.age}</Typography>
 <Typography variant="body1">Breed: {dogProfile?.breed}</Typography>
@@ -130,6 +132,7 @@ function DogProfile() {
 <Typography variant="body1">Behavior with other dogs: {dogProfile?.behavior_with_other_dogs}</Typography>
 <Typography variant="body1">Behavior with cats: {dogProfile?.behavior_with_cats}</Typography>
 <Typography variant="body1">Behavior with children: {dogProfile?.behavior_with_children}</Typography>
+
 
         </CardContent>
         <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
