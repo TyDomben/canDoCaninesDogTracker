@@ -24,7 +24,7 @@ import UserProfileEdit from "../UserProfileEdit/UserProfileEdit";
 import RequestSitterForm from "../RequestSitter/RequestSitter";
 // import RequestSitterForm from "../RequestSitterForm/RequestSitterForm";
 import RequestCareForm from "../RequestCareForm/RequestCareForm";
-
+import VolunteerSitterForm from "../VolunteerSitterForm/VolunteerSitterForm";
 // Import the new pages
 import SitterHomePage from "../SitterHome/SitterHome";
 import AdminHome from "../AdminHome/AdminHome";
@@ -85,6 +85,9 @@ function App() {
           </ProtectedRoute>
           <ProtectedRoute exact path="/requestCareForm">
             <RequestCareForm />
+          </ProtectedRoute>
+          <ProtectedRoute exact path="/volunteerSitterForm">
+            <VolunteerSitterForm />
           </ProtectedRoute>
           <Route exact path="/login">
             {user.id ? <Redirect to="/user" /> : <LoginPage />}
