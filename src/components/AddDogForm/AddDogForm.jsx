@@ -34,8 +34,8 @@ const AddDogForm = () => {
     eating_times: '',
 
     // medicalAppointments: '',
-    medicalConditions: '',
-    surgeryRecovery: '',
+    medical_conditions: '',
+    surgery_recovery: '',
     currentMedications: '',
     inHeat: '',
     //pottyHabitis
@@ -90,6 +90,20 @@ const AddDogForm = () => {
       breed: Number(event.target.value)
     })
   }
+
+  const handleChangeBool = (event) => {
+    const bool = event.target.value
+if (bool === "true"){setFormValues ({
+  ...formValues,
+  surgery_recovery: true
+})}
+else  {
+  setFormValues ({
+    ...formValues,
+    surgery_recovery: false
+  })}}
+console.log(formValues.surgery_recovery)
+  
   console.log('food type:', formValues.food_type, formValues.breed)
   const handleSave = (event) => {
     console.log('in postDogForm Save', formValues)
@@ -273,15 +287,17 @@ const AddDogForm = () => {
               id="medicalConditions"
               name="medicalConditions"
               label="Please list any medical conditions you are currently addressing with this dog"
-              value={formValues.medicalConditions}
+              value={formValues.medical_conditions}
               onChange={handleChange}
               variant="outlined"
             />
             <FormLabel id="">Is this dog currently recovering from a surgery or medical concern?</FormLabel>
             <RadioGroup
               aria-labelledby="surgery-radio-buttons-group-label"
-              defaultValue="false "
+              
+              value= {formValues.surgery_recovery}
               name="surgery-radio-buttons-group"
+              onChange={handleChangeBool}
             >
               <FormControlLabel value="true" control={<Radio />} label="Yes" />
               <FormControlLabel value="false" control={<Radio />} label="No" />
