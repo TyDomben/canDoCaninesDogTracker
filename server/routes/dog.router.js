@@ -2,6 +2,7 @@ const express = require("express");
 const pool = require("../modules/pool");
 const router = express.Router();
 
+//! clean up console logs and comments before client handoff
 /**
  * GET route to retrieve the "dog" table from the DB
  */
@@ -19,58 +20,60 @@ router.get("/", async (req, res) => {
       // const userRole = req.body.userRole
 
       const query = `
-            SELECT
-            "dogs"."user_id",
-            "dogs"."name", 
-            "dogs"."age", 
-            "dogs"."breed", 
-            "dogs"."spayed_neutered", 
-            "dogs"."food_type", 
-            "dogs"."food_amount", 
-            "dogs"."meals_per_day", 
-            "dogs"."eating_times", 
-            "dogs"."medical_conditions", 
-            "dogs"."recovering_from_surgery", 
-            "dogs"."medications", 
-            "dogs"."in_heat", 
-            "dogs"."potty_routine", 
-            "dogs"."potty_habits_notes", 
-            "exercise_limitations"."exercise_limitations", 
-            "exercise_equipment"."exercise_equipment", 
-            "dogs"."crate_manners", 
-            "dogs"."house_manners", 
-            "dogs"."living_with_other_dogs", 
-            "dogs"."living_with_cats", 
-            "dogs"."living_with_children_older_ten", 
-            "dogs"."living_with_children_younger_ten", 
-            "dogs"."living_with_adults", 
-            "dogs"."living_with_small_animals", 
-            "dogs"."living_with_large_animals", 
-            "behavior_dog"."behavior_category_name" AS "behavior_with_other_dogs",
-            "behavior_cat"."behavior_category_name" AS "behavior_with_cats",
-            "behavior_child"."behavior_category_name" AS "behavior_with_children"
-        FROM 
-            "dogs"
-        JOIN 
-            "dog_hosting" ON "dogs"."id" = "dog_hosting"."dog_id"
-        JOIN 
-            "exercise_limitations" AS "exercise_limitations" ON "dogs"."exercise_limitations" = "exercise_limitations"."id"
-        JOIN 
-            "exercise_equipment" AS "exercise_equipment" ON "dogs"."exercise_equipment" = "exercise_equipment"."id"
-        JOIN 
-            "behavior" AS "behavior_dog" ON "dogs"."behavior_with_other_dogs" = "behavior_dog"."id"
-        JOIN 
-            "behavior" AS "behavior_cat" ON "dogs"."behavior_with_cats" = "behavior_cat"."id"
-        JOIN 
-            "behavior" AS "behavior_child" ON "dogs"."behavior_with_children" = "behavior_child"."id"
-        WHERE
-            "dog_hosting"."user_id" = $1;
+      SELECT
+      "dogs"."id",
+      "dogs"."user_id",
+      "dogs"."name", 
+      "dogs"."age", 
+      "dogs"."breed", 
+      "dogs"."spayed_neutered", 
+      "dogs"."food_type", 
+      "dogs"."food_amount", 
+      "dogs"."meals_per_day", 
+      "dogs"."eating_times", 
+      "dogs"."medical_conditions", 
+      "dogs"."recovering_from_surgery", 
+      "dogs"."medications", 
+      "dogs"."in_heat", 
+      "dogs"."potty_routine", 
+      "dogs"."potty_habits_notes", 
+      "exercise_limitations"."exercise_limitations", 
+      "exercise_equipment"."exercise_equipment", 
+      "dogs"."crate_manners", 
+      "dogs"."house_manners", 
+      "dogs"."living_with_other_dogs", 
+      "dogs"."living_with_cats", 
+      "dogs"."living_with_children_older_ten", 
+      "dogs"."living_with_children_younger_ten", 
+      "dogs"."living_with_adults", 
+      "dogs"."living_with_small_animals", 
+      "dogs"."living_with_large_animals", 
+      "behavior_dog"."behavior_category_name" AS "behavior_with_other_dogs",
+      "behavior_cat"."behavior_category_name" AS "behavior_with_cats",
+      "behavior_child"."behavior_category_name" AS "behavior_with_children"
+  FROM 
+      "dogs"
+  JOIN 
+      "dog_hosting" ON "dogs"."id" = "dog_hosting"."dog_id"
+  JOIN 
+      "exercise_limitations" AS "exercise_limitations" ON "dogs"."exercise_limitations" = "exercise_limitations"."id"
+  JOIN 
+      "exercise_equipment" AS "exercise_equipment" ON "dogs"."exercise_equipment" = "exercise_equipment"."id"
+  JOIN 
+      "behavior" AS "behavior_dog" ON "dogs"."behavior_with_other_dogs" = "behavior_dog"."id"
+  JOIN 
+      "behavior" AS "behavior_cat" ON "dogs"."behavior_with_cats" = "behavior_cat"."id"
+  JOIN 
+      "behavior" AS "behavior_child" ON "dogs"."behavior_with_children" = "behavior_child"."id"
+  WHERE
+      "dog_hosting"."user_id" = $1;
             `;
 
       const result = await connection.query(query, [userId]);
       const dogsResult = result.rows;
-
+      console.log(dogsResult);
       res.json(dogsResult);
+
     } catch (error) {
       console.error("error fetching dogs", error);
       res.sendStatus(500);
@@ -184,7 +187,7 @@ router.post("/", (req, res) => {
     const user = req.user.id;
 
     const dogData = [
-      req.body.user_id, // assuming you're now including this in the insert
+      req.user.id,
       req.body.name,
       req.body.age,
       req.body.breed,
@@ -264,18 +267,19 @@ router.post("/", (req, res) => {
 
 router.delete("/:id", (req, res) => {
   const dogId = req.params.id;
-if(req.isAuthenticated()){
-  const deleteDogQuery = `
+  if (req.isAuthenticated()) {
+    const deleteDogQuery = `
         DELETE FROM "dogs"
         WHERE "id" = $1;`;
 
-  pool
-    .query(deleteDogQuery, [dogId])
-    .then(() => res.sendStatus(201))
-    .catch((error) => {
-      console.log("Failed to delete dog profile", error);
-      res.sendStatus(500);
-    })}
+    pool
+      .query(deleteDogQuery, [dogId])
+      .then(() => res.sendStatus(201))
+      .catch((error) => {
+        console.log("Failed to delete dog profile", error);
+        res.sendStatus(500);
+      });
+  }
 });
 
 router.put("/:id", async (req, res) => {
@@ -291,16 +295,15 @@ router.put("/:id", async (req, res) => {
       //Build the SQL update statement based on the fields the user updates
       //keys are the db property names  of the fields the user is trying to update
 
-      const setClause = Object.keys(updates) 
-        .map((key, index) => `"${key}" = $${index + 1}`)  //iterate over the keys(db fields) to create an array of string segments for the SET clause
-                                                          //Each segment maps a field name to a placeholder value ($1, $2`). 
+      const setClause = Object.keys(updates)
+        .map((key, index) => `"${key}" = $${index + 1}`) //iterate over the keys(db fields) to create an array of string segments for the SET clause
+        //Each segment maps a field name to a placeholder value ($1, $2`).
         .join(", "); // this combines the segments above and creates a single string. This forms the SET piece of the queryText
 
       const values = Object.values(updates); //This takes the SetClause object and creates an array. Corresponds to new data being put in the db
 
-     
-     //construct the SQL Query Text using setClause and values.length +1 = dog id
-     //RETURNING is just asking PostgreSQL to return the updated row of data
+      //construct the SQL Query Text using setClause and values.length +1 = dog id
+      //RETURNING is just asking PostgreSQL to return the updated row of data
       const queryText = `UPDATE "dogs" SET ${setClause} WHERE "id" = $${
         values.length + 1
       } RETURNING *;`;

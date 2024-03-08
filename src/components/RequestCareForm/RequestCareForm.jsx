@@ -50,21 +50,16 @@ const RequestCareForm = ({ onGoBack, onSave }) => {
   return (
     <Container maxWidth="sm">
       <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-            onClick={handleGoBack}
-          >
-            <ArrowBackIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Can Do Canines
-          </Typography>
-        </Toolbar>
+        <IconButton
+          size="large"
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{ mr: 2 }}
+          onClick={handleGoBack}
+        >
+          <ArrowBackIcon />
+        </IconButton>
       </AppBar>
       <Box
         component="form"
@@ -78,7 +73,7 @@ const RequestCareForm = ({ onGoBack, onSave }) => {
         }}
       >
         <Typography variant="h5" align="center" gutterBottom>
-          Request a Sitter for Loki
+          Request a Host for Loki
         </Typography>
         <TextField
           label="Start Date"
@@ -104,6 +99,53 @@ const RequestCareForm = ({ onGoBack, onSave }) => {
         />
         <Box
           sx={{
+            "& > :not(style)": { m: 1, width: "55ch" },
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            id="outlined-basic-comments"
+            variant="outlined"
+            label="Comments"
+            type="text"
+            name="Comments"
+            onChange={handleChange}
+            sx={{ width: 500, my: 2 }}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            multiline 
+            rows={4} 
+          />
+        </Box>
+
+        <Box
+          sx={{
+            "& > :not(style)": { m: 1, width: "55ch" },
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            id="outlined-basic-appointments"
+            variant="outlined"
+            label="Appointment Notes"
+            type="text"
+            name="Appointment"
+            onChange={handleChange}
+            sx={{ width: 500, my: 2 }}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            multiline 
+            rows={4} 
+          />
+        </Box>
+
+      
+        <Box
+          sx={{
             display: "flex",
             justifyContent: "space-between",
             width: "100%",
@@ -123,33 +165,8 @@ const RequestCareForm = ({ onGoBack, onSave }) => {
         </Box>
       </Box>
       <Box sx={{ mt: 2 }}>
-        <Typography variant="h6" align="center" sx={{ my: 2 }}>
-          Dog ID:
-          {/* {dog_id} */}
-        </Typography>
-        <Typography variant="body1" align="center" sx={{ my: 2 }}>
-          User ID:
-          {/* {user_id} */}
-        </Typography>
-        <Typography variant="body1" align="center" sx={{ my: 2 }}>
-          Start Date:
-          {/* {StartDate} */}
-        </Typography>
-        <Typography variant="body1" align="center" sx={{ my: 2 }}>
-          End Date:
-          {/* {endDate} */}
-        </Typography>
-        <Typography variant="body1" align="center" sx={{ my: 2 }}>
-          Comments:
-          {/* {comments} */}
-        </Typography>
-        <Typography variant="body1" align="center" sx={{ my: 2 }}>
-          Appointments:
-          {/* {appointments} */}
-        </Typography>
         <Typography variant="body1" align="center" sx={{ my: 2 }}>
           Status:
-          {/* {status} */}
         </Typography>
       </Box>
 
