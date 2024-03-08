@@ -6,9 +6,6 @@ function* fetchDogs() {
     console.log("Lost dogs!", error);
   }
 }
-function* dogSaga() {
-  yield takeLatest("FETCH_USER_DOGS", fetchDogs);
-}
 
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
@@ -24,9 +21,21 @@ function* fetchDog() {
   }
 }
 
+function* updateDog (action) {
+  try {
+    const { dogId, updates } = action.payload;
+    yield axios.patch(`/api/dog/${dogId}`, updates)
+    yield put ({ type: 'FETCH_DOG_PROFILE' })
+  }
+  catch(err) {
+    console.log('Error updating dog in saga:', err)
+  }
+}
+
 
 function* dogSaga() {
   yield takeLatest('FETCH_DOG_PROFILE', fetchDog);
+  yield takeLatest('UPDATE_DOG_PROFILE', updateDog)
 }
 
 export default dogSaga;
