@@ -8,8 +8,6 @@ const dogReducer = (state = [], action) => {
 }
 
 
-export default dogReducer;
-
 const dogProfile = (state = [], action) => {
     switch(action.type){
         case 'SET_DOG_PROFILE':

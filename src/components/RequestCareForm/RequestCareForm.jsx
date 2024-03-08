@@ -50,7 +50,6 @@ const RequestCareForm = ({ onGoBack, onSave }) => {
   return (
     <Container maxWidth="sm">
       <AppBar position="static">
-        <Toolbar>
           <IconButton
             size="large"
             edge="start"
@@ -61,10 +60,6 @@ const RequestCareForm = ({ onGoBack, onSave }) => {
           >
             <ArrowBackIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Can Do Canines
-          </Typography>
-        </Toolbar>
       </AppBar>
       <Box
         component="form"
