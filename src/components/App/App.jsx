@@ -35,8 +35,7 @@ import DogProfile from '../DogProfile/DogProfile';
 // import UserProfileEdit from "../UserProfileEdit/UserProfileEdit";
 import RequestSitterForm from "../RequestSitter/RequestSitter";
 import RequestCareForm from "../RequestCareForm/RequestCareForm";
-
-
+import VolunteerSitterForm from "../VolunteerSitterForm/VolunteerSitterForm";
 // Import the new pages
 import SitterHomePage from '../SitterHome/SitterHome';
 import DogCards from '../AllDogForm/AllDogForm';
@@ -113,7 +112,9 @@ function App() {
           <ProtectedRoute exact path="/requestcareform/:dogId">
             <RequestCareForm />
           </ProtectedRoute>
-
+          <ProtectedRoute exact path="/volunteerSitterForm">
+            <VolunteerSitterForm />
+          </ProtectedRoute>
           <Route exact path="/login">
             {user.id ? <Redirect to="/user" /> : <LoginPage />}
           </Route>

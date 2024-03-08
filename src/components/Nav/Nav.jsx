@@ -43,6 +43,7 @@ function Nav() {
     { text: "Info", path: "/info" },
     { text: "Request Sitter", path: "/requestSitterForm" },
     { text: "Request Care", path: "/requestCareForm" },
+    { text: "Volunteer Sitter", path: "/volunteerSitterForm" },
   ];
   // Nav bar
   return (
