@@ -16,13 +16,13 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 
 import AboutPage from '../AboutPage/AboutPage';
+import AddDogForm from '../AddDogForm/AddDogForm';
 import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import UserProfileEdit from '../UserProfileEdit/UserProfileEdit';
-import AddDogForm from '../AddDogForm/AddDogForm';
 import RaiserDogPage from '../RaiserDogPage/RaiserDogPage';
 import DogProfile from '../DogProfile/DogProfile';
 
@@ -34,14 +34,13 @@ import DogProfile from '../DogProfile/DogProfile';
 // import RegisterPage from "../RegisterPage/RegisterPage";
 // import UserProfileEdit from "../UserProfileEdit/UserProfileEdit";
 import RequestSitterForm from "../RequestSitter/RequestSitter";
-// import RequestSitterForm from "../RequestSitterForm/RequestSitterForm";
 import RequestCareForm from "../RequestCareForm/RequestCareForm";
 
 
 // Import the new pages
-import SitterHomePage from "../SitterHome/SitterHome";
+import SitterHomePage from '../SitterHome/SitterHome';
+import DogCards from '../AllDogForm/AllDogForm';
 import AdminHome from "../AdminHome/AdminHome";
-import DogCards from "../AllDogForm/AllDogForm";
 import DataGrid from "../DataGrid/DataGrid";
 
 //import DogProfile from "../DogProfile/DogProfile";
@@ -71,8 +70,9 @@ function App() {
 
           <ProtectedRoute exact path="/sitter-home"><SitterHomePage /></ProtectedRoute>
           <ProtectedRoute exact path="/admin-home"><AdminHome /></ProtectedRoute>
-          <ProtectedRoute exact path="/all-dog-cards"><DogCards /></ProtectedRoute>
+          <ProtectedRoute exact path="/add-dog-form"><AddDogForm/></ProtectedRoute>
           <ProtectedRoute exact path="/data-grid"><DataGrid /></ProtectedRoute>
+          <ProtectedRoute exact path="/raiser-home"><RaiserDogPage/></ProtectedRoute>
           <ProtectedRoute exact path="/user-edit"><UserProfileEdit /> </ProtectedRoute>
           <ProtectedRoute exact path="/user"><UserPage /></ProtectedRoute>
           <ProtectedRoute exact path="/info"><InfoPage /></ProtectedRoute>
@@ -110,7 +110,7 @@ function App() {
           <ProtectedRoute exact path="/RequestSitterForm">
             <RequestSitterForm />
           </ProtectedRoute>
-          <ProtectedRoute exact path="/requestCareForm">
+          <ProtectedRoute exact path="/requestcareform/:dogId">
             <RequestCareForm />
           </ProtectedRoute>
 

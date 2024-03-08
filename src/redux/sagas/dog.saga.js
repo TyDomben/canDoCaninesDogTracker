@@ -1,3 +1,6 @@
+import axios from 'axios';
+import { put, takeLatest } from 'redux-saga/effects';
+
 function* fetchDogs() {
   try {
     const response = yield axios.get("/api/raiser-dog");
@@ -7,8 +10,6 @@ function* fetchDogs() {
   }
 }
 
-import axios from 'axios';
-import { put, takeLatest } from 'redux-saga/effects';
 
 // worker Saga: will be fired on "FETCH_DOG_PROFILE" actions
 function* fetchDog() {
@@ -35,7 +36,8 @@ function* updateDog (action) {
 
 function* dogSaga() {
   yield takeLatest('FETCH_DOG_PROFILE', fetchDog);
-  yield takeLatest('UPDATE_DOG_PROFILE', updateDog)
+  yield takeLatest('UPDATE_DOG_PROFILE', updateDog);
+  yield takeLatest('SET_USER_DOGS', fetchDogs);
 }
 
 export default dogSaga;
