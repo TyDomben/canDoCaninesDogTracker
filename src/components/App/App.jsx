@@ -26,13 +26,7 @@ import UserProfileEdit from '../UserProfileEdit/UserProfileEdit';
 import RaiserDogPage from '../RaiserDogPage/RaiserDogPage';
 import DogProfile from '../DogProfile/DogProfile';
 
-//import AboutPage from "../AboutPage/AboutPage";
-// import UserPage from "../UserPage/UserPage";
-// import InfoPage from "../InfoPage/InfoPage";
-// import LandingPage from "../LandingPage/LandingPage";
-// import LoginPage from "../LoginPage/LoginPage";
-// import RegisterPage from "../RegisterPage/RegisterPage";
-// import UserProfileEdit from "../UserProfileEdit/UserProfileEdit";
+
 import RequestSitterForm from "../RequestSitter/RequestSitter";
 import RequestCareForm from "../RequestCareForm/RequestCareForm";
 import VolunteerSitterForm from "../VolunteerSitterForm/VolunteerSitterForm";
@@ -41,7 +35,6 @@ import SitterHomePage from '../SitterHome/SitterHome';
 import DogCards from '../AllDogForm/AllDogForm';
 import AdminHome from "../AdminHome/AdminHome";
 import DataGrid from "../DataGrid/DataGrid";
-
 //import DogProfile from "../DogProfile/DogProfile";
 import EditDogProfile from '../EditDogProfile/EditDogProfile';
 

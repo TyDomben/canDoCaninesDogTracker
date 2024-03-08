@@ -9,7 +9,6 @@ const userDogReducer = (state = [], action) => {
     }
 }
 
-
 const dogProfile = (state = [], action) => {
     switch(action.type) {
         case 'SET_DOG_PROFILE':
