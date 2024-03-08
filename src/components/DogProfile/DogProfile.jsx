@@ -71,15 +71,15 @@ function DogProfile() {
 
   // Navigate to Edit Dog Profile
   const handleEdit = () => {
-    console.log("handle edit clicked for:", dogId);
-    // dispatch({type: "SET_EDIT_DOG", payload: dog})
+    console.log("handle edit clicked for:", dogProfile);
+    dispatch({type: "SET_EDIT_DOG", payload: dogProfile})
     history.push(`/editdogprofile/${dogId}`)
   };
 
 // Navigate to Request Care Dates
   const handleRequestCareDates = () => {
     console.log("button for request care dates was pushed for dog Id:", dogId);
-    history.push(`/RequestSitterForm`)
+    history.push(`/requestcareform/:dogId`)
 
   };
 
