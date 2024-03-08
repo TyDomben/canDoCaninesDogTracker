@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Container,
   TextField,
@@ -13,14 +13,14 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const RequestCareForm = ({ onGoBack, onSave }) => {
-  const [dates, setDates] = useState({ startDate: '', endDate: '' });
+  const [dates, setDates] = useState({ startDate: "", endDate: "" });
   const [openDialog, setOpenDialog] = useState(false);
-  const [dialogContent, setDialogContent] = useState('');
+  const [dialogContent, setDialogContent] = useState("");
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -29,12 +29,12 @@ const RequestCareForm = ({ onGoBack, onSave }) => {
 
   const handleSave = () => {
     onSave(dates);
-    setDialogContent('Your request has been saved successfully!');
+    setDialogContent("Your request has been saved successfully!");
     setOpenDialog(true);
   };
 
   const handleGoBack = () => {
-    setDialogContent('Are you sure you want to go back without saving?');
+    setDialogContent("Are you sure you want to go back without saving?");
     setOpenDialog(true);
   };
 
@@ -50,25 +50,30 @@ const RequestCareForm = ({ onGoBack, onSave }) => {
   return (
     <Container maxWidth="sm">
       <AppBar position="static">
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-            onClick={handleGoBack}
-          >
-            <ArrowBackIcon />
-          </IconButton>
+        <IconButton
+          size="large"
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{ mr: 2 }}
+          onClick={handleGoBack}
+        >
+          <ArrowBackIcon />
+        </IconButton>
       </AppBar>
       <Box
         component="form"
         noValidate
         autoComplete="off"
-        sx={{ mt: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+        sx={{
+          mt: 3,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
       >
         <Typography variant="h5" align="center" gutterBottom>
-          Request a Sitter for Loki
+          Request a Host for Loki
         </Typography>
         <TextField
           label="Start Date"
@@ -92,14 +97,66 @@ const RequestCareForm = ({ onGoBack, onSave }) => {
             shrink: true,
           }}
         />
+        <Box
+          sx={{
+            "& > :not(style)": { m: 1, width: "55ch" },
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            id="outlined-basic-comments"
+            variant="outlined"
+            label="Comments"
+            type="text"
+            name="Comments"
+            onChange={handleChange}
+            sx={{ width: 500, my: 2 }}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            multiline 
+            rows={4} 
+          />
+        </Box>
 
+        <Box
+          sx={{
+            "& > :not(style)": { m: 1, width: "55ch" },
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            id="outlined-basic-appointments"
+            variant="outlined"
+            label="Appointment Notes"
+            type="text"
+            name="Appointment"
+            onChange={handleChange}
+            sx={{ width: 500, my: 2 }}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            multiline 
+            rows={4} 
+          />
+        </Box>
 
-
-
-
-        
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', mt: 2 }}>
-          <Button variant="outlined" color="secondary" onClick={handleConfirmGoBack}>
+      
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+            mt: 2,
+          }}
+        >
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={handleConfirmGoBack}
+          >
             Go Back
           </Button>
           <Button variant="contained" color="primary" onClick={handleSave}>
@@ -107,6 +164,12 @@ const RequestCareForm = ({ onGoBack, onSave }) => {
           </Button>
         </Box>
       </Box>
+      <Box sx={{ mt: 2 }}>
+        <Typography variant="body1" align="center" sx={{ my: 2 }}>
+          Status:
+        </Typography>
+      </Box>
+
       <Dialog
         open={openDialog}
         onClose={handleCloseDialog}
