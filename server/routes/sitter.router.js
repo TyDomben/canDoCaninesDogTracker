@@ -136,8 +136,8 @@ router.get("/history", async (req, res) => {
 /**
  * POST route to request a sitter
  */
-router.post("/request", async (req, res) => {
-  console.log("/sitter/request POST route");
+router.post("/:id", async (req, res) => {
+  console.log("/sitter/:id POST route");
   console.log("is authenticated?", req.isAuthenticated());
   console.log("user", req.user);
 
