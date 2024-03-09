@@ -6,7 +6,7 @@ import {
   Switch,
 } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import theme from "../../theme";
 
 // import components
@@ -14,28 +14,25 @@ import Nav from "../Nav/Nav";
 import Footer from "../Footer/Footer";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
-
-import AboutPage from '../AboutPage/AboutPage';
-import AddDogForm from '../AddDogForm/AddDogForm';
-import UserPage from '../UserPage/UserPage';
-import InfoPage from '../InfoPage/InfoPage';
-import LandingPage from '../LandingPage/LandingPage';
-import LoginPage from '../LoginPage/LoginPage';
-import RegisterPage from '../RegisterPage/RegisterPage';
-import UserProfileEdit from '../UserProfileEdit/UserProfileEdit';
-import RaiserDogPage from '../RaiserDogPage/RaiserDogPage';
-import DogProfile from '../DogProfile/DogProfile';
+import AboutPage from "../AboutPage/AboutPage";
+import AddDogForm from "../AddDogForm/AddDogForm";
+import UserPage from "../UserPage/UserPage";
+import InfoPage from "../InfoPage/InfoPage";
+import LandingPage from "../LandingPage/LandingPage";
+import LoginPage from "../LoginPage/LoginPage";
+import RegisterPage from "../RegisterPage/RegisterPage";
+import UserProfileEdit from "../UserProfileEdit/UserProfileEdit";
+import RaiserDogPage from "../RaiserDogPage/RaiserDogPage";
+import DogProfile from "../DogProfile/DogProfile";
 import RequestSitterForm from "../RequestSitter/RequestSitter";
 import RequestCareForm from "../RequestCareForm/RequestCareForm";
-
 
 // Import the new pages
 import SitterHomePage from "../SitterHome/SitterHome";
 import DogCards from "../AllDogForm/AllDogForm";
 import AdminHome from "../AdminHome/AdminHome";
 import DataGrid from "../DataGrid/DataGrid";
-import EditDogProfile from '../EditDogProfile/EditDogProfile';
-
+import EditDogProfile from "../EditDogProfile/EditDogProfile";
 
 import "./App.css";
 
@@ -114,31 +111,32 @@ function App() {
             {/* <ProtectedRoute exact path="/request-sitter-profile-card">
             <RequestSitterForm />
           </ProtectedRoute>           */}
-          <ProtectedRoute exact path="/RequestSitterForm">
-            <RequestSitterForm />
-          </ProtectedRoute>
-          <ProtectedRoute exact path="/requestcareform/:dogId">
-            <RequestCareForm />
-          </ProtectedRoute>
+            <ProtectedRoute exact path="/RequestSitterForm">
+              <RequestSitterForm />
+            </ProtectedRoute>
+            <ProtectedRoute exact path="/requestcareform/:dogId">
+              <RequestCareForm />
+            </ProtectedRoute>
 
-          <Route exact path="/login">
-            {user.id ? <Redirect to="/user" /> : <LoginPage />}
-          </Route>
-          <Route exact path="/registration">
-            {user.id ? <Redirect to="/user" /> : <RegisterPage />}
-          </Route>
-          <Route exact path="/home">
-            {user.id ? <Redirect to="/user" /> : <LandingPage />}
-          </Route>
-          <Route path="/dogProfile/:dogId" component={DogProfile} />
-          <Route path="/editdogprofile/:id" component={EditDogProfile} />
-          <Route>
-            <h1>404 - Page Not Found</h1>
-          </Route>
-        </Switch>
-        <Footer />
-      </div>
-    </Router>
+            <Route exact path="/login">
+              {user.id ? <Redirect to="/user" /> : <LoginPage />}
+            </Route>
+            <Route exact path="/registration">
+              {user.id ? <Redirect to="/user" /> : <RegisterPage />}
+            </Route>
+            <Route exact path="/home">
+              {user.id ? <Redirect to="/user" /> : <LandingPage />}
+            </Route>
+            <Route path="/dogProfile/:dogId" component={DogProfile} />
+            <Route path="/editdogprofile/:id" component={EditDogProfile} />
+            <Route>
+              <h1>404 - Page Not Found</h1>
+            </Route>
+          </Switch>
+          <Footer />
+        </div>
+      </Router>
+    </ThemeProvider>
   );
 }
 
