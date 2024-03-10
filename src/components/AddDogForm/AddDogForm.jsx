@@ -40,16 +40,22 @@ const AddDogForm = () => {
     in_heat: '',
     //pottyHabitis
     potty_routine: '',
-    potty_indicators: '',
+    // potty_indicators: '',
     potty_comments: '',
     //excercise
-    exercise_restrictions: '',
     limit_water: '',
+    limit_toy_play: '',
+    watch_carefully: '',
+    ingest_toys: '',
+    keep_away: '',
+    shares_toys: '',
+
+
     exercise_equipment: '',
     //crating
     crate_manners: '',
     //houseManners
-    houseManners: '',
+    house_manners: '',
     //preferences
     //lives with ?
     // environmentalPreferences: '',
@@ -61,7 +67,7 @@ const AddDogForm = () => {
     living_with_large_animals: '',
     behavior_with_other_dogs: '',
     behavior_with_cats: '',
-    behaviorWithChildren: ''
+    behavior_with_children: ''
 
 
 
@@ -244,7 +250,7 @@ const AddDogForm = () => {
         return (
 
           <FormControl>
-            <FormLabel id="food_type">Food Informations</FormLabel>
+            <FormLabel id="food_type">Food Information</FormLabel>
             <RadioGroup
               aria-labelledby="food_type"
               defaultValue="1"
@@ -387,7 +393,7 @@ const AddDogForm = () => {
         return (
 
           <FormControl>
-            {/* <FormControlLabel label="Are there things we should about regarding this dog and exercise or play?" /> */}
+            <FormLabel id="exercise_limitations">Are there things we should know about regarding this dog and exercise or play?"</FormLabel>
             <FormGroup>
               <Paper elevation={5}>
                 <FormControlLabel name='limit_water' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Limit water" />
@@ -450,9 +456,8 @@ const AddDogForm = () => {
         return (
 
           <FormControl>
-            <p>Please describe this dog's house manners, including any less-than-desirable behaviors. </p>
+            <FormLabel>Please describe this dog's house manners, including any less-than-desirable behaviors. </FormLabel>
             <Box
-              component="form"
               sx={{
                 '& .MuiTextField-root': { m: 1, width: '1' },
               }}
@@ -478,11 +483,11 @@ const AddDogForm = () => {
 
           <FormControl>
             <Box>
-              <p>This dog lives with:</p>
+              <FormLabel>This dog lives with:</FormLabel>
               <FormGroup>
-                <FormControlLabel required control={<Checkbox />} label="Other dogs" />
-                <FormControlLabel required control={<Checkbox />} label="Cats" />
-                <FormControlLabel required control={<Checkbox />} label="Childred (under 10)" />
+                <FormControlLabel name='other_dogs' onChange={handleChangeCheckBox}required control={<Checkbox />} label="Other dogs" />
+                <FormControlLabel name='cats' onChange={handleChangeCheckBox}required control={<Checkbox />} label="Cats" />
+                <FormControlLabel name='children' onChange={handleChangeCheckBox}required control={<Checkbox />} label="Childred (under 10)" />
                 <FormControlLabel required control={<Checkbox />} label="Children (10 and over)" />
                 <FormControlLabel required control={<Checkbox />} label='Adults" ' />
                 <FormControlLabel required control={<Checkbox />} label="Small Animals" />
