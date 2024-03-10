@@ -29,7 +29,7 @@ const RequestCareForm = () => {
   // const [openDialog, setOpenDialog] = useState(false);
   // const [dialogContent, setDialogContent] = useState('');
 
-// const dogId = useSelector((state) => state.fetchOneDogProfile.dogId);
+const dogProfile = useSelector((state) => state.fetchOneDogProfile);
 const { dogId } = useParams();
 
 
@@ -115,7 +115,7 @@ if (value === "delete"){
         sx={{ mt: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       >
         <Typography variant="h5" align="center" gutterBottom>
-          Request a Sitter for Loki.
+          Request a Sitter for {dogProfile?.name}
         </Typography>
         <TextField
           label="Start Date"
