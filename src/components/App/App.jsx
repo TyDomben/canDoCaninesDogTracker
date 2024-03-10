@@ -25,7 +25,6 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import RaiserDogPage from "../RaiserDogPage/RaiserDogPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
 import RequestCareForm from "../RequestCareForm/RequestCareForm";
-import RequestSitterForm from "../RequestSitter/RequestSitter";
 import SitterHomePage from "../SitterHome/SitterHome";
 import UserPage from "../UserPage/UserPage";
 import UserProfileEdit from "../UserProfileEdit/UserProfileEdit";
@@ -106,9 +105,8 @@ function App() {
             {/* <ProtectedRoute exact path="/dogprofile/:dogId">
             <DogProfile />
           </ProtectedRoute> */}
-            <ProtectedRoute exact path="/RequestSitterForm">
-              <RequestSitterForm />
-            </ProtectedRoute>
+            <ProtectedRoute exact path="requestcareform"></ProtectedRoute>
+
             <ProtectedRoute exact path="/requestcareform/:dogId">
               <RequestCareForm />
             </ProtectedRoute>

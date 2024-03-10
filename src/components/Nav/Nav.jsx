@@ -29,20 +29,17 @@ function Nav() {
   };
   // Nav links
   const navLinks = [
+    { text: "Home", path: "/home" },
     { text: "About", path: "/about" },
-    { text: "Data Grid", path: "/dataGrid" },
+    { text: "Data Grid", path: "/data-grid" },
     { text: "All Dog Cards", path: "/allDogCards" },
-    { text: "Login", path: "/login" },
-    { text: "Register", path: "/registration" },
-    { text: "Sitter Home", path: "/sitterHome" },
-    { text: "User Home", path: "/userHome" },
-    { text: "Admin Home", path: "/adminHome" },
-    { text: "User Edit", path: "/userEdit" },
-    { text: "User", path: "/user" },
+    // Conditional authentication links are handled outside of this array
+    { text: "Sitter Home", path: "/sitter-home" },
+    { text: "Admin Home", path: "/admin-home" },
+    { text: "Edit Profile", path: "/user-edit" },
     { text: "Info", path: "/info" },
-    { text: "Request Sitter", path: "/requestSitterForm" },
-    { text: "Request Care", path: "/requestCareForm" },
-    { text: "Volunteer Sitter", path: "/volunteerSitterForm" },
+    { text: "Request Care Form", path: "/requestCareForm" },
+    { text: "Volunteer Sitter Form", path: "/volunteerSitterForm" },
   ];
   // Nav bar
   return (
@@ -64,14 +61,6 @@ function Nav() {
           <List>
             {user.id && (
               <>
-                <ListItem
-                  button
-                  component={NavLink}
-                  to="/user-home"
-                  onClick={toggleDrawer(false)}
-                >
-                  <ListItemText primary="User Home" />
-                </ListItem>
                 {user.role === "admin" && (
                   <ListItem
                     button
