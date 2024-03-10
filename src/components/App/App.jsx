@@ -25,15 +25,17 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import UserProfileEdit from '../UserProfileEdit/UserProfileEdit';
 import RaiserDogPage from '../RaiserDogPage/RaiserDogPage';
 import DogProfile from '../DogProfile/DogProfile';
+
+
 import RequestSitterForm from "../RequestSitter/RequestSitter";
 import RequestCareForm from "../RequestCareForm/RequestCareForm";
-
-
+import VolunteerSitterForm from "../VolunteerSitterForm/VolunteerSitterForm";
 // Import the new pages
 import SitterHomePage from '../SitterHome/SitterHome';
 import DogCards from '../AllDogForm/AllDogForm';
 import AdminHome from "../AdminHome/AdminHome";
 import DataGrid from "../DataGrid/DataGrid";
+//import DogProfile from "../DogProfile/DogProfile";
 import EditDogProfile from '../EditDogProfile/EditDogProfile';
 
 
@@ -103,7 +105,9 @@ function App() {
           <ProtectedRoute exact path="/requestcareform/:dogId">
             <RequestCareForm />
           </ProtectedRoute>
-
+          <ProtectedRoute exact path="/volunteerSitterForm">
+            <VolunteerSitterForm />
+          </ProtectedRoute>
           <Route exact path="/login">
             {user.id ? <Redirect to="/user" /> : <LoginPage />}
           </Route>

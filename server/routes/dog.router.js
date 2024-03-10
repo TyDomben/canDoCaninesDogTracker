@@ -2,6 +2,7 @@ const express = require("express");
 const pool = require("../modules/pool");
 const router = express.Router();
 
+//! clean up console logs and comments before client handoff
 /**
  * GET route to retrieve the "dog" table from the DB
  */
@@ -187,7 +188,7 @@ router.post("/", (req, res) => {
     const user = req.user.id;
 
     const dogData = [
-      req.user_id,
+      req.user.id,
       req.body.name,
       req.body.age,
       req.body.breed,

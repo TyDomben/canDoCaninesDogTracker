@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import {useParams, useHistory} from 'react-router-dom';
@@ -9,14 +10,8 @@ import {
   Button,
   Typography,
   AppBar,
-  // Toolbar,
   IconButton,
   Box,
-  // Dialog,
-  // DialogActions,
-  // DialogContent,
-  // DialogContentText,
-  // DialogTitle,
 } from '@mui/material';
 
 import MenuIcon from '@mui/icons-material/Menu';
@@ -25,9 +20,6 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 const RequestCareForm = () => {
   let dispatch = useDispatch("");
   let history = useHistory("");
-
-  // const [openDialog, setOpenDialog] = useState(false);
-  // const [dialogContent, setDialogContent] = useState('');
 
 const dogProfile = useSelector((state) => state.fetchOneDogProfile);
 const { dogId } = useParams();
@@ -46,17 +38,18 @@ useEffect(() => {
   }
 }, [dogId]);
 
-  const handleChange = (event) => {
+const handleChange = (event) => {
     const { name, value } = event.target;
     setNewRequest({ ...newRequest, [name]: value });
   };
-
 
   const handleSave = async(event) => {
     event.preventDefault();
       console.log('dispatching REQUEST HOST action')
       dispatch({ type: 'REQUEST_HOST', payload: {dogId, formData: newRequest}})
       history.push(`/dogprofile/${dogId}`)
+
+
 
   };
 
@@ -97,22 +90,27 @@ if (value === "delete"){
   return (
     <Container maxWidth="sm">
       <AppBar position="static">
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-            onClick={handleGoBack}
-          >
-            <ArrowBackIcon />
-          </IconButton>
+        <IconButton
+          size="large"
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{ mr: 2 }}
+          onClick={handleGoBack}
+        >
+          <ArrowBackIcon />
+        </IconButton>
       </AppBar>
       <Box
         component="form"
         noValidate
         autoComplete="off"
-        sx={{ mt: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+        sx={{
+          mt: 3,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
       >
         <Typography variant="h5" align="center" gutterBottom>
           Request a Sitter for {dogProfile?.name}
@@ -139,8 +137,51 @@ if (value === "delete"){
             shrink: true,
           }}
         />
+        <Box
+          sx={{
+            "& > :not(style)": { m: 1, width: "55ch" },
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            id="outlined-basic-comments"
+            variant="outlined"
+            label="Comments"
+            type="text"
+            name="Comments"
+            onChange={handleChange}
+            sx={{ width: 500, my: 2 }}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            multiline 
+            rows={4} 
+          />
+        </Box>
 
-
+        <Box
+          sx={{
+            "& > :not(style)": { m: 1, width: "55ch" },
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            id="outlined-basic-appointments"
+            variant="outlined"
+            label="Appointment Notes"
+            type="text"
+            name="Appointment"
+            onChange={handleChange}
+            sx={{ width: 500, my: 2 }}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            multiline 
+            rows={4} 
+          />
+        </Box>
 
 <div
           sx={{
@@ -188,6 +229,7 @@ if (value === "delete"){
         
         <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', mt: 2 }}>
           <Button variant="outlined" color="secondary" onClick={handleGoBack}>
+
             Go Back
           </Button>
           <Button variant="contained" color="primary" onClick={handleSave}>
