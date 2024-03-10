@@ -9,14 +9,14 @@ router.get("/", async (req, res) => {
   console.log("/dog GET route ");
   console.log("is authenticated?", req.isAuthenticated());
   console.log("user", req.user);
-  // console.log("role", req.body.userRole)
+
 
   if (req.isAuthenticated()) {
     let connection;
     try {
-      connection = await pool.connect(); // Get a connection from the pool
+      connection = await pool.connect();
       const userId = req.user.id;
-      // const userRole = req.body.userRole
+
 
       const query = `
       SELECT
@@ -86,21 +86,22 @@ router.get("/", async (req, res) => {
   }
 });
 
-
+/**
+ * GET route to retrieve a single dog from "dogs" table from the DB
+ * The dog's ID is passed as a URL parameter named 'id'
+*/
   router.get("/:id", async (req, res) => {
     console.log("/dog/:id GET route");
     console.log("is authenticated?", req.isAuthenticated());
     console.log("user", req.user);
-    // Assuming the dog's ID is passed as a URL parameter named 'id'
   
     if (req.isAuthenticated()) {
       let connection;
       try {
-        connection = await pool.connect(); // Get a connection from the pool
-        const dogId = req.params.id; // Access the ID from the route parameter
+        connection = await pool.connect(); 
+        const dogId = req.params.id; 
   
         console.log("dogId server", dogId)
-// const query = `SELECT * FROM "dogs" WHERE "id" = $1;`
         const query = `SELECT
         "dogs"."user_id",
         "dogs"."name", 
@@ -186,7 +187,7 @@ router.post("/", (req, res) => {
     const user = req.user.id;
 
     const dogData = [
-      req.body.user_id, // assuming you're now including this in the insert
+      req.user_id,
       req.body.name,
       req.body.age,
       req.body.breed,

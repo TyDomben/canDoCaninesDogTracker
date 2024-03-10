@@ -68,7 +68,7 @@ const RequestCareForm = ({ onGoBack, onSave }) => {
         sx={{ mt: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       >
         <Typography variant="h5" align="center" gutterBottom>
-          Request a Sitter for Loki. Testing branch.
+          Request a Sitter for Loki.
         </Typography>
         <TextField
           label="Start Date"
@@ -92,6 +92,51 @@ const RequestCareForm = ({ onGoBack, onSave }) => {
             shrink: true,
           }}
         />
+
+
+
+<div
+          sx={{
+            "& > :not(style)": { m: 1, width: "55ch" },
+          }}
+        >
+          <TextField
+            id="outlined-basic-comments"
+            variant="outlined"
+            label="Comments"
+            type="text"
+            name="Comments"
+            onChange={handleChange}
+            sx={{ width: 500, my: 2 }}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            multiline 
+            rows={4} 
+          />
+        </div>
+
+        <div
+          sx={{
+            "& > :not(style)": { m: 1, width: "55ch" },
+          }}
+        >
+          <TextField
+            id="outlined-basic-appointments"
+            variant="outlined"
+            label="Appointment Notes"
+            type="text"
+            name="Appointment"
+            onChange={handleChange}
+            sx={{ width: 500, my: 2 }}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            multiline 
+            rows={4} 
+          />
+        </div>
+
 
 
 

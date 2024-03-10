@@ -135,18 +135,29 @@ router.get("/history", async (req, res) => {
 
 /**
  * POST route to request a sitter
+ * Input fields from the user:
+ * Start Date, End date, Comments, Appointment Notes
  */
-router.post("/request", async (req, res) => {
-  console.log("/sitter/request POST route");
+router.post("/:id", async (req, res) => {
+  console.log("/sitter/:id POST route");
   console.log("is authenticated?", req.isAuthenticated());
   console.log("user", req.user);
 
-  if (req.isAuthenticated()) {
-    let connection;
-    try {
-      connection = await pool.connect();
-      const { dogId, startDate, endDate, dateComments, appointments, status } = req.body;
+  if (!req.isAuthenticated()) {
+    return res.sendStatus(403);}
+
+
       const userId = req.user.id;
+      const dogId = req.params.id;
+      console.log("dogId server side", dogId)
+
+      const {start_date, end_date, date_comments, appointments, status } = req.body;
+      console.log("req.body", req.body)
+
+      let connection;
+    
+      try {
+        connection = await pool.connect();
 
       const query = `
         INSERT INTO "dog_hosting" (
@@ -161,9 +172,14 @@ router.post("/request", async (req, res) => {
         RETURNING "id";
       `;
 
-      const result = await connection.query(query, [dogId, userId, startDate, endDate, dateComments, appointments, status]);
+      const values = [dogId, userId, start_date, end_date, date_comments, appointments, status]
+      const result = await connection.query(query, values);
+      
       const hostingId = result.rows[0].id;
-      res.json({ hostingId });
+      console.log("hosting request created id:", hostingId)
+
+
+      res.status(201).json({ hostingId });
     } catch (error) {
       console.error("error requesting sitter", error);
       res.sendStatus(500);
@@ -172,10 +188,7 @@ router.post("/request", async (req, res) => {
         connection.release();
       }
     }
-  } else {
-    res.sendStatus(403);
-  }
-});
+  });
 /**
  * GET route to retrieve all sitter requests
  */
