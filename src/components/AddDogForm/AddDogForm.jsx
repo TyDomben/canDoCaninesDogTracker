@@ -78,17 +78,12 @@ const AddDogForm = () => {
     });
   };
 
-  const handleChangeFoodType = (event) => {
+  const handleChangeRadioBtn = (event) => {
+    const { name, value} = event.target
+    console.log('radio btn', name, value)
     setFormValues({
       ...formValues,
-      food_type: Number(event.target.value)
-    })
-  }
-
-  const handleChangeBreed = (event) => {
-    setFormValues({
-      ...formValues,
-      breed: Number(event.target.value)
+      [name]: Number(value)
     })
   }
 
@@ -110,16 +105,14 @@ const AddDogForm = () => {
   }
 
   const handleChangeCheckBox = (event) => {
-    
-      console.log("value - ",event.target.name, event.target.checked);
-    console.log('inside handleCheckBox')
+        console.log('inside handleCheckBox')
     setFormValues({
       ...formValues,
       [event.target.name]: event.target.checked,
     })
   }
   console.log('formValues',formValues)
-  console.log('food type:', formValues.food_type, formValues.breed)
+  console.log('food type:', formValues.food_amount)
   const handleSave = (event) => {
     console.log('in postDogForm Save', formValues)
 
@@ -215,8 +208,8 @@ const AddDogForm = () => {
               aria-labelledby="breed-label"
               defaultValue="1"
               value={formValues.breed}
-              onChange={handleChangeBreed}
-              name="breed-radio-buttons-group"
+              onChange={handleChangeRadioBtn}
+              name="breed"
             >
               <FormControlLabel value={1} control={<Radio />} label="Labrador" />
               <FormControlLabel value={2} control={<Radio />} label="Golden Retriever" />
@@ -234,9 +227,10 @@ const AddDogForm = () => {
 
             <FormLabel id="spayed_neutered">Is the dog spayed or neutered?</FormLabel>
             <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue=" "
-              name="spayed_neutered-radio-buttons-group"
+              aria-labelledby="spayed_neutered"
+              value=""
+              onChange={handleChangeBool}
+              name="spayed_neutered"
             >
               <FormControlLabel value="true" control={<Radio />} label="Yes" />
               <FormControlLabel value="false" control={<Radio />} label="No" />
@@ -251,11 +245,11 @@ const AddDogForm = () => {
           <FormControl>
             <FormLabel id="food-label">Food Informations</FormLabel>
             <RadioGroup
-              aria-labelledby="food-label"
+              aria-labelledby="food_type"
               defaultValue="1"
               value={formValues.food_type}
-              onChange={handleChangeFoodType}
-              name="food-radio-buttons-group"
+              onChange={handleChangeRadioBtn}
+              name="food_type"
             >
               <FormControlLabel value={'1'} control={<Radio />} label="Purina Pro Plan Large Breed PUPPY" />
               <FormControlLabel value={'2'} control={<Radio />} label="Purina Pro Plan Large Breed ADULT" />
@@ -268,8 +262,8 @@ const AddDogForm = () => {
             <TextField
               fullWidth
               margin="normal"
-              id="foodAmount"
-              name="foodAmount"
+              id="food_amount"
+              name="food_amount"
               label="Amount of food per MEAL?"
               value={formValues.food_amount}
               onChange={handleChange}
@@ -279,8 +273,8 @@ const AddDogForm = () => {
             <TextField
               fullWidth
               margin="normal"
-              id="foodAmount"
-              name="foodFrequency"
+              id="food_frequency"
+              name="food_frequency"
               label="Number of meals PER DAY?"
               value={formValues.food_frequency}
               onChange={handleChange}
