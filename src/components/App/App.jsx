@@ -115,6 +115,7 @@ function App() {
           </Route>
           <Route path="/dogProfile/:dogId" component={DogProfile} />
           <Route path="/editdogprofile/:id" component={EditDogProfile} />
+          <Route path="/requestcareform/:dogId" component={RequestCareForm}/>
           <Route>
             <h1>404 - Page Not Found</h1>
           </Route>

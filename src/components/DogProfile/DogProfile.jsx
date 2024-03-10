@@ -41,7 +41,7 @@ function DogProfile() {
     try{
       const value = await swal({
         title: "Are you sure?",
-        text: "Select your action for this cat profile",
+        text: "Select your action for this profile",
         icon: "warning",
         buttons: {
           cancel: "Go Back",
@@ -60,7 +60,7 @@ function DogProfile() {
     history.push('/');
   } else {
     // The user clicked on "Go Back" or clicked outside the alert, no action needed
-    swal("Cancelled", "No changes were made to the cat profile.", "info");
+    swal("Cancelled", "No changes were made to the dog's profile.", "info");
   }
 } catch (error) {
   console.error("An error occurred while processing the profile:", error);
@@ -72,14 +72,13 @@ function DogProfile() {
   // Navigate to Edit Dog Profile
   const handleEdit = () => {
     console.log("handle edit clicked for:", dogId);
-    // dispatch({type: "SET_EDIT_DOG", payload: dog})
     history.push(`/editdogprofile/${dogId}`)
   };
 
 // Navigate to Request Care Dates
   const handleRequestCareDates = () => {
     console.log("button for request care dates was pushed for dog Id:", dogId);
-    history.push(`/requestcareform/:dogId`)
+    history.push(`/requestcareform/${dogId}`)
 
   };
 

@@ -5,6 +5,7 @@ import user from './user.reducer';
 import dog from './dog.reducer';
 import fetchOneDogProfile from './fetchonedog.reducer';
 import deleteDogProfile from './deletedog.reducer';
+import requestHost from './requesthost.reducer';
 
 
 // rootReducer is the primary reducer for our entire project

@@ -1,55 +1,98 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import {useParams, useHistory} from 'react-router-dom';
+import swal from "sweetalert";
+
 import {
   Container,
   TextField,
   Button,
   Typography,
   AppBar,
-  Toolbar,
+  // Toolbar,
   IconButton,
   Box,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
+  // Dialog,
+  // DialogActions,
+  // DialogContent,
+  // DialogContentText,
+  // DialogTitle,
 } from '@mui/material';
+
 import MenuIcon from '@mui/icons-material/Menu';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-const RequestCareForm = ({ onGoBack, onSave }) => {
-  const [dates, setDates] = useState({ startDate: '', endDate: '' });
-  const [openDialog, setOpenDialog] = useState(false);
-  const [dialogContent, setDialogContent] = useState('');
+const RequestCareForm = () => {
+  let dispatch = useDispatch("");
+  let history = useHistory("");
 
-const dogProfile = useSelector((state) => state.fetchOneDogProfile);
+  // const [openDialog, setOpenDialog] = useState(false);
+  // const [dialogContent, setDialogContent] = useState('');
+
+// const dogId = useSelector((state) => state.fetchOneDogProfile.dogId);
+const { dogId } = useParams();
 
 
+let [newRequest, setNewRequest] = useState({
+  start_date: "",
+  end_date:"",
+  date_comments:"",
+  appointments:"",
+})
+
+useEffect(() => {
+  if(dogId){
+  dispatch({ type: "FETCH_ONE_DOG_PROFILE", payload:{dogId} });
+  }
+}, [dogId]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setDates({ ...dates, [name]: value });
+    setNewRequest({ ...newRequest, [name]: value });
   };
 
-  const handleSave = () => {
-    onSave(dates);
-    setDialogContent('Your request has been saved successfully!');
-    setOpenDialog(true);
+
+  const handleSave = async(event) => {
+    event.preventDefault();
+      console.log('dispatching REQUEST HOST action')
+      dispatch({ type: 'REQUEST_HOST', payload: {dogId, formData: newRequest}})
+      history.push(`/dogprofile/${dogId}`)
+
   };
 
-  const handleGoBack = () => {
-    setDialogContent('Are you sure you want to go back without saving?');
-    setOpenDialog(true);
+  const handleGoBack = async (event) => {
+    event.preventDefault();
+try{
+  const value = await 
+swal({
+  title: "Are you sure?",
+  text: "Any data entered in your request will be lost.",
+  icon: "warning",
+  buttons: {
+    cancel: "Go back to your request",
+    delete: {
+      text: "Continue without saving",
+      value: "delete",
+    },
+  },
+  dangerMode: true,
+});
+if (value === "delete"){
+  console.log("going back to dog id:", dogId)
+  await swal("Request was not saved")
+  history.push(`/dogprofile/${dogId}`)
+} else {
+  swal("Cancelled.")
+}
+} catch (error) {
+  console.log("error", error)
+  swal("error", "error")
+}
+
+
+
   };
 
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-  };
-
-  const handleConfirmGoBack = () => {
-    onGoBack();
-    setOpenDialog(false);
-  };
 
   return (
     <Container maxWidth="sm">
@@ -77,8 +120,8 @@ const dogProfile = useSelector((state) => state.fetchOneDogProfile);
         <TextField
           label="Start Date"
           type="date"
-          name="startDate"
-          value={dates.startDate}
+          name="start_date"
+          value={newRequest.start_date}
           onChange={handleChange}
           sx={{ width: 250, my: 2 }}
           InputLabelProps={{
@@ -88,8 +131,8 @@ const dogProfile = useSelector((state) => state.fetchOneDogProfile);
         <TextField
           label="End Date"
           type="date"
-          name="endDate"
-          value={dates.endDate}
+          name="end_date"
+          value={newRequest.end_date}
           onChange={handleChange}
           sx={{ width: 250, my: 2 }}
           InputLabelProps={{
@@ -109,7 +152,8 @@ const dogProfile = useSelector((state) => state.fetchOneDogProfile);
             variant="outlined"
             label="Comments"
             type="text"
-            name="Comments"
+            name="date_comments"
+            value={newRequest.date_comments}
             onChange={handleChange}
             sx={{ width: 500, my: 2 }}
             InputLabelProps={{
@@ -130,7 +174,8 @@ const dogProfile = useSelector((state) => state.fetchOneDogProfile);
             variant="outlined"
             label="Appointment Notes"
             type="text"
-            name="Appointment"
+            name="appointments"
+            value={newRequest.appointments}
             onChange={handleChange}
             sx={{ width: 500, my: 2 }}
             InputLabelProps={{
@@ -140,15 +185,9 @@ const dogProfile = useSelector((state) => state.fetchOneDogProfile);
             rows={4} 
           />
         </div>
-
-
-
-
-
-
         
         <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', mt: 2 }}>
-          <Button variant="outlined" color="secondary" onClick={handleConfirmGoBack}>
+          <Button variant="outlined" color="secondary" onClick={handleGoBack}>
             Go Back
           </Button>
           <Button variant="contained" color="primary" onClick={handleSave}>
@@ -156,25 +195,6 @@ const dogProfile = useSelector((state) => state.fetchOneDogProfile);
           </Button>
         </Box>
       </Box>
-      <Dialog
-        open={openDialog}
-        onClose={handleCloseDialog}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"Confirmation"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            {dialogContent}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialog}>Cancel</Button>
-          <Button onClick={handleConfirmGoBack} autoFocus>
-            Confirm
-          </Button>
-        </DialogActions>
-      </Dialog>
     </Container>
   );
 };
