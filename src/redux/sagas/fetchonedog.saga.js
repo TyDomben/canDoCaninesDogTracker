@@ -3,7 +3,6 @@ import { put, takeLatest } from 'redux-saga/effects';
 
 // worker Saga: will be fired on "FETCH_DOG_PROFILE" actions
 function* fetchOneDog(action) {
-  //get the dogs:
   const { dogId } = action.payload;
 try{
   const oneDogResponse = yield axios.get(`/api/dog/${dogId}`)
