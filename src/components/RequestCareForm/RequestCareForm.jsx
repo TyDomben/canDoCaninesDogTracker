@@ -22,6 +22,10 @@ const RequestCareForm = ({ onGoBack, onSave }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [dialogContent, setDialogContent] = useState('');
 
+const dogProfile = useSelector((state) => state.fetchOneDogProfile);
+
+
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setDates({ ...dates, [name]: value });

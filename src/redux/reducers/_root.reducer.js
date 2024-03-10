@@ -20,6 +20,7 @@ const rootReducer = combineReducers({
   dog,//contains "dogs" table data
   fetchOneDogProfile, 
   deleteDogProfile,
+  requestHost,
 
 });
 

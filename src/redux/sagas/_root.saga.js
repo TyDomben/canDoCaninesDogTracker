@@ -22,5 +22,6 @@ export default function* rootSaga() {
     dogSaga(),
     oneDogSaga(),
     deleteDogSaga(),
+    requestHostForCareSaga()
   ]);
 }
