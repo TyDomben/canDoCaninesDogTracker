@@ -8,38 +8,31 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import theme from "../../theme";
-
 // import components
-import Nav from "../Nav/Nav";
-import Footer from "../Footer/Footer";
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
-
 import AboutPage from "../AboutPage/AboutPage";
 import AddDogForm from "../AddDogForm/AddDogForm";
-import UserPage from "../UserPage/UserPage";
+import AdminHome from "../AdminHome/AdminHome";
+import DataGrid from "../DataGrid/DataGrid";
+import DogCards from "../AllDogForm/AllDogForm";
+import DogProfile from "../DogProfile/DogProfile";
+import EditDogProfile from "../EditDogProfile/EditDogProfile";
+import Footer from "../Footer/Footer";
 import InfoPage from "../InfoPage/InfoPage";
 import LandingPage from "../LandingPage/LandingPage";
 import LoginPage from "../LoginPage/LoginPage";
-import RegisterPage from "../RegisterPage/RegisterPage";
-import UserProfileEdit from "../UserProfileEdit/UserProfileEdit";
+import Nav from "../Nav/Nav";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import RaiserDogPage from "../RaiserDogPage/RaiserDogPage";
-import DogProfile from "../DogProfile/DogProfile";
-import RequestSitterForm from "../RequestSitter/RequestSitter";
+import RegisterPage from "../RegisterPage/RegisterPage";
 import RequestCareForm from "../RequestCareForm/RequestCareForm";
-
-// Import the new pages
 import SitterHomePage from "../SitterHome/SitterHome";
-import DogCards from "../AllDogForm/AllDogForm";
-import AdminHome from "../AdminHome/AdminHome";
-import DataGrid from "../DataGrid/DataGrid";
-import EditDogProfile from "../EditDogProfile/EditDogProfile";
-
+import UserPage from "../UserPage/UserPage";
+import UserProfileEdit from "../UserProfileEdit/UserProfileEdit";
+import VolunteerSitterForm from "../VolunteerSitterForm/VolunteerSitterForm";
 import "./App.css";
-
 function App() {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
-
   const customTheme = createTheme(theme);
 
   useEffect(() => {
@@ -70,7 +63,9 @@ function App() {
             <ProtectedRoute exact path="/data-grid">
               <DataGrid />
             </ProtectedRoute>
-            {/* <ProtectedRoute exact path="/raiser-home"><RaiserDogPage/></ProtectedRoute> */}
+            <ProtectedRoute exact path="/raiser-home">
+              <RaiserDogPage />
+            </ProtectedRoute>
             <ProtectedRoute exact path="/user-edit">
               <UserProfileEdit />{" "}
             </ProtectedRoute>
@@ -80,8 +75,9 @@ function App() {
             <ProtectedRoute exact path="/info">
               <InfoPage />
             </ProtectedRoute>
-            {/* <ProtectedRoute exact path="/home"><RaiserDogPage /></ProtectedRoute> */}
-
+            <ProtectedRoute exact path="/home">
+              <RaiserDogPage />
+            </ProtectedRoute>
             <ProtectedRoute exact path="/sitterHome">
               <SitterHomePage />
             </ProtectedRoute>
@@ -103,17 +99,14 @@ function App() {
             <ProtectedRoute exact path="/info">
               <InfoPage />
             </ProtectedRoute>
-
+            <ProtectedRoute exact path="/volunteerSitterForm">
+              <VolunteerSitterForm />
+            </ProtectedRoute>
             {/* <ProtectedRoute exact path="/dogprofile/:dogId">
             <DogProfile />
           </ProtectedRoute> */}
+            <ProtectedRoute exact path="requestcareform"></ProtectedRoute>
 
-            {/* <ProtectedRoute exact path="/request-sitter-profile-card">
-            <RequestSitterForm />
-          </ProtectedRoute>           */}
-            <ProtectedRoute exact path="/RequestSitterForm">
-              <RequestSitterForm />
-            </ProtectedRoute>
             <ProtectedRoute exact path="/requestcareform/:dogId">
               <RequestCareForm />
             </ProtectedRoute>
