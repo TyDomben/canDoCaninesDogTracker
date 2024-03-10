@@ -36,16 +36,16 @@ const AddDogForm = () => {
     // medicalAppointments: '',
     medical_conditions: '',
     surgery_recovery: '',
-    currentMedications: '',
-    inHeat: '',
+    current_medications: '',
+    in_heat: '',
     //pottyHabitis
-    pottyFrequency: '',
-    pottyIndicators: '',
-    pottyComments: '',
+    potty_routine: '',
+    potty_indicators: '',
+    potty_comments: '',
     //excercise
-    exerciseRestrictions: '',
+    exercise_restrictions: '',
     limit_water: '',
-    exerciseEquipment: '',
+    exercise_equipment: '',
     //crating
     crate_manners: '',
     //houseManners
@@ -72,6 +72,7 @@ const AddDogForm = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    console.log('event.target', event.target)
     setFormValues({
       ...formValues,
       [name]: value,
@@ -79,7 +80,7 @@ const AddDogForm = () => {
   };
 
   const handleChangeRadioBtn = (event) => {
-    const { name, value} = event.target
+    const { name, value } = event.target
     console.log('radio btn', name, value)
     setFormValues({
       ...formValues,
@@ -105,13 +106,13 @@ const AddDogForm = () => {
   }
 
   const handleChangeCheckBox = (event) => {
-        console.log('inside handleCheckBox')
+    console.log('inside handleCheckBox')
     setFormValues({
       ...formValues,
       [event.target.name]: event.target.checked,
     })
   }
-  console.log('formValues',formValues)
+  console.log('formValues', formValues)
   console.log('food type:', formValues.food_amount)
   const handleSave = (event) => {
     console.log('in postDogForm Save', formValues)
@@ -182,7 +183,7 @@ const AddDogForm = () => {
             <TextField
               fullWidth
               margin="normal"
-              required id="dog_name"
+              required id="name"
               name="name"
               label="Dog Name"
               value={formValues.name}
@@ -228,7 +229,7 @@ const AddDogForm = () => {
             <FormLabel id="spayed_neutered">Is the dog spayed or neutered?</FormLabel>
             <RadioGroup
               aria-labelledby="spayed_neutered"
-              value=""
+              value={formValues.spayed_neutered}
               onChange={handleChangeBool}
               name="spayed_neutered"
             >
@@ -243,7 +244,7 @@ const AddDogForm = () => {
         return (
 
           <FormControl>
-            <FormLabel id="food-label">Food Informations</FormLabel>
+            <FormLabel id="food_type">Food Informations</FormLabel>
             <RadioGroup
               aria-labelledby="food_type"
               defaultValue="1"
@@ -293,19 +294,30 @@ const AddDogForm = () => {
             <TextField
               fullWidth
               margin="normal"
-              id="medicalConditions"
-              name="medicalConditions"
+              id="medical_conditions"
+              name="medical_conditions"
               label="Please list any medical conditions you are currently addressing with this dog"
               value={formValues.medical_conditions}
               onChange={handleChange}
               variant="outlined"
             />
+            <TextField
+              fullWidth
+              margin="normal"
+              id="current_medications"
+              name="current_medications"
+              label="Please list any medications this dog is taking along with dosages."
+              value={formValues.current_medications}
+              onChange={handleChange}
+              variant="outlined"
+            />
+
             <FormLabel id="">Is this dog currently recovering from a surgery or medical concern?</FormLabel>
             <RadioGroup
-              aria-labelledby="surgery-radio-buttons-group-label"
+              aria-labelledby="surgery_recovery"
 
               value={formValues.surgery_recovery}
-              name="surgery-radio-buttons-group"
+              name="surgery_recovery"
               onChange={handleChangeBool}
             >
               <FormControlLabel value="true" control={<Radio />} label="Yes" />
@@ -314,22 +326,17 @@ const AddDogForm = () => {
 
 
 
-            <TextField
-              fullWidth
-              margin="normal"
-              id="medications"
-              name="medications"
-              label="Please list any medications this dog is taking along with dosages."
-              value={formValues.currentMedications}
-              onChange={handleChange}
-              variant="outlined"
-            />
 
-            <FormLabel id="">If you're fostering an spayed_neutered female are they in heat?</FormLabel>
+
+
+
+            <FormLabel id="in_heat">If you're fostering an spayed_neutered female are they in heat?</FormLabel>
             <RadioGroup
-              aria-labelledby="heat-radio-buttons-group-label"
-              defaultValue="3"
-              name="surgery-radio-buttons-group"
+              // aria-labelledby="in_heat"
+              name="in_heat"
+              defaultValue=""
+              value={formValues.in_heat}
+              onChange={handleChangeRadioBtn}
             >
               <FormControlLabel value={1} control={<Radio />} label="Yes" />
               <FormControlLabel value={2} control={<Radio />} label="No" />
@@ -346,7 +353,6 @@ const AddDogForm = () => {
           <FormControl>
 
             <Box
-              component="form"
               sx={{
                 '& .MuiTextField-root': { m: 1, width: '1' },
               }}
@@ -356,21 +362,21 @@ const AddDogForm = () => {
               <p>Please describe the dog's daily potty routine as well as how the dog indicates it has to go.
               </p>
               <TextField
-                id="outlined-multiline-static"
-                label="pottyRoutine"
+                id="potty_routine"
+                label="potty_routine"
                 multiline
                 rows={12}
-                value={formValues.pottyFrequency}
+                value={formValues.potty_routine}
                 onChange={handleChange}
               />
               <p>Is there anything else that fosters should know about this dog's potty habits?
               </p>
               <TextField
-                id="outlined-multiline-static"
-                label="pottyComments"
+                id="potty_comments"
+                label="potty_comments"
                 multiline
                 rows={12}
-                value={formValues.pottyComments}
+                value={formValues.potty_comments}
                 onChange={handleChange}
               />
             </Box>
@@ -381,15 +387,15 @@ const AddDogForm = () => {
         return (
 
           <FormControl>
-            <p>Are there things we should about regarding this dog and exercise or play?</p>
+            {/* <FormControlLabel label="Are there things we should about regarding this dog and exercise or play?" /> */}
             <FormGroup>
               <Paper elevation={5}>
-                <FormControlLabel name='limit_water' onChange={handleChangeCheckBox}required control={<Checkbox />} label="Limit water" />
-                <FormControlLabel name= 'limit_toy_play' onChange={handleChangeCheckBox}required control={<Checkbox />} label="Limit toy play" />
+                <FormControlLabel name='limit_water' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Limit water" />
+                <FormControlLabel name='limit_toy_play' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Limit toy play" />
                 <FormControlLabel name='watch_carefully' onChange={handleChangeCheckBox} required control={<Checkbox />} label="May destroy toys (watch carefully)" />
-                <FormControlLabel required control={<Checkbox />} label="May ingest toys" />
-                <FormControlLabel required control={<Checkbox />} label='Plays "Keep Away" ' />
-                <FormControlLabel required control={<Checkbox />} label="Does not share toys wiht other dogs?" />
+                <FormControlLabel name='ingest_toys' onChange={handleChangeCheckBox} required control={<Checkbox />} label="May ingest toys" />
+                <FormControlLabel name='keep_away' onChange={handleChangeCheckBox} required control={<Checkbox />} label='Plays "Keep Away" ' />
+                <FormControlLabel name='shares_toys' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Does not share toys wiht other dogs?" />
               </Paper>
 
 
@@ -397,9 +403,10 @@ const AddDogForm = () => {
 
             <p>Please indicate what equipment this dog uses for walks.</p>
             <RadioGroup
-              aria-labelledby="food-label"
+              aria-labelledby="exercise_equipment"
               defaultValue="1"
-              name="food-radio-buttons-group"
+              name="exercise_equipment"
+              onChange={handleChangeRadioBtn}
             >
               <Paper elevation={5}>
                 <FormControlLabel value={1} control={<Radio />} label="Gentle leader" />
@@ -419,7 +426,6 @@ const AddDogForm = () => {
           <FormControl>
             <p>Please describe this dogs crate manners and habits.                    </p>
             <Box
-              component="form"
               sx={{
                 '& .MuiTextField-root': { m: 1, width: '1' },
               }}
