@@ -105,9 +105,9 @@ function App() {
             {/* <ProtectedRoute exact path="/dogprofile/:dogId">
             <DogProfile />
           </ProtectedRoute> */}
-            <ProtectedRoute exact path="requestcareform"></ProtectedRoute>
-
-            <ProtectedRoute exact path="/requestcareform/:dogId">
+            <ProtectedRoute exact path="requestCareForm"></ProtectedRoute>
+            {/* //! right now the request care form is not working, UNLESS it is pulling the dog id */}
+            <ProtectedRoute exact path="/requestCareForm/:dogId">
               <RequestCareForm />
             </ProtectedRoute>
 
