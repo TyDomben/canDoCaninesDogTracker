@@ -44,23 +44,37 @@ const HomePage = () => {
     <>
       <Container>
         <Typography variant="h5" gutterBottom>
-          Raiser's Dogs
+          Dogs You Are Hosting
         </Typography>
         <Grid container spacing={2}>
           {/* Map your dog data to these cards */}
           {doggos.map((dog) => (
             <Grid item xs={12} sm={6} md={4}>
-              <Card key={dog.id} onClick={() => history.push("/dog-profile")}>
+              <Card key={dog.id} onClick={() => history.push(`/dogprofile/${dog.id}`)}>
                 {/* <Card key={dog.id} onClick={() => console.log(dog)}> */}
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image="/static/images/cards/contemplative-reptile.jpg"
-                  alt="Dog"
-                />
+                <Box
+                  sx={{
+                    height: 300,
+                    width: "auto",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <img
+                    src="/public/images/dogoutline.jpeg"
+                    alt="Dog"
+                    style={{
+                      height: "100%",
+                      width: "auto",
+                      maxWidth: "100%",
+                      objectFit: "contain",
+                    }}
+                  />
+                </Box>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
-                    {dog.name}
+                    {dog.dog_name}
                   </Typography>
                 </CardContent>
               </Card>
@@ -68,7 +82,10 @@ const HomePage = () => {
           ))}
           {/* ... other dogs */}
         </Grid>
-        <Button variant="contained" onClick={() => history.push("/add-dog")}>
+        <Button
+          variant="contained"
+          onClick={() => history.push("/add-dog-form")}
+        >
           Add a Dog Profile
         </Button>
 

@@ -67,14 +67,22 @@ CREATE TABLE IF NOT EXISTS "breed" (
 INSERT INTO "breed" ("breed")
 VALUES ('Labrador'), ('Golden Retriever'), ('Labrador Mix'), ('Golden Retriever Mix'), ('Poodle/Poodle Mix'), ('Collie'), ('I Dont Know');
 
+---------------------------------------------------------------- In Heat Table-----------------------------------------------------------
 
+CREATE TABLE IF NOT EXISTS "in_heat"
+
+	("id" SERIAL PRIMARY KEY,
+	"condition" VARCHAR(20) NOT NULL
+	);
+INSERT INTO "in_heat" ("condition") 
+VALUES ('yes'), ('no'), ('unknown');
 ---------------------------------------------------------------- DOGS TABLE ----------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS "dogs" (
     "id" SERIAL PRIMARY KEY,
     "user_id" INT REFERENCES "user"("id") NOT NULL,
-    "name" VARCHAR(255) NOT NULL,
-    "age" INT NOT NULL,
+    "dog_name" VARCHAR(255) NOT NULL,
+    "age" VARCHAR(50) NOT NULL,
     "breed" INT NOT NULL,
     "spayed_neutered" BOOLEAN NOT NULL,
     "food_type" INT NOT NULL,
@@ -84,16 +92,21 @@ CREATE TABLE IF NOT EXISTS "dogs" (
     "medical_conditions" VARCHAR(255) NOT NULL,
     "recovering_from_surgery" BOOLEAN NOT NULL,
     "medications" VARCHAR(255) NOT NULL,
-    "in_heat" BOOLEAN NOT NULL,
+    "in_heat" INT NOT NULL,
     "potty_routine" VARCHAR(255) NOT NULL,
     "potty_habits_notes" VARCHAR(255) NOT NULL,
-    "exercise_limitations" INT NOT NULL,
+    "limit_water" BOOLEAN NOT NULL,
+    "limit_toy_play" BOOLEAN NOT NULL,
+    "watch_carefully" BOOLEAN NOT NULL,
+    "ingest_toys" BOOLEAN NOT NULL,
+    "keep_away" BOOLEAN NOT NULL,
+    "shares_toys" BOOLEAN NOT NULL,    
     "exercise_equipment" INT NOT NULL,
     "crate_manners" VARCHAR(255) NOT NULL,
     "house_manners" VARCHAR(255) NOT NULL,
     "living_with_other_dogs" BOOLEAN NOT NULL,
     "living_with_cats" BOOLEAN NOT NULL,
-    "living_with_children_older_ten" BOOLEAN NOT NULL,
+    "living_with_children_ten_and_up" BOOLEAN NOT NULL,
     "living_with_children_younger_ten" BOOLEAN NOT NULL,
     "living_with_adults" BOOLEAN NOT NULL,
     "living_with_small_animals" BOOLEAN NOT NULL,
@@ -102,15 +115,16 @@ CREATE TABLE IF NOT EXISTS "dogs" (
     "behavior_with_cats" INT NOT NULL,
     "behavior_with_children" INT NOT NULL,
     FOREIGN KEY ("user_id") REFERENCES "user"("id"),
-    FOREIGN KEY ("exercise_limitations") REFERENCES "exercise_limitations"("id"),
     FOREIGN KEY ("exercise_equipment") REFERENCES "exercise_equipment"("id"),
     FOREIGN KEY ("behavior_with_other_dogs") REFERENCES "behavior"("id"),
     FOREIGN KEY ("behavior_with_cats") REFERENCES "behavior"("id"),
     FOREIGN KEY ("behavior_with_children") REFERENCES "behavior"("id"),
     FOREIGN KEY ("food_type") REFERENCES "food_type"("id"),
-    FOREIGN KEY ("breed") REFERENCES "breed"("id")
+    FOREIGN KEY ("breed") REFERENCES "breed"("id"),
+    FOREIGN KEY ("in_heat") REFERENCES "in_heat"("id")
     
 );
+
 INSERT INTO "dogs" (
 	"user_id",
     "name",

@@ -10,20 +10,20 @@ router.get("/", async (req, res) => {
   console.log("/dog GET route ");
   console.log("is authenticated?", req.isAuthenticated());
   console.log("user", req.user);
-  // console.log("role", req.body.userRole)
+
 
   if (req.isAuthenticated()) {
     let connection;
     try {
-      connection = await pool.connect(); // Get a connection from the pool
+      connection = await pool.connect();
       const userId = req.user.id;
-      // const userRole = req.body.userRole
+
 
       const query = `
       SELECT
       "dogs"."id",
       "dogs"."user_id",
-      "dogs"."name", 
+      "dogs"."dog_name", 
       "dogs"."age", 
       "dogs"."breed", 
       "dogs"."spayed_neutered", 
@@ -37,13 +37,18 @@ router.get("/", async (req, res) => {
       "dogs"."in_heat", 
       "dogs"."potty_routine", 
       "dogs"."potty_habits_notes", 
-      "exercise_limitations"."exercise_limitations", 
+      "dogs"."limit_water",
+      "dogs"."limit_toy_play",
+      "dogs"."watch_carefully",
+      "dogs"."ingest_toys",
+      "dogs"."keep_away",
+      "dogs"."shares_toys", 
       "exercise_equipment"."exercise_equipment", 
       "dogs"."crate_manners", 
       "dogs"."house_manners", 
       "dogs"."living_with_other_dogs", 
       "dogs"."living_with_cats", 
-      "dogs"."living_with_children_older_ten", 
+      "dogs"."living_with_children_ten_and_up", 
       "dogs"."living_with_children_younger_ten", 
       "dogs"."living_with_adults", 
       "dogs"."living_with_small_animals", 
@@ -53,10 +58,7 @@ router.get("/", async (req, res) => {
       "behavior_child"."behavior_category_name" AS "behavior_with_children"
   FROM 
       "dogs"
-  JOIN 
-      "dog_hosting" ON "dogs"."id" = "dog_hosting"."dog_id"
-  JOIN 
-      "exercise_limitations" AS "exercise_limitations" ON "dogs"."exercise_limitations" = "exercise_limitations"."id"
+  
   JOIN 
       "exercise_equipment" AS "exercise_equipment" ON "dogs"."exercise_equipment" = "exercise_equipment"."id"
   JOIN 
@@ -66,7 +68,7 @@ router.get("/", async (req, res) => {
   JOIN 
       "behavior" AS "behavior_child" ON "dogs"."behavior_with_children" = "behavior_child"."id"
   WHERE
-      "dog_hosting"."user_id" = $1;
+      "dogs"."user_id" = $1;
             `;
 
       const result = await connection.query(query, [userId]);
@@ -87,24 +89,25 @@ router.get("/", async (req, res) => {
   }
 });
 
-
+/**
+ * GET route to retrieve a single dog from "dogs" table from the DB
+ * The dog's ID is passed as a URL parameter named 'id'
+*/
   router.get("/:id", async (req, res) => {
     console.log("/dog/:id GET route");
     console.log("is authenticated?", req.isAuthenticated());
     console.log("user", req.user);
-    // Assuming the dog's ID is passed as a URL parameter named 'id'
   
     if (req.isAuthenticated()) {
       let connection;
       try {
-        connection = await pool.connect(); // Get a connection from the pool
-        const dogId = req.params.id; // Access the ID from the route parameter
+        connection = await pool.connect(); 
+        const dogId = req.params.id; 
   
         console.log("dogId server", dogId)
-// const query = `SELECT * FROM "dogs" WHERE "id" = $1;`
         const query = `SELECT
         "dogs"."user_id",
-        "dogs"."name", 
+        "dogs"."dog_name", 
         "dogs"."age", 
         "breed"."breed" as "breed", 
         "dogs"."spayed_neutered", 
@@ -117,14 +120,19 @@ router.get("/", async (req, res) => {
         "dogs"."medications", 
         "dogs"."in_heat", 
         "dogs"."potty_routine", 
-        "dogs"."potty_habits_notes", 
-        "exercise_limitations"."exercise_limitations", 
+        "dogs"."potty_habits_notes",  
+        "dogs"."limit_water",
+        "dogs"."limit_toy_play",
+        "dogs"."watch_carefully",
+        "dogs"."ingest_toys",
+        "dogs"."keep_away",
+        "dogs"."shares_toys",
         "exercise_equipment"."exercise_equipment", 
         "dogs"."crate_manners", 
         "dogs"."house_manners", 
         "dogs"."living_with_other_dogs", 
         "dogs"."living_with_cats", 
-        "dogs"."living_with_children_older_ten", 
+        "dogs"."living_with_children_ten_and_up", 
         "dogs"."living_with_children_younger_ten", 
         "dogs"."living_with_adults", 
         "dogs"."living_with_small_animals", 
@@ -138,9 +146,7 @@ router.get("/", async (req, res) => {
         "food_type" AS "food_type" ON "dogs"."food_type" = "food_type"."id"
     JOIN 
         "breed" AS "breed" ON "dogs"."breed" = "breed"."id"
-    JOIN 
-        "exercise_limitations" AS "exercise_limitations" ON "dogs"."exercise_limitations" = "exercise_limitations"."id"
-    JOIN 
+   Join
         "exercise_equipment" AS "exercise_equipment" ON "dogs"."exercise_equipment" = "exercise_equipment"."id"
     JOIN 
         "behavior" AS "behavior_dog" ON "dogs"."behavior_with_other_dogs" = "behavior_dog"."id"
@@ -187,8 +193,8 @@ router.post("/", (req, res) => {
     const user = req.user.id;
 
     const dogData = [
-      req.user.id,
-      req.body.name,
+      req.user.id, // assuming you're now including this in the insert
+      req.body.dog_name,
       req.body.age,
       req.body.breed,
       req.body.spayed_neutered,
@@ -202,14 +208,19 @@ router.post("/", (req, res) => {
       req.body.in_heat,
       req.body.potty_routine,
       req.body.potty_habits_notes,
-      req.body.exercise_limitations,
+      req.body.limit_water,
+      req.body.limit_toy_play,
+      req.body.watch_carefully,
+      req.body.ingest_toys,
+      req.body.keep_away,
+      req.body.shares_toys,
       req.body.exercise_equipment,
       req.body.crate_manners,
       req.body.house_manners,
       req.body.living_with_other_dogs,
       req.body.living_with_cats,
-      req.body.living_with_children_older_ten,
-      req.body.living_with_children_younger_ten,
+      req.body.living_with_children_ten_and_up,
+      req.body.living_with_children_younger_than_ten,
       req.body.living_with_adults,
       req.body.living_with_small_animals,
       req.body.living_with_large_animals,
@@ -224,7 +235,7 @@ router.post("/", (req, res) => {
     const queryText = `
             INSERT INTO "dogs" (
                 "user_id",
-                "name",
+                "dog_name",
                 "age",
                 "breed",
                 "spayed_neutered",
@@ -238,13 +249,18 @@ router.post("/", (req, res) => {
                 "in_heat",
                 "potty_routine",
                 "potty_habits_notes",
-                "exercise_limitations",
+                "limit_water",
+                "limit_toy_play",
+                "watch_carefully",
+                "ingest_toys",
+                "keep_away",
+                "shares_toys",
                 "exercise_equipment",
                 "crate_manners",
                 "house_manners",
                 "living_with_other_dogs",
                 "living_with_cats",
-                "living_with_children_older_ten",
+                "living_with_children_ten_and_up",
                 "living_with_children_younger_ten",
                 "living_with_adults",
                 "living_with_small_animals",
@@ -252,7 +268,7 @@ router.post("/", (req, res) => {
                 "behavior_with_other_dogs",
                 "behavior_with_cats",
                 "behavior_with_children")
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29);
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34);
             `;
 
     pool
