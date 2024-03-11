@@ -1,3 +1,5 @@
+// we are specifically NOT calling theme in this file right now - just in App.jsx
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
@@ -15,3 +17,4 @@ root.render(
     </Provider>
   </React.StrictMode>
 );
+

@@ -18,17 +18,25 @@ import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
 const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
   const dispatch = useDispatch();
-  const dogProfile = useSelector((state) => state.fetchOneDogProfile);
-  const { dogId } = useParams();
+  const editDog = useSelector((store) => store.dog.editDog);
+  // const { dogId } = useParams();
   const history = useHistory();
+  // const [ formValues, setEditDog ] = useState(editDog);
 
   const handleChange = (event) => {
+    event.preventDefault()
     const { name, value } = event.target;
-    setValues({ ...values, [name]: value });
+    console.log('name and value', name, value);
+    dispatch({
+      type: 'EDIT_DOG',
+      payload: {...editDog, [name]: value
+       }
+    });
   };
+  console.log('edit dog:', editDog)
 
   const handleSave = () => {
-    onSave(values);
+    dispatch({ type: 'UPDATE_DOG_PROFILE', payload: {dogId: dogProfile, updates: formValues}})
     // Show confirmation alert
   };
 
@@ -44,7 +52,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
       </AppBar>
       <Box component="form" noValidate autoComplete="off" sx={{ mt: 3 }}>
         <Typography variant="h5" align="center" gutterBottom>
-          Edit {dogProfile?.name}'s Profile
+          Edit {editDog?.name}'s Profile
         </Typography>
         <TextField
           fullWidth
@@ -52,7 +60,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="name"
           name="name"
           label="Name"
-          value={dogProfile?.name}
+          value={editDog?.name}
           onChange={handleChange}
           variant="outlined"
         />
@@ -62,7 +70,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="age"
           name="age"
           label="Age"
-          value={dogProfile?.age}
+          value={editDog?.age}
           onChange={handleChange}
           variant="outlined"
         />
@@ -72,7 +80,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="breed"
           name="breed"
           label="Breed"
-          value={dogProfile?.breed}
+          value={editDog?.breed}
           onChange={handleChange}
           variant="outlined"
         />
@@ -82,7 +90,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="spayed_neutered"
           name="spayed_neutered"
           label="Spayed/ Neutered"
-          value={dogProfile?.spayed_neutered}
+          value={editDog?.spayed_neutered}
           onChange={handleChange}
           variant="outlined"
         />
@@ -92,7 +100,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="food_type"
           name="food_type"
           label="Food type"
-          value={dogProfile?.food_type}
+          value={editDog?.food_type}
           onChange={handleChange}
           variant="outlined"
         />
@@ -102,7 +110,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="food_amount"
           name="food_amount"
           label="Food Amount"
-          value={dogProfile?.food_amount}
+          value={editDog?.food_amount}
           onChange={handleChange}
           variant="outlined"
         />
@@ -112,7 +120,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="meals_per_day"
           name="meals_per_day"
           label="Meals per day"
-          value={dogProfile?.meals_per_day}
+          value={editDog?.meals_per_day}
           onChange={handleChange}
           variant="outlined"
         />
@@ -122,7 +130,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="eating_times"
           name="eating_times"
           label="Eating Times"
-          value={dogProfile?.eating_times}
+          value={editDog?.eating_times}
           onChange={handleChange}
           variant="outlined"
         />
@@ -132,7 +140,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="medical_conditions"
           name="medical_conditions"
           label="Medical Conditions"
-          value={dogProfile?.medical_conditions}
+          value={editDog?.medical_conditions}
           onChange={handleChange}
           variant="outlined"
         />
@@ -142,7 +150,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="recovering_from_surgery"
           name="recovering_from_suregery"
           label="Recovering from Surgery"
-          value={dogProfile?.recovering_from_surgery}
+          value={editDog?.recovering_from_surgery}
           onChange={handleChange}
           variant="outlined"
         />
@@ -152,7 +160,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="medications"
           name="medications"
           label="Medications"
-          value={dogProfile?.medications}
+          value={editDog?.medications}
           onChange={handleChange}
           variant="outlined"
         />
@@ -162,7 +170,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="in_heat"
           name="in_heat"
           label="In Heat"
-          value={dogProfile?.in_heat}
+          value={editDog?.in_heat}
           onChange={handleChange}
           variant="outlined"
         />
@@ -172,7 +180,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="potty_routine"
           name="potty_routine"
           label="Potty Routine"
-          value={dogProfile?.potty_routine}
+          value={editDog?.potty_routine}
           onChange={handleChange}
           variant="outlined"
         />
@@ -182,7 +190,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="potty_habits_notes"
           name="potty_habits_notes"
           label="Potty Habits Notes"
-          value={dogProfile?.potty_habits_notes}
+          value={editDog?.potty_habits_notes}
           onChange={handleChange}
           variant="outlined"
         />
@@ -192,7 +200,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="exercise_limitations"
           name="exercise_limitations"
           label="Exercise Limitations"
-          value={dogProfile?.exercise_limitations}
+          value={editDog?.exercise_limitations}
           onChange={handleChange}
           variant="outlined"
         />
@@ -202,7 +210,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="exercise_equipment"
           name="exercise_equipment"
           label="Exercise Equipment"
-          value={dogProfile?.exercise_equipment}
+          value={editDog?.exercise_equipment}
           onChange={handleChange}
           variant="outlined"
         />
@@ -212,7 +220,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="crate_manners"
           name="crate_manners"
           label="Crate Manners"
-          value={dogProfile?.crate_manners}
+          value={editDog?.crate_manners}
           onChange={handleChange}
           variant="outlined"
         />
@@ -222,7 +230,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="house_manners"
           name="house_manners"
           label="House Manners"
-          value={dogProfile?.house_manners}
+          value={editDog?.house_manners}
           onChange={handleChange}
           variant="outlined"
         />
@@ -232,7 +240,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="living_with_other_dogs"
           name="living_with_other_dogs"
           label="Living with other Dogs"
-          value={dogProfile?.living_with_other_dogs}
+          value={editDog?.living_with_other_dogs}
           onChange={handleChange}
           variant="outlined"
         />
@@ -242,7 +250,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="living_with_cats"
           name="living_with_cats"
           label="Living with Cats"
-          value={dogProfile?.living_with_cats}
+          value={editDog?.living_with_cats}
           onChange={handleChange}
           variant="outlined"
         />
@@ -252,7 +260,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="living_with_children_older_ten"
           name="living_with_children_older_ten"
           label="Living with Children Older than 10"
-          value={dogProfile?.living_with_children_older_ten}
+          value={editDog?.living_with_children_older_ten}
           onChange={handleChange}
           variant="outlined"
         />
@@ -262,7 +270,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="living_with_children_younger_ten"
           name="living_with_children_younger_ten"
           label="Living with Children Younger than 10"
-          value={dogProfile?.living_with_children_younger_ten}
+          value={editDog?.living_with_children_younger_ten}
           onChange={handleChange}
           variant="outlined"
         />
@@ -272,7 +280,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="living_with_adults"
           name="living_with_adults"
           label="Living with Adults"
-          value={dogProfile?.living_with_adults}
+          value={editDog?.living_with_adults}
           onChange={handleChange}
           variant="outlined"
         />
@@ -282,7 +290,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="living_with_small_animals"
           name="living_with_small_animals"
           label="Living with Small Animals"
-          value={dogProfile?.living_with_small_animals}
+          value={editDog?.living_with_small_animals}
           onChange={handleChange}
           variant="outlined"
         />
@@ -292,7 +300,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="living_with_large_animals"
           name="living_with_large_animals"
           label="Living with Large Animals"
-          value={dogProfile?.living_with_large_animals}
+          value={editDog?.living_with_large_animals}
           onChange={handleChange}
           variant="outlined"
         /><TextField
@@ -301,7 +309,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
         id="behavior_with_other_dogs"
         name="behavior_with_other_dogs"
         label="Behavior with other Dogs"
-        value={dogProfile?.behavior_with_other_dogs}
+        value={editDog?.behavior_with_other_dogs}
         onChange={handleChange}
         variant="outlined"
       />
@@ -311,7 +319,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="behavior_with_cats"
           name="behavior_with_cats"
           label="Behavior with Cats"
-          value={dogProfile?.behavior_with_cats}
+          value={editDog?.behavior_with_cats}
           onChange={handleChange}
           variant="outlined"
         />
@@ -321,7 +329,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           id="behavior_with_children"
           name="behavior_with_children"
           label="Behavior with Children"
-          value={dogProfile?.behavior_with_children}
+          value={editDog?.behavior_with_children}
           onChange={handleChange}
           variant="outlined"
         />

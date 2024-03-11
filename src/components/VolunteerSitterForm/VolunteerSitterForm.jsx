@@ -1,56 +1,77 @@
-import React, { useState } from 'react';
-import { 
-  Container, 
-  TextField, 
-  Button, 
-  Typography, 
-  AppBar, 
-  Toolbar, 
-  IconButton, 
-  Box 
-} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import React, { useState } from "react";
+import {
+  Container,
+  TextField,
+  Button,
+  Typography,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const VolunteerSitterForm = ({ onGoBack, onSubmit }) => {
-  const [dates, setDates] = useState({ startDate: '2024-04-03', endDate: '2024-04-07' });
+  const [dates, setDates] = useState({
+    startDate: "2024-04-03",
+    endDate: "2024-04-07",
+  });
+  const [openDialog, setOpenDialog] = useState(false);
+  const [dialogContent, setDialogContent] = useState("");
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setDates({ ...dates, [name]: value });
   };
 
+  const handleDialogOpen = (content) => {
+    setDialogContent(content);
+    setOpenDialog(true);
+  };
+
+  const handleDialogClose = () => {
+    setOpenDialog(false);
+  };
+
+  const handleGoBack = () => {
+    handleDialogOpen("Are you sure you want to go back without saving?");
+  };
+
+  const handleGoBackConfirm = () => {
+    handleDialogClose();
+    onGoBack();
+  };
+
   const handleSubmit = () => {
+    handleDialogOpen("Your request has been saved successfully!");
+  };
+
+  const handleSubmitConfirm = () => {
+    handleDialogClose();
     onSubmit(dates);
-    // Handle the submission, potentially navigate the user to a confirmation page
   };
 
   return (
     <Container maxWidth="sm">
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Can Do Canines
-          </Typography>
-        </Toolbar>
-      </AppBar>
       <Typography variant="h4" align="center" sx={{ my: 2 }}>
         Volunteer to be a Sitter for Loki
       </Typography>
-      <Box 
-        component="form" 
-        noValidate 
-        autoComplete="off" 
-        sx={{ mt: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+      <Box
+        component="form"
+        noValidate
+        autoComplete="off"
+        sx={{
+          mt: 3,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
       >
         <TextField
           label="Start Date"
@@ -58,10 +79,8 @@ const VolunteerSitterForm = ({ onGoBack, onSubmit }) => {
           name="startDate"
           value={dates.startDate}
           onChange={handleChange}
-          sx={{ width: '100%', my: 2 }}
-          InputLabelProps={{
-            shrink: true,
-          }}
+          sx={{ width: "100%", my: 2 }}
+          InputLabelProps={{ shrink: true }}
         />
         <TextField
           label="End Date"
@@ -69,20 +88,54 @@ const VolunteerSitterForm = ({ onGoBack, onSubmit }) => {
           name="endDate"
           value={dates.endDate}
           onChange={handleChange}
-          sx={{ width: '100%', my: 2 }}
-          InputLabelProps={{
-            shrink: true,
-          }}
+          sx={{ width: "100%", my: 2 }}
+          InputLabelProps={{ shrink: true }}
         />
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', mt: 2 }}>
-          <Button variant="outlined" onClick={onGoBack}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+            mt: 2,
+          }}
+        >
+          <Button variant="outlined" onClick={handleGoBackConfirm}>
             Go Back
           </Button>
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSubmitConfirm}
+          >
             Submit
           </Button>
         </Box>
       </Box>
+      <Dialog
+        open={openDialog}
+        onClose={handleDialogClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Confirmation</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {dialogContent}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose}>Cancel</Button>
+          {dialogContent.includes("saved") ? (
+            <Button onClick={handleSubmitConfirm} autoFocus>
+              Confirm
+            </Button>
+          ) : (
+            <Button onClick={handleGoBackConfirm} autoFocus>
+              Confirm
+            </Button>
+          )}
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };
