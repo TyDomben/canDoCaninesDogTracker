@@ -98,7 +98,7 @@ function DogProfile() {
           <CardMedia
             component="img"
             height="500"
-            image="/public/images/sample4.jpeg" 
+            image="/public/images/dogoutline.jpeg" 
             alt="Dog"
           />
 
