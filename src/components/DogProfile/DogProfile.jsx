@@ -103,7 +103,7 @@ function DogProfile() {
           />
 
 
-<Typography variant="body1">Name: {dogProfile?.name}</Typography>
+<Typography variant="body1">Name: {dogProfile?.dog_name}</Typography>
 <Typography variant="body1">Age: {dogProfile?.age}</Typography>
 <Typography variant="body1">Breed: {dogProfile?.breed}</Typography>
 <Typography variant="body1">Spayed or Neutered: {dogProfile?.spayed_neutered ? 'Yes' : 'No'}</Typography>
