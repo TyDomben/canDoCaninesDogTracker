@@ -37,7 +37,12 @@ router.get("/", async (req, res) => {
       "dogs"."in_heat", 
       "dogs"."potty_routine", 
       "dogs"."potty_habits_notes", 
-      "exercise_limitations"."exercise_limitations", 
+      "dogs"."limit_water",
+      "dogs"."limit_toy_play",
+      "dogs"."watch_carefully",
+      "dogs"."ingest_toys",
+      "dogs"."keep_away",
+      "dogs"."shares_toys", 
       "exercise_equipment"."exercise_equipment", 
       "dogs"."crate_manners", 
       "dogs"."house_manners", 
@@ -55,8 +60,7 @@ router.get("/", async (req, res) => {
       "dogs"
   JOIN 
       "dog_hosting" ON "dogs"."id" = "dog_hosting"."dog_id"
-  JOIN 
-      "exercise_limitations" AS "exercise_limitations" ON "dogs"."exercise_limitations" = "exercise_limitations"."id"
+  
   JOIN 
       "exercise_equipment" AS "exercise_equipment" ON "dogs"."exercise_equipment" = "exercise_equipment"."id"
   JOIN 
@@ -118,8 +122,13 @@ router.get("/", async (req, res) => {
         "dogs"."medications", 
         "dogs"."in_heat", 
         "dogs"."potty_routine", 
-        "dogs"."potty_habits_notes", 
-        "exercise_limitations"."exercise_limitations", 
+        "dogs"."potty_habits_notes",  
+        "dogs"."limit_water",
+        "dogs"."limit_toy_play",
+        "dogs"."watch_carefully",
+        "dogs"."ingest_toys",
+        "dogs"."keep_away",
+        "dogs"."shares_toys",
         "exercise_equipment"."exercise_equipment", 
         "dogs"."crate_manners", 
         "dogs"."house_manners", 
@@ -139,9 +148,7 @@ router.get("/", async (req, res) => {
         "food_type" AS "food_type" ON "dogs"."food_type" = "food_type"."id"
     JOIN 
         "breed" AS "breed" ON "dogs"."breed" = "breed"."id"
-    JOIN 
-        "exercise_limitations" AS "exercise_limitations" ON "dogs"."exercise_limitations" = "exercise_limitations"."id"
-    JOIN 
+   Join
         "exercise_equipment" AS "exercise_equipment" ON "dogs"."exercise_equipment" = "exercise_equipment"."id"
     JOIN 
         "behavior" AS "behavior_dog" ON "dogs"."behavior_with_other_dogs" = "behavior_dog"."id"
@@ -202,7 +209,7 @@ router.post("/", (req, res) => {
       req.body.medications,
       req.body.in_heat,
       req.body.potty_routine,
-      req.body.potty_comments,
+      req.body.potty_habits_notes,
       req.body.limit_water,
       req.body.limit_toy_play,
       req.body.watch_carefully,
@@ -230,7 +237,7 @@ router.post("/", (req, res) => {
     const queryText = `
             INSERT INTO "dogs" (
                 "user_id",
-                "name",
+                "dog_name",
                 "age",
                 "breed",
                 "spayed_neutered",
@@ -244,13 +251,18 @@ router.post("/", (req, res) => {
                 "in_heat",
                 "potty_routine",
                 "potty_habits_notes",
-                "exercise_limitations",
+                "limit_water",
+                "limit_toy_play",
+                "watch_carefully",
+                "ingest_toys",
+                "keep_away",
+                "shares_toys",
                 "exercise_equipment",
                 "crate_manners",
                 "house_manners",
                 "living_with_other_dogs",
                 "living_with_cats",
-                "living_with_children_older_ten",
+                "living_with_children_ten_and_up",
                 "living_with_children_younger_ten",
                 "living_with_adults",
                 "living_with_small_animals",
