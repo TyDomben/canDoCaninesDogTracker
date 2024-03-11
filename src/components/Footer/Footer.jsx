@@ -12,7 +12,7 @@ const Footer = () => {
         py: 3,
         px: 2,
         mt: "auto",
-        backgroundColor: theme.palette.background.default, // Use theme's background color
+        backgroundColor: theme.palette.background.default,
       }}
     >
       <Container maxWidth="sm">
