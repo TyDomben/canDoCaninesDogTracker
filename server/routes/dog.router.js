@@ -23,7 +23,7 @@ router.get("/", async (req, res) => {
       SELECT
       "dogs"."id",
       "dogs"."user_id",
-      "dogs"."name", 
+      "dogs"."dog_name", 
       "dogs"."age", 
       "dogs"."breed", 
       "dogs"."spayed_neutered", 
@@ -48,7 +48,7 @@ router.get("/", async (req, res) => {
       "dogs"."house_manners", 
       "dogs"."living_with_other_dogs", 
       "dogs"."living_with_cats", 
-      "dogs"."living_with_children_older_ten", 
+      "dogs"."living_with_children_ten_and_up", 
       "dogs"."living_with_children_younger_ten", 
       "dogs"."living_with_adults", 
       "dogs"."living_with_small_animals", 
@@ -58,8 +58,6 @@ router.get("/", async (req, res) => {
       "behavior_child"."behavior_category_name" AS "behavior_with_children"
   FROM 
       "dogs"
-  JOIN 
-      "dog_hosting" ON "dogs"."id" = "dog_hosting"."dog_id"
   
   JOIN 
       "exercise_equipment" AS "exercise_equipment" ON "dogs"."exercise_equipment" = "exercise_equipment"."id"
@@ -70,7 +68,7 @@ router.get("/", async (req, res) => {
   JOIN 
       "behavior" AS "behavior_child" ON "dogs"."behavior_with_children" = "behavior_child"."id"
   WHERE
-      "dog_hosting"."user_id" = $1;
+      "dogs"."user_id" = $1;
             `;
 
       const result = await connection.query(query, [userId]);
@@ -134,7 +132,7 @@ router.get("/", async (req, res) => {
         "dogs"."house_manners", 
         "dogs"."living_with_other_dogs", 
         "dogs"."living_with_cats", 
-        "dogs"."living_with_children_older_ten", 
+        "dogs"."living_with_children_ten_and_up", 
         "dogs"."living_with_children_younger_ten", 
         "dogs"."living_with_adults", 
         "dogs"."living_with_small_animals", 

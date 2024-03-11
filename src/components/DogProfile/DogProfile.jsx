@@ -93,7 +93,7 @@ function DogProfile() {
             <ArrowBackIcon />
           </IconButton> */}
           <Typography gutterBottom variant="h5" component="div">
-            {dogProfile?.name}’s Profile
+            {dogProfile?.dog_name}’s Profile
           </Typography>
           <CardMedia
             component="img"
