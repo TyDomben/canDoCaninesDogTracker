@@ -109,7 +109,7 @@ router.get("/", async (req, res) => {
         console.log("dogId server", dogId)
         const query = `SELECT
         "dogs"."user_id",
-        "dogs"."name", 
+        "dogs"."dog_name", 
         "dogs"."age", 
         "breed"."breed" as "breed", 
         "dogs"."spayed_neutered", 
