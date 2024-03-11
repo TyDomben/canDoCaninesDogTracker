@@ -332,7 +332,7 @@ const AddDogForm = () => {
               aria-labelledby="surgery_recovery"
 
               value={formValues.recovering_from_surgery}
-              name="surgery_recovery"
+              name="recovering_from_surgery"
               onChange={handleChangeBool}
             >
               <FormControlLabel value="true" control={<Radio />} label="Yes" />
@@ -456,7 +456,7 @@ const AddDogForm = () => {
                 multiline
                 rows={12}
                 name="crate_habits"
-                value={formValues.crate_habits}
+                value={formValues.crate_manners}
                 onChange={handleChange}
               />
 
