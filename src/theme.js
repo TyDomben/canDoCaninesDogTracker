@@ -1,7 +1,7 @@
 // src/theme.js
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createTheme } from '@mui/material/styles';
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
       main: '#E31837', // Can Do Canines Red

@@ -38,7 +38,7 @@ function* dogSaga() {
   yield takeLatest('FETCH_DOG_PROFILE', fetchDog);
   yield takeLatest("FETCH_USER_DOGS", fetchRaiserDogs);
   yield takeLatest('UPDATE_DOG_PROFILE', updateDog);
-  yield takeLatest('SET_USER_DOGS', fetchDogs);
+  yield takeLatest('SET_USER_DOGS', fetchDog);
 
 }
 

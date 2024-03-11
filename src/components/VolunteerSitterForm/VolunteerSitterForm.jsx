@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Container,
   TextField,
@@ -13,14 +13,17 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const VolunteerSitterForm = ({ onGoBack, onSubmit }) => {
-  const [dates, setDates] = useState({ startDate: '2024-04-03', endDate: '2024-04-07' });
+  const [dates, setDates] = useState({
+    startDate: "2024-04-03",
+    endDate: "2024-04-07",
+  });
   const [openDialog, setOpenDialog] = useState(false);
-  const [dialogContent, setDialogContent] = useState('');
+  const [dialogContent, setDialogContent] = useState("");
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -37,7 +40,7 @@ const VolunteerSitterForm = ({ onGoBack, onSubmit }) => {
   };
 
   const handleGoBack = () => {
-    handleDialogOpen('Are you sure you want to go back without saving?');
+    handleDialogOpen("Are you sure you want to go back without saving?");
   };
 
   const handleGoBackConfirm = () => {
@@ -46,7 +49,7 @@ const VolunteerSitterForm = ({ onGoBack, onSubmit }) => {
   };
 
   const handleSubmit = () => {
-    handleDialogOpen('Your request has been saved successfully!');
+    handleDialogOpen("Your request has been saved successfully!");
   };
 
   const handleSubmitConfirm = () => {
@@ -56,23 +59,6 @@ const VolunteerSitterForm = ({ onGoBack, onSubmit }) => {
 
   return (
     <Container maxWidth="sm">
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="go back"
-            sx={{ mr: 2 }}
-            onClick={handleGoBack}
-          >
-            <ArrowBackIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Can Do Canines
-          </Typography>
-        </Toolbar>
-      </AppBar>
       <Typography variant="h4" align="center" sx={{ my: 2 }}>
         Volunteer to be a Sitter for Loki
       </Typography>
@@ -80,7 +66,12 @@ const VolunteerSitterForm = ({ onGoBack, onSubmit }) => {
         component="form"
         noValidate
         autoComplete="off"
-        sx={{ mt: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+        sx={{
+          mt: 3,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
       >
         <TextField
           label="Start Date"
@@ -88,7 +79,7 @@ const VolunteerSitterForm = ({ onGoBack, onSubmit }) => {
           name="startDate"
           value={dates.startDate}
           onChange={handleChange}
-          sx={{ width: '100%', my: 2 }}
+          sx={{ width: "100%", my: 2 }}
           InputLabelProps={{ shrink: true }}
         />
         <TextField
@@ -97,14 +88,25 @@ const VolunteerSitterForm = ({ onGoBack, onSubmit }) => {
           name="endDate"
           value={dates.endDate}
           onChange={handleChange}
-          sx={{ width: '100%', my: 2 }}
+          sx={{ width: "100%", my: 2 }}
           InputLabelProps={{ shrink: true }}
         />
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', mt: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+            mt: 2,
+          }}
+        >
           <Button variant="outlined" onClick={handleGoBackConfirm}>
             Go Back
           </Button>
-          <Button variant="contained" color="primary" onClick={handleSubmitConfirm}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSubmitConfirm}
+          >
             Submit
           </Button>
         </Box>
@@ -123,7 +125,7 @@ const VolunteerSitterForm = ({ onGoBack, onSubmit }) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleDialogClose}>Cancel</Button>
-          {dialogContent.includes('saved') ? (
+          {dialogContent.includes("saved") ? (
             <Button onClick={handleSubmitConfirm} autoFocus>
               Confirm
             </Button>
