@@ -37,7 +37,12 @@ router.get("/", async (req, res) => {
       "dogs"."in_heat", 
       "dogs"."potty_routine", 
       "dogs"."potty_habits_notes", 
-      "exercise_limitations"."exercise_limitations", 
+      "dogs"."limit_water",
+      "dogs"."limit_toy_play",
+      "dogs"."watch_carefully",
+      "dogs"."ingest_toys",
+      "dogs"."keep_away",
+      "dogs"."shares_toys", 
       "exercise_equipment"."exercise_equipment", 
       "dogs"."crate_manners", 
       "dogs"."house_manners", 
@@ -55,8 +60,7 @@ router.get("/", async (req, res) => {
       "dogs"
   JOIN 
       "dog_hosting" ON "dogs"."id" = "dog_hosting"."dog_id"
-  JOIN 
-      "exercise_limitations" AS "exercise_limitations" ON "dogs"."exercise_limitations" = "exercise_limitations"."id"
+  
   JOIN 
       "exercise_equipment" AS "exercise_equipment" ON "dogs"."exercise_equipment" = "exercise_equipment"."id"
   JOIN 
@@ -118,8 +122,13 @@ router.get("/", async (req, res) => {
         "dogs"."medications", 
         "dogs"."in_heat", 
         "dogs"."potty_routine", 
-        "dogs"."potty_habits_notes", 
-        "exercise_limitations"."exercise_limitations", 
+        "dogs"."potty_habits_notes",  
+        "dogs"."limit_water",
+        "dogs"."limit_toy_play",
+        "dogs"."watch_carefully",
+        "dogs"."ingest_toys",
+        "dogs"."keep_away",
+        "dogs"."shares_toys",
         "exercise_equipment"."exercise_equipment", 
         "dogs"."crate_manners", 
         "dogs"."house_manners", 
@@ -139,9 +148,7 @@ router.get("/", async (req, res) => {
         "food_type" AS "food_type" ON "dogs"."food_type" = "food_type"."id"
     JOIN 
         "breed" AS "breed" ON "dogs"."breed" = "breed"."id"
-    JOIN 
-        "exercise_limitations" AS "exercise_limitations" ON "dogs"."exercise_limitations" = "exercise_limitations"."id"
-    JOIN 
+   Join
         "exercise_equipment" AS "exercise_equipment" ON "dogs"."exercise_equipment" = "exercise_equipment"."id"
     JOIN 
         "behavior" AS "behavior_dog" ON "dogs"."behavior_with_other_dogs" = "behavior_dog"."id"

@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
     SELECT
       "dogs"."user_id",
       "dogs"."id",
-      "dogs"."name",
+      "dogs"."dog_name",
       "dogs"."age",
       "dogs"."breed",
       "dogs"."spayed_neutered",
@@ -28,13 +28,18 @@ router.get("/", (req, res) => {
       "dogs"."in_heat",
       "dogs"."potty_routine",
       "dogs"."potty_habits_notes",
-      "exercise_limitations"."exercise_limitations",
+      "dogs"."limit_water",
+      "dogs"."limit_toy_play",
+      "dogs"."watch_carefully",
+      "dogs"."ingest_toys",
+      "dogs"."keep_away",
+      "dogs"."shares_toys",
       "exercise_equipment"."exercise_equipment",
       "dogs"."crate_manners",
       "dogs"."house_manners",
       "dogs"."living_with_other_dogs",
       "dogs"."living_with_cats",
-      "dogs"."living_with_children_older_ten",
+      "dogs"."living_with_children_ten_and_up",
       "dogs"."living_with_children_younger_ten",
       "dogs"."living_with_adults",
       "dogs"."living_with_small_animals",
@@ -46,8 +51,6 @@ router.get("/", (req, res) => {
       "user"
     JOIN
       "dogs" ON "user"."id" ="dogs"."user_id"
-    JOIN
-      "exercise_limitations" AS "exercise_limitations" ON "dogs"."exercise_limitations" = "exercise_limitations"."id"
     JOIN
       "exercise_equipment" AS "exercise_equipment" ON "dogs"."exercise_equipment" = "exercise_equipment"."id"
     JOIN
