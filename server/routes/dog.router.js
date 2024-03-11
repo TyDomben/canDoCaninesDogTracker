@@ -188,8 +188,8 @@ router.post("/", (req, res) => {
     const user = req.user.id;
 
     const dogData = [
-      req.user.id,
-      req.body.name,
+      req.user.id, // assuming you're now including this in the insert
+      req.body.dog_name,
       req.body.age,
       req.body.breed,
       req.body.spayed_neutered,
@@ -202,15 +202,20 @@ router.post("/", (req, res) => {
       req.body.medications,
       req.body.in_heat,
       req.body.potty_routine,
-      req.body.potty_habits_notes,
-      req.body.exercise_limitations,
+      req.body.potty_comments,
+      req.body.limit_water,
+      req.body.limit_toy_play,
+      req.body.watch_carefully,
+      req.body.ingest_toys,
+      req.body.keep_away,
+      req.body.shares_toys,
       req.body.exercise_equipment,
       req.body.crate_manners,
       req.body.house_manners,
       req.body.living_with_other_dogs,
       req.body.living_with_cats,
-      req.body.living_with_children_older_ten,
-      req.body.living_with_children_younger_ten,
+      req.body.living_with_children_ten_and_up,
+      req.body.living_with_children_younger_than_ten,
       req.body.living_with_adults,
       req.body.living_with_small_animals,
       req.body.living_with_large_animals,
@@ -253,7 +258,7 @@ router.post("/", (req, res) => {
                 "behavior_with_other_dogs",
                 "behavior_with_cats",
                 "behavior_with_children")
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29);
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34);
             `;
 
     pool
