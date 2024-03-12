@@ -44,6 +44,7 @@ router.post("/testemail", async (req, res) => {
 });
 
 router.post("/confirmation", async (req, res) => {
+    //userEmail should = something like req.user.email or something like that, will have to sort out after getting something to call this on the page
   const { userEmail } = req.body;
   //This is used to identify the logged in user
   //const user = req.user;
