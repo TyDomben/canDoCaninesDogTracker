@@ -72,6 +72,7 @@ function DogProfile() {
   // Navigate to Edit Dog Profile
   const handleEdit = () => {
     console.log("handle edit clicked for:", dogId);
+    dispatch({ type:'SET_EDIT_DOG', payload: dogProfile})
     history.push(`/editdogprofile/${dogId}`)
   };
 

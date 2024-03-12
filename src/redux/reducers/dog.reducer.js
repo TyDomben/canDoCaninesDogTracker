@@ -20,14 +20,15 @@ const dogProfile = (state = [], action) => {
 }
 
 const editDog = (state = {}, action) => {
+    console.log('action', action.payload)
     if (action.type === 'SET_EDIT_DOG') {
         return action.payload;
     } else if (action.type === 'EDIT_DOG') {
-        console.log('action:', action.payload.value);
+        console.log('action.payload', action.payload);
         return {
             ...state,
             // [action.payload.property]: action.payload.value,
-            [action.payload]: action.payload.value
+            [action.payload.property]: action.payload.value
         }
     // } else if (action.type === 'EDIT_CLEAR') {
     //     return {};

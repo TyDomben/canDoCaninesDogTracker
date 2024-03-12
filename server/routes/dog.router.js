@@ -118,7 +118,7 @@ router.get("/:id", async (req, res) => {
         "dogs"."medical_conditions", 
         "dogs"."recovering_from_surgery", 
         "dogs"."medications", 
-        "dogs"."in_heat", 
+        "in_heat"."in_heat", 
         "dogs"."potty_routine", 
         "dogs"."potty_habits_notes",  
         "dogs"."limit_water",

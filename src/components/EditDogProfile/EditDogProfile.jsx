@@ -19,20 +19,21 @@ import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
   const dispatch = useDispatch();
   const editDog = useSelector((store) => store.dog.editDog);
-  // const { dogId } = useParams();
+  const { dogId } = useParams();
   const history = useHistory();
   // const [ formValues, setEditDog ] = useState(editDog);
-
+  console.log('edit dog initial', editDog)
   const handleChange = (event) => {
+    console.log(event.target)
     event.preventDefault()
     const { name, value } = event.target;
     console.log('name and value', name, value);
     dispatch({
       type: 'EDIT_DOG',
-      payload: {...editDog, [name]: value
-       }
+       payload: { property:name, value: value}
+       
     });
-  };
+}
   console.log('edit dog:', editDog)
 
   const handleSave = () => {
@@ -52,15 +53,15 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
       </AppBar>
       <Box component="form" noValidate autoComplete="off" sx={{ mt: 3 }}>
         <Typography variant="h5" align="center" gutterBottom>
-          Edit {editDog?.name}'s Profile
+          Edit {editDog?.dog_name}'s Profile
         </Typography>
         <TextField
           fullWidth
           margin="normal"
-          id="name"
-          name="name"
+          id="dog_name"
+          name="dog_name"
           label="Name"
-          value={editDog?.name}
+          value={editDog?.dog_name}
           onChange={handleChange}
           variant="outlined"
         />
