@@ -38,7 +38,6 @@ function Nav() {
     { text: "Admin Home", path: "/admin-home" },
     { text: "Edit Profile", path: "/user-edit" },
     { text: "Info", path: "/info" },
-    { text: "Request Care Form", path: "/requestCareForm" },
     { text: "Volunteer Sitter Form", path: "/volunteerSitterForm" },
   ];
   // Nav bar

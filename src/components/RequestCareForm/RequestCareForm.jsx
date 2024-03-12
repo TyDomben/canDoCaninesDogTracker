@@ -149,7 +149,7 @@ if (value === "delete"){
             variant="outlined"
             label="Comments"
             type="text"
-            name="Comments"
+            name="date_comments"
             onChange={handleChange}
             sx={{ width: 500, my: 2 }}
             InputLabelProps={{
@@ -172,7 +172,7 @@ if (value === "delete"){
             variant="outlined"
             label="Appointment Notes"
             type="text"
-            name="Appointment"
+            name="appointments"
             onChange={handleChange}
             sx={{ width: 500, my: 2 }}
             InputLabelProps={{
@@ -182,51 +182,6 @@ if (value === "delete"){
             rows={4} 
           />
         </Box>
-
-<div
-          sx={{
-            "& > :not(style)": { m: 1, width: "55ch" },
-          }}
-        >
-          <TextField
-            id="outlined-basic-comments"
-            variant="outlined"
-            label="Comments"
-            type="text"
-            name="date_comments"
-            value={newRequest.date_comments}
-            onChange={handleChange}
-            sx={{ width: 500, my: 2 }}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            multiline 
-            rows={4} 
-          />
-        </div>
-
-        <div
-          sx={{
-            "& > :not(style)": { m: 1, width: "55ch" },
-          }}
-        >
-          <TextField
-            id="outlined-basic-appointments"
-            variant="outlined"
-            label="Appointment Notes"
-            type="text"
-            name="appointments"
-            value={newRequest.appointments}
-            onChange={handleChange}
-            sx={{ width: 500, my: 2 }}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            multiline 
-            rows={4} 
-          />
-        </div>
-        
         <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', mt: 2 }}>
           <Button variant="outlined" color="secondary" onClick={handleGoBack}>
 

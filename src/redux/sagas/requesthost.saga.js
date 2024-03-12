@@ -7,8 +7,9 @@ function* requestHost(action){
 
         console.log("dogId:", formData)
 
-        const response = yield axios.post(`api/sitter/${dogId}`, formData)
+        const response = yield axios.post(`api/sitter/request/${dogId}`, formData)
         yield put({ type: 'REQUEST_HOST_SUCCESS', payload: response.data });
+        console.log("response", response.data)
     } catch (error) {
         console.log('request host saga failed', error);
     //     yield put({ type: 'REQUEST_HOST_FAILURE', error: error.message });

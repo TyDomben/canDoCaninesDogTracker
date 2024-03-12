@@ -10,6 +10,15 @@ function* fetchRaiserDogs() {
   }
 }
 
+function* addDog (action) {
+    try {
+        const postDog = yield axios.post("/api/dog", action.payload) 
+            yield put ({ type:"FETCH_RAISER_DOGS"})
+        
+    }catch(error) {
+        console.log ('add dog failed', error)
+    }
+}
 
 // worker Saga: will be fired on "FETCH_DOG_PROFILE" actions
 function* fetchDog() {
@@ -39,6 +48,7 @@ function* dogSaga() {
   yield takeLatest("FETCH_USER_DOGS", fetchRaiserDogs);
   yield takeLatest('UPDATE_DOG_PROFILE', updateDog);
   yield takeLatest('SET_USER_DOGS', fetchDog);
+  yield takeLatest('POST_DOG', addDog);
 
 }
 
