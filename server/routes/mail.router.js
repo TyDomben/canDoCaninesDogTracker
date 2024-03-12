@@ -5,6 +5,7 @@ const nodemailer = require("nodemailer");
 const { EMAIL, PASSWORD } = require("../../.env");
 const Mailgen = require("mailgen");
 
+//This is a test emai function that sends an email to a fake randomly generated email and sends a link to ethereal email to view it
 router.post("/testemail", async (req, res) => {
   let testAccount = await nodemailer.createTestAccount();
 
@@ -47,33 +48,28 @@ router.post("/confirmation", async (req, res) => {
   let config = {
     service: "gmail",
     auth: {
+    //EMAIL and PASSWORD are refenced in a .env file so you will have to make your own, this is for who is SENDING the email
       user: EMAIL,
       pass: PASSWORD,
     },
   };
   let transporter = nodemailer.createTransport(config);
 
+  //This is what populates the Header and the Footer, think of this as "what company is this coming from"
   let MailGenerator = new Mailgen({
     theme: "default",
     product: {
-      name: "Mailgen",
-      link: "https://mailgen.js/",
+      name: "Can Do Canines",
+      link: "https://candocanines.org/",
     },
   });
+  //This is where we make the actual body of the email, i.e. what the user will see when reading the email
   let response = {
     body: {
       name: "jswanson97",
       intro:
         "Confirmation email to watch (dogs name) for dates (start date) through (end date)",
-    //   table: {
-    //     date: [
-    //       {
-    //         item: "Nodemailer stack book",
-    //         description: "A backend stack application",
-    //       },
-    //     ],
-    //   },
-      outro: "Thank you for volunteering",
+      signature: "Thank you for volunteering",
     },
   };
   let mail = MailGenerator.generate(response);
