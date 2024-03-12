@@ -24,17 +24,6 @@ CREATE TABLE IF NOT EXISTS "behavior" (
 INSERT INTO "behavior" ("behavior_category_name")
 VALUES ('unknown'), ('comfortable'), ('indefferent'), ('uncomfortable');
 
----------------------------------------------------------------- EXERCISE LIMITATION TABLE ------------------------------------------------------
-
-
-CREATE TABLE IF NOT EXISTS "exercise_limitations" (
-    "id" SERIAL PRIMARY KEY,
-    "exercise_limitations" VARCHAR(255) NOT NULL
-);
-
-INSERT INTO "exercise_limitations" ("exercise_limitations")
-VALUES ('limit water'), ('limit toy play'), ('may destroy toys(watch carefully)'), ('may injest toys'),
-('plays keep away'), ('does not share toys with other dogs');
 
 ---------------------------------------------------------------- EXERCISE EQUIPMENT TABLE ------------------------------------------------------
 
@@ -126,8 +115,8 @@ CREATE TABLE IF NOT EXISTS "dogs" (
 );
 
 INSERT INTO "dogs" (
-	"user_id",
-    "name",
+    "user_id",
+    "dog_name",
     "age",
     "breed",
     "spayed_neutered",
@@ -141,13 +130,18 @@ INSERT INTO "dogs" (
     "in_heat",
     "potty_routine",
     "potty_habits_notes",
-    "exercise_limitations",
+    "limit_water",
+    "limit_toy_play",
+    "watch_carefully",
+    "ingest_toys",
+    "keep_away",
+    "shares_toys",    
     "exercise_equipment",
     "crate_manners",
     "house_manners",
     "living_with_other_dogs",
     "living_with_cats",
-    "living_with_children_older_ten",
+    "living_with_children_ten_and_up",
     "living_with_children_younger_ten",
     "living_with_adults",
     "living_with_small_animals",
@@ -155,8 +149,7 @@ INSERT INTO "dogs" (
     "behavior_with_other_dogs",
     "behavior_with_cats",
     "behavior_with_children")
-VALUES ('1','Loki', '2', '1', true, '1', '1 cup', '3', '6 am', 'none', false, 'none', '1', 'every 3 hours', 'takes a long time', '1', '1', 'feels safe in crate', 'gets on the couch', true, true, false, false, true, true, true, '1', '1', '1');
-
+VALUES ('1','Loki', '2', '1', true, '1', '1 cup', '3', '6 am', 'none', false, 'none', '1', 'every 3 hours', 'takes a long time',true, true, true, true, true, true, '1', 'feels safe in crate', 'gets on the couch', true, true, false, false, true, true, true, '1', '1', '1');
 ---------------------------------------------------------------- DOG HOSTING TABLE ----------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS "hosting_request" (
@@ -203,100 +196,9 @@ VALUES('1', '1', '4-1-2024', '4-7-2024', 'no comments', false);
 
 -------------------------------- QUERIES --------------------------
 
------------- GET --------------
-SELECT
-	"dogs"."user_id",
-    "dogs"."name", 
-    "dogs"."age", 
-    "dogs"."breed", 
-    "dogs"."spayed_neutered", 
-    "dogs"."food_type", 
-    "dogs"."food_amount", 
-    "dogs"."meals_per_day", 
-    "dogs"."eating_times", 
-    "dogs"."medical_conditions", 
-    "dogs"."recovering_from_surgery", 
-    "dogs"."medications", 
-    "dogs"."in_heat", 
-    "dogs"."potty_routine", 
-    "dogs"."potty_habits_notes", 
-    "exercise_limitations"."exercise_limitations", 
-    "exercise_equipment"."exercise_equipment", 
-    "dogs"."crate_manners", 
-    "dogs"."house_manners", 
-    "dogs"."living_with_other_dogs", 
-    "dogs"."living_with_cats", 
-    "dogs"."living_with_children_>_ten", 
-    "dogs"."living_with_children_<_ten", 
-    "dogs"."living_with_adults", 
-    "dogs"."living_with_small_animals", 
-    "dogs"."living_with_large_animals", 
-    "behavior_dog"."behavior_category_name" AS "behavior_with_other_dogs",
-    "behavior_cat"."behavior_category_name" AS "behavior_with_cats",
-    "behavior_child"."behavior_category_name" AS "behavior_with_children"
-FROM 
-    "dogs"
-JOIN 
-	"dog_hosting" ON "dogs"."id" = "dog_hosting"."dog_id"
-JOIN 
-    "exercise_limitations" AS "exercise_limitations" ON "dogs"."exercise_limitations" = "exercise_limitations"."id"
-JOIN 
-    "exercise_equipment" AS "exercise_equipment" ON "dogs"."exercise_equipment" = "exercise_equipment"."id"
-JOIN 
-    "behavior" AS "behavior_dog" ON "dogs"."behavior_with_other_dogs" = "behavior_dog"."id"
-JOIN 
-    "behavior" AS "behavior_cat" ON "dogs"."behavior_with_cats" = "behavior_cat"."id"
-JOIN 
-    "behavior" AS "behavior_child" ON "dogs"."behavior_with_children" = "behavior_child"."id"
-WHERE
-	"dog_hosting"."user_id" = 4;
-;
-
------------- POST --------------
-
-INSERT INTO "dogs" (
-                "user_id",
-                "name",
-                "age",
-                "breed",
-                "spayed_neutered",
-                "food_type",
-                "food_amount",
-                "meals_per_day",
-                "eating_times",
-                "medical_conditions",
-                "recovering_from_surgery",
-                "medications",
-                "in_heat",
-                "potty_routine",
-                "potty_habits_notes",
-                "exercise_limitations",
-                "exercise_equipment",
-                "crate_manners",
-                "house_manners",
-                "living_with_other_dogs",
-                "living_with_cats",
-                "living_with_children_older_ten",
-                "living_with_children_younger_ten",
-                "living_with_adults",
-                "living_with_small_animals",
-                "living_with_large_animals",
-                "behavior_with_other_dogs",
-                "behavior_with_cats",
-                "behavior_with_children")
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29);
-
-
----------- DOG DELETE ----------
- DELETE FROM "dogs"
- WHERE "id" = $1;
+---------- REQUEST A HOST (POST) ----------
  
- SELECT * FROM "dogs";
- 
- 
- ---------- SITTER POST ----------
- 
-         INSERT INTO "dog_hosting" (
+         INSERT INTO "hosting_request" (
           "dog_id",
           "user_id",
           "start_date",
@@ -304,25 +206,52 @@ VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $
           "date_comments",
           "appointments",
           "status"
-        ) VALUES (, $2, $3, $4, $5, $6, $7)
+        ) VALUES ('1', '1', '4-10-2024', '4-17-2024', 'going on vacation', 'no appointments', false)
         RETURNING "id";
         
         
-------- SITTER GET ---------
+------- REQUEST A HOST (GET) ---------
 SELECT 
 "dogs"."id" AS "dog_id",
 "user"."id" AS "user_id",
-"dog_hosting"."start_date",
-"dog_hosting"."end_date",
-"dog_hosting"."date_comments",
-"dog_hosting"."appointments",
-"dog_hosting"."status"
+"hosting_request"."start_date",
+"hosting_request"."end_date",
+"hosting_request"."date_comments",
+"hosting_request"."appointments",
+"hosting_request"."status"
 FROM 
-"dog_hosting"
+"hosting_request"
 JOIN 
-"dogs" ON "dogs"."id" = "dog_hosting"."dog_id"
+"dogs" ON "dogs"."id" = "hosting_request"."dog_id"
 JOIN 
-"user" ON "user"."id" = "dog_hosting"."user_id"
+"user" ON "user"."id" = "hosting_request"."user_id"
 WHERE 
-"dog_hosting"."id" = $1;
-;
+"hosting_request"."id" = 2;
+
+-------- VOLUNTEER TO HOST (POST) -------
+INSERT INTO "volunteer_hosting" (
+          "request_id",
+          "user_id",
+          "start_date",
+          "end_date",
+          "comments",
+          "status"
+        ) VALUES ('2', '1', '4-10-2024', '4-13-2024', 'can take from 10-13 April', false)
+        RETURNING "id";
+        
+---------- VOLUNTEER TO HOST (GET) --------
+SELECT 
+"hosting_request"."id" AS "request_id",
+"user"."id" AS "user_id",
+"volunteer_hosting"."start_date",
+"volunteer_hosting"."end_date",
+"volunteer_hosting"."comments",
+"volunteer_hosting"."status"
+FROM 
+"volunteer_hosting"
+JOIN 
+"hosting_request" ON "hosting_request"."id" = "volunteer_hosting"."request_id"
+JOIN 
+"user" ON "user"."id" = "volunteer_hosting"."user_id"
+WHERE 
+"hosting_request"."id" = $2;

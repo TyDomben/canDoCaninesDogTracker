@@ -7,7 +7,7 @@ function* volunteerHost(action){
 
         console.log("hostingId:", formData)
 
-        const response = yield axios.post(`api/sitter/${hostingId}`, formData)
+        const response = yield axios.post(`api/sitter/volunteer/${hostingId}`, formData)
         yield put({ type: 'VOLUNTEER_HOST_SUCCESS', payload: response.data });
         console.log("response", response.data)
     } catch (error) {

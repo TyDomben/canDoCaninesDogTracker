@@ -22,6 +22,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 const VolunteerSitterForm = ({ onGoBack, onSubmit }) => {
   let dispatch = useDispatch("");
   let history = useHistory("");
+  const { hostingId } = useParams();
 
 
   const [dates, setDates] = useState({
@@ -30,47 +31,47 @@ const VolunteerSitterForm = ({ onGoBack, onSubmit }) => {
   });
 
   
-  const [openDialog, setOpenDialog] = useState(false);
-  const [dialogContent, setDialogContent] = useState("");
+  // const [openDialog, setOpenDialog] = useState(false);
+  // const [dialogContent, setDialogContent] = useState("");
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setDates({ ...dates, [name]: value });
   };
 
-  const handleDialogOpen = (content) => {
-    setDialogContent(content);
-    setOpenDialog(true);
-  };
+  // const handleDialogOpen = (content) => {
+  //   setDialogContent(content);
+  //   setOpenDialog(true);
+  // };
 
-  const handleDialogClose = () => {
-    setOpenDialog(false);
-  };
+  // const handleDialogClose = () => {
+  //   setOpenDialog(false);
+  // };
 
-  const handleGoBack = () => {
-    handleDialogOpen("Are you sure you want to go back without saving?");
-  };
+  // const handleGoBack = () => {
+  //   handleDialogOpen("Are you sure you want to go back without saving?");
+  // };
 
-  const handleGoBackConfirm = () => {
-    handleDialogClose();
-    onGoBack();
-  };
+  // const handleGoBackConfirm = () => {
+  //   handleDialogClose();
+  //   onGoBack();
+  // };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();
     console.log("dispatching VOLUNTEER_TO_HOST action")
   
     dispatch({ type: "VOLUNTEER_TO_HOST", 
-    payload: {hostingId: hostingId, formData: dates}
+    payload: {hostingId, formData: dates}
   })
-    history.push('/')
+    history.push('/home')
     handleDialogOpen("Your request has been saved successfully!");
   };
 
-  const handleSubmitConfirm = () => {
-    handleDialogClose();
-    onSubmit(dates);
-  };
+  // const handleSubmitConfirm = () => {
+  //   handleDialogClose();
+  //   onSubmit(dates);
+  // };
 
   return (
     <Container maxWidth="sm">
@@ -116,19 +117,44 @@ const VolunteerSitterForm = ({ onGoBack, onSubmit }) => {
             mt: 2,
           }}
         >
-          <Button variant="outlined" onClick={handleGoBackConfirm}>
+
+<Box
+          sx={{
+            "& > :not(style)": { m: 1, width: "55ch" },
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            id="outlined-basic-comments"
+            variant="outlined"
+            label="Comments"
+            type="text"
+            name="comments"
+            onChange={handleChange}
+            sx={{ width: 500, my: 2 }}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            multiline 
+            rows={4} 
+          />
+        </Box>
+          {/* <Button variant="outlined" onClick={handleGoBackConfirm}>
             Go Back
-          </Button>
+          </Button> */}
+          <Box>
           <Button
             variant="contained"
             color="primary"
-            onClick={handleSubmitConfirm}
+            onClick={handleSubmit}
           >
             Submit
           </Button>
+          </Box>
         </Box>
       </Box>
-      <Dialog
+      {/* <Dialog
         open={openDialog}
         onClose={handleDialogClose}
         aria-labelledby="alert-dialog-title"
@@ -152,7 +178,7 @@ const VolunteerSitterForm = ({ onGoBack, onSubmit }) => {
             </Button>
           )}
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
     </Container>
   );
 };

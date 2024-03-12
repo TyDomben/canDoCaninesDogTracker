@@ -2,8 +2,6 @@ const express = require("express");
 const pool = require("../modules/pool");
 const router = express.Router();
 
-
-
 /**
  * GET route to retrieve the sitter data from the "user" table
  */
@@ -136,62 +134,6 @@ router.get("/history", async (req, res) => {
 });
 
 /**
- * POST route to request a sitter
- * Input fields from the user:
- * Start Date, End date, Comments, Appointment Notes
- */
-router.post("/:id", async (req, res) => {
-  console.log("/sitter/:id POST route");
-  console.log("is authenticated?", req.isAuthenticated());
-  console.log("user", req.user);
-
-  if (!req.isAuthenticated()) {
-    return res.sendStatus(403);}
-
-
-      const userId = req.user.id;
-      const dogId = req.params.id;
-      console.log("dogId server side", dogId)
-
-      const {start_date, end_date, date_comments, appointments, status } = req.body;
-      console.log("req.body", req.body)
-
-      let connection;
-    
-      try {
-        connection = await pool.connect();
-
-      const query = `
-        INSERT INTO "dog_hosting" (
-          "dog_id",
-          "user_id",
-          "start_date",
-          "end_date",
-          "date_comments",
-          "appointments",
-          "status"
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7)
-        RETURNING "id";
-      `;
-
-      const values = [dogId, userId, start_date, end_date, date_comments, appointments, status]
-      const result = await connection.query(query, values);
-      
-      const hostingId = result.rows[0].id;
-      console.log("hosting request created id:", hostingId)
-
-
-      res.status(201).json({ hostingId });
-    } catch (error) {
-      console.error("error requesting sitter", error);
-      res.sendStatus(500);
-    } finally {
-      if (connection) {
-        connection.release();
-      }
-    }
-  });
-/**
  * GET route to retrieve all sitter requests
  */
 router.get("/requests", async (req, res) => {
@@ -221,60 +163,241 @@ router.get("/requests", async (req, res) => {
   }
 });
 
+
 /**
- * GET route to view hosting request (POST sitter/:id)
+ * POST route to request a sitter
+ * Input fields from the user:
+ * Start Date, End date, Comments, Appointment Notes
+ * :id is the dogId of the associated dog 
  */
-router.get('/request/:id', async(req,res) => {
-  console.log("/sitter/request/:id GET route")
+router.post("/request/:id", async (req, res) => {
+  console.log("/sitter/request/:id POST route");
+  console.log("is authenticated?", req.isAuthenticated());
+  console.log("user", req.user);
+
+  if (!req.isAuthenticated()) {
+    return res.sendStatus(403);
+  }
+
+  const userId = req.user.id;
+  const dogId = req.params.id;
+  console.log("dogId server side", dogId);
+
+  const { start_date, end_date, date_comments, appointments, status } =
+    req.body;
+  console.log("req.body", req.body);
+
+  let connection;
+
+  try {
+    connection = await pool.connect();
+
+    const query = `
+      INSERT INTO "hosting_request" 
+      ( "dog_id",
+        "user_id",
+        "start_date",
+        "end_date",
+        "date_comments",
+        "appointments",
+        "status"
+      ) VALUES ('1', '1', '4-10-2024', '4-17-2024', 'going on vacation', 'no appointments', false)
+      RETURNING "id";`;
+
+    const values = [
+      dogId,
+      userId,
+      start_date,
+      end_date,
+      date_comments,
+      appointments,
+      status,
+    ];
+    const result = await connection.query(query, values);
+
+    const hostingId = result.rows[0].id;
+    console.log("hosting request created id:", hostingId);
+
+    res.status(201).json({ hostingId });
+  } catch (error) {
+    console.error("error requesting sitter", error);
+    res.sendStatus(500);
+  } finally {
+    if (connection) {
+      connection.release();
+    }
+  }
+});
+
+/**
+ * GET route to view a submitted hosting request for single dog (POST sitter/request/:id)
+ *  the :id here is the requestId of the corresponding request (hosting_request)
+ */
+router.get("/request/volunteer/:id", async (req, res) => {
+  console.log("/sitter/request/volunteer/:id GET route");
 
   if (!req.isAuthenticated()) {
     return res.sendStatus(403);
   }
   const hostingId = req.params.id;
-  console.log("fetching hosting request for id:", hostingId)
-  
+  console.log("fetching hosting request for id:", hostingId);
+
   let connection;
-  
-  try{
+
+  try {
     connection = await pool.connect();
 
-    const query =
-    `SELECT 
+    const query = ` SELECT 
     "dogs"."id" AS "dog_id",
     "user"."id" AS "user_id",
-    "dog_hosting"."start_date",
-    "dog_hosting"."end_date",
-    "dog_hosting"."date_comments",
-    "dog_hosting"."appointments",
-    "dog_hosting"."status"
+    "hosting_request"."start_date",
+    "hosting_request"."end_date",
+    "hosting_request"."date_comments",
+    "hosting_request"."appointments",
+    "hosting_request"."status"
     FROM 
-    "dog_hosting"
+    "hosting_request"
     JOIN 
-    "dogs" ON "dogs"."id" = "dog_hosting"."dog_id"
+    "dogs" ON "dogs"."id" = "hosting_request"."dog_id"
     JOIN 
-    "user" ON "user"."id" = "dog_hosting"."user_id"
+    "user" ON "user"."id" = "hosting_request"."user_id"
     WHERE 
-    "dog_hosting"."id" = $1;`
+    "hosting_request"."id" = $1;`;
 
     const values = [hostingId];
     const result = await connection.query(query, values);
 
-    if(result.rows.length > 0){
+    if (result.rows.length > 0) {
       const hostingRequest = result.rows[0];
       res.json(hostingRequest);
     } else {
-      res.sendStatus(404)
+      res.sendStatus(404);
     }
-  }catch (error){
-    console.log("error", error)
+  } catch (error) {
+    console.log("error", error);
     res.sendStatus(500);
-  }finally {
-    if(connection){
+  } finally {
+    if (connection) {
       connection.release();
     }
   }
-})
+});
 
+/**
+ * POST route to volunteer to be a sitter for the corresponding request id
+ * Input fields from the user:
+ * Start Date, End date, Comments
+ * the :id here is the requestId of the corresponding request for a host (hosting_request)
+ */
+router.post("/volunteer/:id", async (req, res) => {
+  console.log("/sitter/volunteer/:id POST route");
+  console.log("is authenticated?", req.isAuthenticated());
+  console.log("user", req.user);
+
+  if (!req.isAuthenticated()) {
+    return res.sendStatus(403);
+  }
+
+  const userId = req.user.id;
+  const requestId = req.params.id;
+  console.log("hostingId server side", requestId);
+
+  const { start_date, end_date, comments, status } = req.body;
+  console.log("req.body", req.body);
+
+  let connection;
+
+  try {
+    connection = await pool.connect();
+
+    const query = `
+    INSERT INTO "volunteer_hosting" (
+      "request_id",
+      "user_id",
+      "start_date",
+      "end_date",
+      "comments",
+      "status"
+    ) VALUES ($1, $2, $3, $4, $5, $6)
+    RETURNING "id";`;
+
+    const values = [
+      dogId,
+      userId,
+      start_date,
+      end_date,
+      comments,
+      status,
+    ];
+    const result = await connection.query(query, values);
+
+    const hostingId = result.rows[0].id;
+    console.log("hosting request created id:", hostingId);
+
+    res.status(201).json({ hostingId });
+  } catch (error) {
+    console.error("error requesting sitter", error);
+    res.sendStatus(500);
+  } finally {
+    if (connection) {
+      connection.release();
+    }
+  }
+});
+
+/**
+ * GET route to view a submitted request a volunteer sends for single dog hosting experience (POST sitter/volunteer/:id)
+ *  the :id here is the hostingId of the corresponding request (volunteer_hosting)
+ */
+router.get("/request/volunteer/:id", async (req, res) => {
+  console.log("/sitter/request/volunteer/:id GET route");
+
+  if (!req.isAuthenticated()) {
+    return res.sendStatus(403);
+  }
+  const hostingId = req.params.id;
+  console.log("fetching volunteer hosting for id:", hostingId);
+
+  let connection;
+
+  try {
+    connection = await pool.connect();
+
+    const query = ` SELECT 
+    "dogs"."id" AS "dog_id",
+    "user"."id" AS "user_id",
+    "hosting_request"."start_date",
+    "hosting_request"."end_date",
+    "hosting_request"."date_comments",
+    "hosting_request"."appointments",
+    "hosting_request"."status"
+    FROM 
+    "hosting_request"
+    JOIN 
+    "dogs" ON "dogs"."id" = "hosting_request"."dog_id"
+    JOIN 
+    "user" ON "user"."id" = "hosting_request"."user_id"
+    WHERE 
+    "hosting_request"."id" = $1;`;
+
+    const values = [hostingId];
+    const result = await connection.query(query, values);
+
+    if (result.rows.length > 0) {
+      const hostingRequest = result.rows[0];
+      res.json(hostingRequest);
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (error) {
+    console.log("error", error);
+    res.sendStatus(500);
+  } finally {
+    if (connection) {
+      connection.release();
+    }
+  }
+});
 
 /**
  * DELETE route to cancel a sitter request
