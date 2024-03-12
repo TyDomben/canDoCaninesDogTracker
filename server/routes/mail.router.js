@@ -5,6 +5,7 @@ const nodemailer = require("nodemailer");
 const { EMAIL, PASSWORD } = require("../../.env");
 const Mailgen = require("mailgen");
 
+//This is a test emai function that sends an email to a fake randomly generated email and sends a link to ethereal email to view it
 router.post("/testemail", async (req, res) => {
   let testAccount = await nodemailer.createTestAccount();
 
@@ -43,37 +44,36 @@ router.post("/testemail", async (req, res) => {
 });
 
 router.post("/confirmation", async (req, res) => {
-    const { userEmail } = req.body;
+  const { userEmail } = req.body;
+  //This is used to identify the logged in user
+  //const user = req.user;
   let config = {
     service: "gmail",
     auth: {
+      //EMAIL and PASSWORD are refenced in a .env file so you will have to make your own, this is for who is SENDING the email
       user: EMAIL,
       pass: PASSWORD,
     },
   };
   let transporter = nodemailer.createTransport(config);
 
+  //This is what populates the Header and the Footer, think of this as "what company is this coming from"
   let MailGenerator = new Mailgen({
     theme: "default",
     product: {
-      name: "Mailgen",
-      link: "https://mailgen.js/",
+      name: "Can Do Canines",
+      link: "https://candocanines.org/",
     },
   });
+  //This is where we make the actual body of the email, i.e. what the user will see when reading the email
   let response = {
     body: {
+        //This will hopefully target the logged in user and populate their name in the email
+        //name: user.name,
       name: "jswanson97",
       intro:
         "Confirmation email to watch (dogs name) for dates (start date) through (end date)",
-    //   table: {
-    //     date: [
-    //       {
-    //         item: "Nodemailer stack book",
-    //         description: "A backend stack application",
-    //       },
-    //     ],
-    //   },
-      outro: "Thank you for volunteering",
+      signature: "Thank you for volunteering",
     },
   };
   let mail = MailGenerator.generate(response);
@@ -81,15 +81,18 @@ router.post("/confirmation", async (req, res) => {
     from: EMAIL,
     to: userEmail,
     subject: "Dog Watch Confirmation",
-    html: mail
-  }
+    html: mail,
+  };
   transporter.sendMail(message).then(() => {
-    return res.status(201).json({
-        msg: "you should receive an email"
-    }).catch(err => {
-        return res.status(500).json({ err })
-    })
-  })
+    return res
+      .status(201)
+      .json({
+        msg: "you should receive an email",
+      })
+      .catch((err) => {
+        return res.status(500).json({ err });
+      });
+  });
 });
 
 module.exports = router;
