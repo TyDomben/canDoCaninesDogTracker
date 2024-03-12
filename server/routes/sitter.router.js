@@ -222,6 +222,61 @@ router.get("/requests", async (req, res) => {
 });
 
 /**
+ * GET route to view hosting request (POST sitter/:id)
+ */
+router.get('/request/:id', async(req,res) => {
+  console.log("/sitter/request/:id GET route")
+
+  if (!req.isAuthenticated()) {
+    return res.sendStatus(403);
+  }
+  const hostingId = req.params.id;
+  console.log("fetching hosting request for id:", hostingId)
+  
+  let connection;
+  
+  try{
+    connection = await pool.connect();
+
+    const query =
+    `SELECT 
+    "dogs"."id" AS "dog_id",
+    "user"."id" AS "user_id",
+    "dog_hosting"."start_date",
+    "dog_hosting"."end_date",
+    "dog_hosting"."date_comments",
+    "dog_hosting"."appointments",
+    "dog_hosting"."status"
+    FROM 
+    "dog_hosting"
+    JOIN 
+    "dogs" ON "dogs"."id" = "dog_hosting"."dog_id"
+    JOIN 
+    "user" ON "user"."id" = "dog_hosting"."user_id"
+    WHERE 
+    "dog_hosting"."id" = $1;`
+
+    const values = [hostingId];
+    const result = await connection.query(query, values);
+
+    if(result.rows.length > 0){
+      const hostingRequest = result.rows[0];
+      res.json(hostingRequest);
+    } else {
+      res.sendStatus(404)
+    }
+  }catch (error){
+    console.log("error", error)
+    res.sendStatus(500);
+  }finally {
+    if(connection){
+      connection.release();
+    }
+  }
+})
+
+
+/**
  * DELETE route to cancel a sitter request
  */
 router.delete("/request/:id", async (req, res) => {

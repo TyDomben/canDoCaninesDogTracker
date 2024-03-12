@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import {useParams, useHistory} from 'react-router-dom';
 import {
   Container,
   TextField,
@@ -18,10 +20,16 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const VolunteerSitterForm = ({ onGoBack, onSubmit }) => {
+  let dispatch = useDispatch("");
+  let history = useHistory("");
+
+
   const [dates, setDates] = useState({
-    startDate: "2024-04-03",
-    endDate: "2024-04-07",
+    start_date: "",
+    end_date: "",
   });
+
+  
   const [openDialog, setOpenDialog] = useState(false);
   const [dialogContent, setDialogContent] = useState("");
 
@@ -48,7 +56,14 @@ const VolunteerSitterForm = ({ onGoBack, onSubmit }) => {
     onGoBack();
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log("dispatching VOLUNTEER_TO_HOST action")
+  
+    dispatch({ type: "VOLUNTEER_TO_HOST", 
+    payload: {hostingId: hostingId, formData: dates}
+  })
+    history.push('/')
     handleDialogOpen("Your request has been saved successfully!");
   };
 
@@ -60,8 +75,10 @@ const VolunteerSitterForm = ({ onGoBack, onSubmit }) => {
   return (
     <Container maxWidth="sm">
       <Typography variant="h4" align="center" sx={{ my: 2 }}>
-        Volunteer to be a Sitter for Loki
+        Volunteer to Host
       </Typography>
+
+
       <Box
         component="form"
         noValidate
