@@ -1,39 +1,47 @@
-import React from 'react';
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableContainer, 
-  TableHead, 
-  TableRow, 
-  Paper, 
-  Button, 
-  AppBar, 
-  Toolbar, 
-  Typography, 
-  IconButton 
-} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import React from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { format } from "date-fns";
 
-const DataGrid = ({ dogs, onVolunteerClick }) => {
+const DataGrid = () => {
+  const [sittingDogs, setSittingDogs] = useState([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ type: "FETCH_USER_DOGS" });
+
+    axios
+      .get("/api/sitterRequest")
+      .then((response) => {
+        console.log(response.data);
+        setSittingDogs(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching sitter requests:", error);
+      });
+  }, [dispatch]);
+
   return (
     <>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Can Do Canines
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <Typography variant="h6" sx={{ flexGrow: 1 }}>
+      Can-Do Canines that Need Sitters
+      </Typography>
       <TableContainer component={Paper} sx={{ my: 4 }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -46,25 +54,43 @@ const DataGrid = ({ dogs, onVolunteerClick }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {dogs.map((dog) => (
-              <TableRow
-                key={dog.name}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {/* Replace with actual image */}
-                  <img src="/static/images/dog-placeholder.jpg" alt={dog.name} style={{ width: 50, height: 50 }} />
-                </TableCell>
-                <TableCell>{dog.name}</TableCell>
-                <TableCell>{dog.startDate}</TableCell>
-                <TableCell>{dog.endDate}</TableCell>
-                <TableCell align="right">
-                  <Button variant="outlined" onClick={() => onVolunteerClick(dog)}>
-                    Volunteer
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
+            {sittingDogs
+              .filter((dog) => dog.status === "not confirmed")
+              .map((dog) => (
+                <TableRow
+                  key={dog.name}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {/* Replace with actual image */}
+                    <img
+                      src="/public/images/dogoutline.jpeg"
+                      alt="Dog"
+                      style={{
+                        height: "100%",
+                        width: "auto",
+                        maxWidth: "100%",
+                        objectFit: "contain",
+                      }}
+                    />
+                  </TableCell>
+                  <TableCell>{dog.dog_name}</TableCell>
+                  <TableCell>
+                    {format(new Date(dog.start_date), "MMMM d, yyyy, h:mm a")}
+                  </TableCell>
+                  <TableCell>
+                    {format(new Date(dog.end_date), "MMMM d, yyyy, h:mm a")}
+                  </TableCell>
+                  <TableCell align="right">
+                    <Button
+                      variant="outlined"
+                      onClick={() => onVolunteerClick(dog)}
+                    >
+                      Volunteer
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

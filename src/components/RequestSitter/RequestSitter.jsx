@@ -22,52 +22,13 @@ import MenuIcon from "@mui/icons-material/Menu";
 import axios from "axios";
 
 const RequestSitterForm = ({ userId, dogId, onGoBack, onVolunteer }) => {
-  const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      setError(null);
-
-      let url = "";
-      if (userId) {
-        url = `/api/user/${userId}`;
-      } else if (dogId) {
-        url = `/api/dog/${dogId}`;
-      }
-
-      try {
-        const response = await axios.get(url);
-        setData(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setError("Failed to fetch data. Please try again later.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [userId, dogId]);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-
-  if (!data) {
-    return <div>No data found</div>;
-  }
-
-  // Conditional rendering based on what data is available
-  const isUserData = !!userId;
-  const name = isUserData ? data.name : data.dogName;
-  const image = isUserData ? data.profileImage : data.dogImage;
+    axios.get(`/api/sitter-request/${id}`).then((response) => {
+      console.log("sitter request", response.data);
+    });
+  }, []);
 
   return (
     <Container maxWidth="sm">

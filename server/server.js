@@ -12,7 +12,7 @@ const userRouter = require('./routes/user.router');
 
 const dogRouter = require('./routes/dog.router')
 const raiserRouter = require('./routes/raiserDog.router')
-
+const sitterRequestRouter = require('./routes/sitterRequest.router')
 
 const sitterRouter = require('./routes/sitter.router');
 
@@ -34,7 +34,7 @@ app.use(passport.session());
 // Routes
 app.use('/api/user', userRouter);
 app.use('/api/dog', dogRouter);
-
+app.use('/api/sitterRequest', sitterRequestRouter)
 app.use('/api/raiser-dog', raiserRouter);
 
 app.use('/api/sitter', sitterRouter);
