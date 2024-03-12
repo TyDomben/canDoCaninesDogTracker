@@ -93,19 +93,19 @@ router.get("/", async (req, res) => {
  * GET route to retrieve a single dog from "dogs" table from the DB
  * The dog's ID is passed as a URL parameter named 'id'
 */
-  router.get("/:id", async (req, res) => {
-    console.log("/dog/:id GET route");
-    console.log("is authenticated?", req.isAuthenticated());
-    console.log("user", req.user);
-  
-    if (req.isAuthenticated()) {
-      let connection;
-      try {
-        connection = await pool.connect(); 
-        const dogId = req.params.id; 
-  
-        console.log("dogId server", dogId)
-        const query = `SELECT
+router.get("/:id", async (req, res) => {
+  console.log("/dog/:id GET route");
+  console.log("is authenticated?", req.isAuthenticated());
+  console.log("user", req.user);
+
+  if (req.isAuthenticated()) {
+    let connection;
+    try {
+      connection = await pool.connect();
+      const dogId = req.params.id;
+
+      console.log("dogId server", dogId)
+      const query = `SELECT
         "dogs"."user_id",
         "dogs"."dog_name", 
         "dogs"."age", 
@@ -154,31 +154,33 @@ router.get("/", async (req, res) => {
         "behavior" AS "behavior_cat" ON "dogs"."behavior_with_cats" = "behavior_cat"."id"
     JOIN 
         "behavior" AS "behavior_child" ON "dogs"."behavior_with_children" = "behavior_child"."id"
-    WHERE
+    JOIN "in_heat" AS "in_heat" ON "dogs"."in_heat" = "in_heat"."id"
+
+        WHERE
         "dogs"."id" = $1;
         `;
-        const result = await connection.query(query, [dogId]); 
-        const dog = result.rows[0]; 
+      const result = await connection.query(query, [dogId]);
+      const dog = result.rows[0];
 
-        console.log("dog result.rows", dog)
-        
-  if (dog) {
-          res.json(dog);
-        } else {
-          res.status(404).send('Dog not found');
-        }
-      } catch (error) {
-        console.error("Error fetching dog", error);
-        res.sendStatus(500);
-      } finally {
-        if (connection) {
-          connection.release();
-        }
+      console.log("dog result.rows", dog)
+
+      if (dog) {
+        res.json(dog);
+      } else {
+        res.status(404).send('Dog not found');
       }
-    } else {
-      res.sendStatus(403);
+    } catch (error) {
+      console.error("Error fetching dog", error);
+      res.sendStatus(500);
+    } finally {
+      if (connection) {
+        connection.release();
+      }
     }
-  });
+  } else {
+    res.sendStatus(403);
+  }
+});
 
 /**
  * POST route to create a new dog profile
@@ -320,9 +322,8 @@ router.put("/:id", async (req, res) => {
 
       //construct the SQL Query Text using setClause and values.length +1 = dog id
       //RETURNING is just asking PostgreSQL to return the updated row of data
-      const queryText = `UPDATE "dogs" SET ${setClause} WHERE "id" = $${
-        values.length + 1
-      } RETURNING *;`;
+      const queryText = `UPDATE "dogs" SET ${setClause} WHERE "id" = $${values.length + 1
+        } RETURNING *;`;
 
       // Execute the update query ...values = placeholder values ($1, $2, $3, etc.)
       const result = await connection.query(queryText, [...values, dogId]);
