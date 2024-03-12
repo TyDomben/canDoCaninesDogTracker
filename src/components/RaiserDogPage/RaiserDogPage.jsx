@@ -103,7 +103,7 @@ const HomePage = () => {
                 </Box>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
-                    {dog.name}
+                    {dog.dog_name}
                   </Typography>
                 </CardContent>
               </Card>

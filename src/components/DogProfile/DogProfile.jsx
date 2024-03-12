@@ -93,7 +93,7 @@ function DogProfile() {
             <ArrowBackIcon />
           </IconButton> */}
           <Typography gutterBottom variant="h5" component="div">
-            {dogProfile?.name}’s Profile
+            {dogProfile?.dog_name}’s Profile
           </Typography>
           <CardMedia
             component="img"
@@ -103,7 +103,7 @@ function DogProfile() {
           />
 
 
-<Typography variant="body1">Name: {dogProfile?.name}</Typography>
+<Typography variant="body1">Name: {dogProfile?.dog_name}</Typography>
 <Typography variant="body1">Age: {dogProfile?.age}</Typography>
 <Typography variant="body1">Breed: {dogProfile?.breed}</Typography>
 <Typography variant="body1">Spayed or Neutered: {dogProfile?.spayed_neutered ? 'Yes' : 'No'}</Typography>
@@ -114,10 +114,19 @@ function DogProfile() {
 <Typography variant="body1">Medical Concerns: {dogProfile?.medical_conditions}</Typography>
 <Typography variant="body1">Recent Surgery: {dogProfile?.recovering_from_surgery ? 'Yes' : 'No'}</Typography>
 <Typography variant="body1">Medications: {dogProfile?.medications}</Typography>
-<Typography variant="body1">If female: In Heat? {dogProfile?.in_heat ? 'Yes' : 'No'}</Typography>
+<Typography variant="body1">If female: In Heat? {dogProfile?.in_heat}</Typography>
 <Typography variant="body1">Potty Routine: {dogProfile?.potty_routine}</Typography>
 <Typography variant="body1">Notes about potty habits: {dogProfile?.potty_habits_notes}</Typography> {/* Note the correction from potty_habit_notes to potty_habits_notes */}
-<Typography variant="body1">Exercise Limitations: {dogProfile?.exercise_limitations}</Typography>
+<Typography variant="body1">Limit Water: {dogProfile?.limit_water  ? 'Yes' : 'No'}</Typography>
+<Typography variant="body1">Limit Toy Play: {dogProfile?.limit_toy_play  ? 'Yes' : 'No'}</Typography>
+<Typography variant="body1">May Destroy Toys: {dogProfile?.watch_carefully  ? 'Yes' : 'No'}</Typography>
+<Typography variant="body1">May Ingest Toys: {dogProfile?.ingest_toys  ? 'Yes' : 'No'}</Typography>
+<Typography variant="body1">May Play Keep Away: {dogProfile?.keep_away  ? 'Yes' : 'No'}</Typography>
+<Typography variant="body1">Shares Toys: {dogProfile?.shares_toys  ? 'Yes' : 'No'}</Typography>
+
+
+
+
 <Typography variant="body1">Exercise Equipment: {dogProfile?.exercise_equipment}</Typography>
 <Typography variant="body1">Crate Manners: {dogProfile?.crate_manners}</Typography>
 <Typography variant="body1">House Manners: {dogProfile?.house_manners}</Typography>

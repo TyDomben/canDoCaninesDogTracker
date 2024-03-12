@@ -144,8 +144,7 @@ JOIN
 JOIN
   "dog_hosting" ON "dogs"."id" = "dog_hosting"."dog_id"
 WHERE
-  "dogs"."user_id" = $1;
-  `;
+  "dogs"."user_id" = $1;`
 
   const sqlParams = [userId]; // Use the current user's ID as the parameter for the query
 

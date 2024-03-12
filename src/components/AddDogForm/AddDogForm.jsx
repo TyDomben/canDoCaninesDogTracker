@@ -40,7 +40,7 @@ const AddDogForm = () => {
     //pottyHabitis
     potty_routine: '',
     // potty_indicators: '',
-    potty_comments: '',
+    potty_habits_notes: '',
     //excercise
     limit_water: false,
     limit_toy_play: false,
@@ -126,42 +126,50 @@ const AddDogForm = () => {
     event.preventDefault();
     dispatch({ type: "POST_DOG", payload: formValues });
     // setFormValues({
-    //    dog_name: '',
+    //   dog_name: '',
     //   age: '',
     //   breed: '',
     //   spayed_neutered: '',
-    //   // vetAppointments: '',
-    //   foodType: '',
-    //   feedingFrequency: '',
-    //   feedingAmount: '',
+    //   //food info
+    //   food_type: '',
+    //   food_amount: '',
+    //   meals_per_day: '',
+    //   eating_times: '',
+  
     //   // medicalAppointments: '',
-    //   medicalConditions: '',
-    //   surguryRecovery: '',
-    //   currentMedications: '',
-    //   inHeat: '',
+    //   medical_conditions: '',
+    //   recovering_from_surgery: '',
+    //   medications: '',
+    //   in_heat: '',
     //   //pottyHabitis
-    //   pottyFrequency: '',
-    //   pottyIndicators: '',
-    //   pottyComments: '',
+    //   potty_routine: '',
+    //   // potty_indicators: '',
+    //   potty_habits_notes: '',
     //   //excercise
-    //   exerciseRestrictions: '',
-    //   exerciseEquipment: '',
+    //   limit_water: false,
+    //   limit_toy_play: false,
+    //   watch_carefully: false,
+    //   ingest_toys: false,
+    //   keep_away: false,
+    //   shares_toys: false,
+  
+  
+    //   exercise_equipment: '',
     //   //crating
-    //   crating_manners: '',
+    //   crate_manners: '',
     //   //houseManners
-    //   houseManners: '',
-    //   //preferences
-    //   //lives with ?
+    //   house_manners: '',
     //   // environmentalPreferences: '',
-    //   livingWithOtherDogs: '',
-    //   livingWithCats: '',
-    //   livingWithChildrenYoungerThanTen: '',
-    //   living_with_adults: '',
-    //   living_with_small_animals: '',
-    //   living_with_large_animals: '',
+    //   living_with_other_dogs: false,
+    //   living_with_cats: false,
+    //   living_with_children_younger_than_ten: false,
+    //   living_with_children_ten_and_up: false,
+    //   living_with_adults: false,
+    //   living_with_small_animals: false,
+    //   living_with_large_animals: false,
     //   behavior_with_other_dogs: '',
     //   behavior_with_cats: '',
-    //   behaviorWithChildren: ''
+    //   behavior_with_children: ''
     // })
     // history.push('/')
   }
@@ -388,12 +396,12 @@ const AddDogForm = () => {
               <p>Is there anything else that fosters should know about this dog's potty habits?
               </p>
               <TextField
-                id="potty_comments"
+                id="potty_habits_notes"
                 label="Type comments here..."
-                name='potty_comments'
+                name='potty_habits_notes'
                 multiline
                 rows={12}
-                value={formValues.potty_comments}
+                value={formValues.potty_habits_notes}
                 onChange={handleChange}
               />
             </Box>
@@ -412,7 +420,7 @@ const AddDogForm = () => {
                 <FormControlLabel defaultChecked='false'name='watch_carefully' onChange={handleChangeCheckBox} required control={<Checkbox />} label="May destroy toys (watch carefully)" />
                 <FormControlLabel defaultChecked='false'name='ingest_toys' onChange={handleChangeCheckBox} required control={<Checkbox />} label="May ingest toys" />
                 <FormControlLabel defaultChecked='false'name='keep_away' onChange={handleChangeCheckBox} required control={<Checkbox />} label='Plays "Keep Away" ' />
-                <FormControlLabel defaultChecked='false'name='shares_toys' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Does not share toys wiht other dogs?" />
+                <FormControlLabel defaultChecked='false'name='shares_toys' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Does not share toys with other dogs?" />
               </Paper>
 
 
@@ -421,7 +429,7 @@ const AddDogForm = () => {
             <p>Please indicate what equipment this dog uses for walks.</p>
             <RadioGroup
               aria-labelledby="exercise_equipment"
-              defaultValue="1"
+              // defaultValue="1"
               name="exercise_equipment"
               onChange={handleChangeRadioBtn}
             >
@@ -455,7 +463,7 @@ const AddDogForm = () => {
                 label="Type here..."
                 multiline
                 rows={12}
-                name="crate_habits"
+                name="crate_manners"
                 value={formValues.crate_manners}
                 onChange={handleChange}
               />

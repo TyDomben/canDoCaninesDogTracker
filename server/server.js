@@ -16,6 +16,8 @@ const sitterRequestRouter = require('./routes/sitterRequest.router')
 
 const sitterRouter = require('./routes/sitter.router');
 
+const mailRouter = require('./routes/mail.router');
+
 
 // Express Middleware
 app.use(express.json());
@@ -36,6 +38,8 @@ app.use('/api/sitterRequest', sitterRequestRouter)
 app.use('/api/raiser-dog', raiserRouter);
 
 app.use('/api/sitter', sitterRouter);
+
+app.use('/api/mail', mailRouter);
 
 
 // Listen Server & Port
