@@ -1,9 +1,10 @@
 {
-  "name": "prime-solo-project",
+  "name": "prime-client-project",
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": "18.x"
+    "node": "18.x",
+    "type": "module"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
