@@ -48,7 +48,8 @@ const DogCards = ({ dogs, onCardClick }) => {
         {allDogs
           .filter((dog) => dog.status !== "confirmed")
           .map((dog, index) => (
-            <Card key={index} onClick={() => history.push(`/sitter-request/${dog.dog_id}`)}>
+            <Card key={index} onClick={() => history.push(`/volunteerSitterForm/${dog.dog_id}`)}>
+              {/* this should go somewhere else, not sitter request persay - volunteer sitter form based on the id */}
               {/* // <Card key={index} onClick={() => console.log(dog)}> */}
               <CardContent>
                 <img
