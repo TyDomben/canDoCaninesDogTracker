@@ -1,13 +1,13 @@
 import axios from 'axios';
 import {put, takeLatest} from 'redux-saga/effects';
 
-function* volunteerHost(action){
+function* volunteerToHost(action){
     try{
-        const { hostingId, formData } = action.payload
+        const { requestId, formData } = action.payload
 
-        console.log("hostingId:", formData)
+        console.log("hostId:", formData)
 
-        const response = yield axios.post(`api/sitter/volunteer/${hostingId}`, formData)
+        const response = yield axios.post(`api/sitter/volunteer/${requestId}`, formData)
         yield put({ type: 'VOLUNTEER_HOST_SUCCESS', payload: response.data });
         console.log("response", response.data)
     } catch (error) {
@@ -17,7 +17,7 @@ function* volunteerHost(action){
 }
 
 function* volunteerHostSaga(){
-    yield takeLatest('VOLUNTEER_TO_HOST', volunteerHost)
+    yield takeLatest('VOLUNTEER_TO_HOST', volunteerToHost)
 }
 
 export default volunteerHostSaga;

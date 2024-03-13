@@ -6,7 +6,7 @@ import dogSaga from './dog.saga';
 import oneDogSaga from './fetchonedog.saga';
 import deleteDogSaga from './deletedog.saga';
 import requestHostSaga from './requesthost.saga';
-import volunteerHostSaga from '../reducers/volunteerhost.reducer';
+import volunteerHostSaga from './volunteerhost.saga';
 
 
 // rootSaga is the primary saga.
