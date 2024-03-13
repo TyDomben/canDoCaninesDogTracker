@@ -9,7 +9,8 @@ import {
   IconButton,
   Box,
   Grid,
-  InputLabel
+  InputLabel,
+  Paper
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -102,115 +103,137 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
       <Box component="form" noValidate autoComplete="off" sx={{ mt: 3 }}>
 
 
-        <Typography variant="h5" align="center" gutterBottom>
+        <Typography variant="h4" align="center" gutterBottom>
           Edit {editDog?.dog_name}'s Profile
         </Typography>
 
 
+        <Typography variant="h5">Dog Information</Typography>
+        <Paper elevation={5}>
+          <TextField
+            fullWidth
+            margin="normal"
+            id="dog_name"
+            name="dog_name"
+            label="Name"
+            value={editDog?.dog_name}
+            onChange={handleChange}
+            variant="outlined"
+          />
+          {/* </FormLabel> */}
 
-        {/* <FormLabel>Name: {dogProfile[0]?.dog_name} */}
-        <TextField
-          fullWidth
-          margin="normal"
-          id="dog_name"
-          name="dog_name"
-          label="Name"
-          value={editDog?.dog_name}
-          onChange={handleChange}
-          variant="outlined"
-        />
-        {/* </FormLabel> */}
+          <TextField
+            fullWidth
+            margin="normal"
+            id="age"
+            name="age"
+            label="Age"
+            value={editDog?.age}
+            onChange={handleChange}
+            variant="outlined"
+          />
 
-        <TextField
-          fullWidth
-          margin="normal"
-          id="age"
-          name="age"
-          label="Age"
-          value={editDog?.age}
-          onChange={handleChange}
-          variant="outlined"
-        />
-
-        <FormLabel id="breed-label">Dog Breed</FormLabel>
-        <RadioGroup
-          aria-labelledby="breed-label"
-          value={editDog?.breed}
-          onChange={handleChangeRadioBtn}
-          name="breed"
-        >
-          <FormControlLabel value={1} control={<Radio />} label="Labrador" />
-          <FormControlLabel value={2} control={<Radio />} label="Golden Retriever" />
-          <FormControlLabel value={3} control={<Radio />} label="Labrador Mix" />
-          <FormControlLabel value={4} control={<Radio />} label="Golden Retriever Mix" />
-          <FormControlLabel value={5} control={<Radio />} label="Poodle/Poodle Mix" />
-          <FormControlLabel value={6} control={<Radio />} label="Collie" />
-          <FormControlLabel value={7} control={<Radio />} label="I don't know" />
-
-
-
-        </RadioGroup>
-
-        <RadioGroup
-          aria-labelledby="spayed_neutered"
-          value={editDog?.spayed_neutered}
-          onChange={handleChangeBool}
-          name="spayed_neutered"
-        >
-          <FormControlLabel value="true" control={<Radio />} label="Yes" />
-          <FormControlLabel value="false" control={<Radio />} label="No" />
-        </RadioGroup>
+          <FormLabel id="breed-label">Dog Breed</FormLabel>
+          <RadioGroup
+            aria-labelledby="breed-label"
+            value={editDog?.breed}
+            onChange={handleChangeRadioBtn}
+            name="breed"
+          >
+            <FormControlLabel value={1} control={<Radio />} label="Labrador" />
+            <FormControlLabel value={2} control={<Radio />} label="Golden Retriever" />
+            <FormControlLabel value={3} control={<Radio />} label="Labrador Mix" />
+            <FormControlLabel value={4} control={<Radio />} label="Golden Retriever Mix" />
+            <FormControlLabel value={5} control={<Radio />} label="Poodle/Poodle Mix" />
+            <FormControlLabel value={6} control={<Radio />} label="Collie" />
+            <FormControlLabel value={7} control={<Radio />} label="I don't know" />
 
 
 
+          </RadioGroup>
+
+          <FormLabel id="spayed_neutered">Is the dog spayed or neutered?</FormLabel>
+          <RadioGroup
+            aria-labelledby="spayed_neutered"
+            value={editDog?.spayed_neutered}
+            onChange={handleChangeBool}
+            name="spayed_neutered"
+          >
 
 
+            <FormControlLabel value="true" control={<Radio />} label="Yes" />
+            <FormControlLabel value="false" control={<Radio />} label="No" />
+          </RadioGroup>
 
-
+        </Paper>
 
 
 
 
-        <TextField
-          fullWidth
-          margin="normal"
-          id="food_type"
-          name="food_type"
-          label="Food type"
-          value={editDog?.food_type}
-          onChange={handleChange}
-          variant="outlined"
-        />
-        <TextField
-          fullWidth
-          margin="normal"
-          id="food_amount"
-          name="food_amount"
-          label="Food Amount"
-          value={editDog?.food_amount}
-          onChange={handleChange}
-          variant="outlined"
-        />
-        <TextField
-          fullWidth
-          margin="normal"
-          id="meals_per_day"
-          name="meals_per_day"
-          label="Meals per day"
-          value={editDog?.meals_per_day}
-          onChange={handleChange}
-          variant="outlined"
-        />
-        <TextField
-          fullWidth
-          margin="normal"
-          id="eating_times"
-          name="eating_times"
-          label="Eating Times"
-          value={editDog?.eating_times}
-          onChange={handleChange}
-          variant="outlined"
-        />
+
+        <Typography variant="h5">Meals</Typography>
+        <Paper elevation={5}>
+
+          <FormLabel id="food_type">Food Information</FormLabel>
+          <RadioGroup
+            aria-labelledby="food_type"
+            value={editDog?.food_type}
+            onChange={handleChangeRadioBtn}
+            name="food_type"
+          >
+            <FormControlLabel value={'1'} control={<Radio />} label="Purina Pro Plan Large Breed PUPPY" />
+            <FormControlLabel value={'2'} control={<Radio />} label="Purina Pro Plan Large Breed ADULT" />
+            <FormControlLabel value={'3'} control={<Radio />} label="Purina Pro Plan Sensitive Skin & Stomach" />
+            <FormControlLabel value={'4'} control={<Radio />} label="Purina Pro Plan Sport 30/20" />
+            <FormControlLabel value={'5'} control={<Radio />} label="Other" />
+
+          </RadioGroup>
+
+          <TextField
+            fullWidth
+            margin="normal"
+            id="food_type"
+            name="food_type"
+            label="Food type"
+            value={editDog?.food_type}
+            onChange={handleChange}
+            variant="outlined"
+          />
+          <TextField
+            fullWidth
+            margin="normal"
+            id="food_amount"
+            name="food_amount"
+            label="Food Amount"
+            value={editDog?.food_amount}
+            onChange={handleChange}
+            variant="outlined"
+          />
+          <TextField
+            fullWidth
+            margin="normal"
+            id="meals_per_day"
+            name="meals_per_day"
+            label="Meals per day"
+            value={editDog?.meals_per_day}
+            onChange={handleChange}
+            variant="outlined"
+          />
+
+          <TextField
+            fullWidth
+            margin="normal"
+            id="eating_times"
+            name="eating_times"
+            label="Eating Times"
+            value={editDog?.eating_times}
+            onChange={handleChange}
+            variant="outlined"
+          />
+        </ Paper>
+
+        <Typography variant='h5'>Medical Information</Typography>
+        <Paper elevation={5}>
         <TextField
           fullWidth
           margin="normal"
@@ -241,6 +264,20 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           onChange={handleChange}
           variant="outlined"
         />
+
+        <FormLabel id="in_heat">If you're fostering an spayed/neutered female are they in heat?</FormLabel>
+        <RadioGroup
+          // aria-labelledby="in_heat"
+          name="in_heat"
+          value={editDog?.in_heat}
+          onChange={handleChangeRadioBtn}
+        >
+          <FormControlLabel value={1} control={<Radio />} label="Yes" />
+          <FormControlLabel value={2} control={<Radio />} label="No" />
+          <FormControlLabel value={3} control={<Radio />} label="Unknown" />
+
+        </RadioGroup>
+        </Paper>
         <TextField
           fullWidth
           margin="normal"
@@ -251,6 +288,9 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           onChange={handleChange}
           variant="outlined"
         />
+
+        <Typography variant='h5'>Potty Habits</Typography>
+        <Paper elevation={5}>
         <TextField
           fullWidth
           margin="normal"
@@ -271,17 +311,10 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           onChange={handleChange}
           variant="outlined"
         />
-        <TextField
-          fullWidth
-          margin="normal"
-          id="exercise_limitations"
-          name="exercise_limitations"
-          label="Exercise Limitations"
-          value={editDog?.exercise_limitations}
-          onChange={handleChange}
-          variant="outlined"
-        />
+        </Paper>
 
+        <Typography variant='5'>Crate and House Manners</Typography>
+        <Paper elevation={5}>
         <TextField
           fullWidth
           margin="normal"
@@ -302,7 +335,19 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           onChange={handleChange}
           variant="outlined"
         />
-        <TextField
+        </Paper>
+
+        <FormControlLabel
+
+          id="living_with_other_dogs"
+          name="living_with_other_dogs"
+          label="Living with other dogs"
+          checked={editDog?.living_with_cats}
+          onChange={handleChangeCheckBox}
+          required control={<Checkbox />}
+        />
+
+        {/* <TextField
           fullWidth
           margin="normal"
           id="living_with_other_dogs"
@@ -311,8 +356,18 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           value={editDog?.living_with_other_dogs}
           onChange={handleChange}
           variant="outlined"
+        /> */}
+        <FormControlLabel
+
+          id="living_with_cats"
+          name="living_with_cats"
+          label="Living with cats"
+          checked={editDog?.living_with_cats}
+          onChange={handleChangeCheckBox}
+          required control={<Checkbox />}
         />
-        <TextField
+
+        {/* <TextField
           fullWidth
           margin="normal"
           id="living_with_cats"
@@ -321,18 +376,18 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           value={editDog?.living_with_cats}
           onChange={handleChange}
           variant="outlined"
-        />
+        /> */}
         <FormControlLabel
-        
-        id="living_with_children_older_ten"
-        name="living_with_children_older_ten"
-        label="Living with children 10 and up"
-        checked={editDog?.living_with_children_older_ten}
-        onChange={handleChangeCheckBox}
-        required control={<Checkbox />}
-      />  
 
-        <TextField
+          id="living_with_children_older_ten"
+          name="living_with_children_older_ten"
+          label="Living with children 10 and up"
+          checked={editDog?.living_with_children_older_ten}
+          onChange={handleChangeCheckBox}
+          required control={<Checkbox />}
+        />
+
+        {/* <TextField
           fullWidth
           margin="normal"
           id="living_with_children_older_ten"
@@ -341,18 +396,18 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           value={editDog?.living_with_children_older_ten}
           onChange={handleChange}
           variant="outlined"
+        /> */}
+        <FormControlLabel
+
+          id="living_with_children_younger_ten"
+          name="living_with_children_yonger_ten"
+          label="Living with children under 10"
+          value={editDog?.living_with_children_younger_ten}
+          onChange={handleChangeCheckBox}
+          required control={<Checkbox />}
         />
-         <FormControlLabel
-        
-        id="living_with_children_older_ten"
-        name="living_with_children_older_ten"
-        label="Living with children 10 and up"
-        checked={editDog?.living_with_children_older_ten}
-        onChange={handleChangeCheckBox}
-        required control={<Checkbox />}
-      />
-        
-        <TextField
+
+        {/* <TextField
           fullWidth
           margin="normal"
           id="living_with_children_younger_ten"
@@ -361,17 +416,17 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           value={editDog?.living_with_children_younger_ten}
           onChange={handleChange}
           variant="outlined"
-        />
+        /> */}
         <FormControlLabel
-        
-        id="living_with_adults"
-        name="living_with_adults"
-        label="Living with Adults"
-        checked={editDog?.living_with_adults}
-        onChange={handleChangeCheckBox}
-        required control={<Checkbox />}
-      />
-        <TextField
+
+          id="living_with_adults"
+          name="living_with_adults"
+          label="Living with Adults"
+          checked={editDog?.living_with_adults}
+          onChange={handleChangeCheckBox}
+          required control={<Checkbox />}
+        />
+        {/* <TextField
           fullWidth
           margin="normal"
           id="living_with_adults"
@@ -380,9 +435,9 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           value={editDog?.living_with_adults}
           onChange={handleChange}
           variant="outlined"
-        />
+        /> */}
         <FormControlLabel
-        
+
           id="living_with_small_animals"
           name="living_with_small_animals"
           label="Living with Small Animals"
@@ -399,7 +454,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           checked={editDog?.living_with_large_animals}
         />
 
-     
+
         <Box>
           <FormLabel id="Behavior1">How does this dog behave around other dogs?</FormLabel>
           <RadioGroup

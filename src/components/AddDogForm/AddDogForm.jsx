@@ -135,7 +135,7 @@ const AddDogForm = () => {
     //   food_amount: '',
     //   meals_per_day: '',
     //   eating_times: '',
-  
+
     //   // medicalAppointments: '',
     //   medical_conditions: '',
     //   recovering_from_surgery: '',
@@ -152,8 +152,8 @@ const AddDogForm = () => {
     //   ingest_toys: false,
     //   keep_away: false,
     //   shares_toys: false,
-  
-  
+
+
     //   exercise_equipment: '',
     //   //crating
     //   crate_manners: '',
@@ -192,51 +192,54 @@ const AddDogForm = () => {
       case 0:
         return (
           <FormControl>
-            <TextField
-              fullWidth
-              margin="normal"
-              required id="dog_name"
-              name="dog_name"
-              label="Dog Name"
-              value={formValues.dog_name}
-              onChange={handleChange}
-              variant="outlined"
-            />
+            <Paper elevation={5}>
 
-            <TextField
-              fullWidth
-              margin="normal"
-              id="age"
-              name="age"
-              label="Dog Age"
-              value={formValues.age}
-              onChange={handleChange}
-              variant="outlined"
-            />
+              <TextField
+                fullWidth
+                margin="normal"
+                required id="dog_name"
+                name="dog_name"
+                label="Dog Name"
+                value={formValues.dog_name}
+                onChange={handleChange}
+                variant="outlined"
+              />
+
+              <TextField
+                fullWidth
+                margin="normal"
+                id="age"
+                name="age"
+                label="Dog Age"
+                value={formValues.age}
+                onChange={handleChange}
+                variant="outlined"
+              />
+
+            </Paper>
+            <Paper elevation={5}>
+
+              <FormLabel id="breed-label">Dog Breed</FormLabel>
+              <RadioGroup
+                aria-labelledby="breed-label"
+                defaultValue="1"
+                value={formValues.breed}
+                onChange={handleChangeRadioBtn}
+                name="breed"
+              >
+                <FormControlLabel value={1} control={<Radio />} label="Labrador" />
+                <FormControlLabel value={2} control={<Radio />} label="Golden Retriever" />
+                <FormControlLabel value={3} control={<Radio />} label="Labrador Mix" />
+                <FormControlLabel value={4} control={<Radio />} label="Golden Retriever Mix" />
+                <FormControlLabel value={5} control={<Radio />} label="Poodle/Poodle Mix" />
+                <FormControlLabel value={6} control={<Radio />} label="Collie" />
+                <FormControlLabel value={7} control={<Radio />} label="I don't know" />
 
 
 
-            <FormLabel id="breed-label">Dog Breed</FormLabel>
-            <RadioGroup
-              aria-labelledby="breed-label"
-              defaultValue="1"
-              value={formValues.breed}
-              onChange={handleChangeRadioBtn}
-              name="breed"
-            >
-              <FormControlLabel value={1} control={<Radio />} label="Labrador" />
-              <FormControlLabel value={2} control={<Radio />} label="Golden Retriever" />
-              <FormControlLabel value={3} control={<Radio />} label="Labrador Mix" />
-              <FormControlLabel value={4} control={<Radio />} label="Golden Retriever Mix" />
-              <FormControlLabel value={5} control={<Radio />} label="Poodle/Poodle Mix" />
-              <FormControlLabel value={6} control={<Radio />} label="Collie" />
-              <FormControlLabel value={7} control={<Radio />} label="I don't know" />
+              </RadioGroup>
 
-
-
-            </RadioGroup>
-
-
+            </Paper>
 
             <FormLabel id="spayed_neutered">Is the dog spayed or neutered?</FormLabel>
             <RadioGroup
@@ -245,9 +248,14 @@ const AddDogForm = () => {
               onChange={handleChangeBool}
               name="spayed_neutered"
             >
-              <FormControlLabel value="true" control={<Radio />} label="Yes" />
-              <FormControlLabel value="false" control={<Radio />} label="No" />
+              <Paper elevation={5}>
+
+                <FormControlLabel value="true" control={<Radio />} label="Yes" />
+
+                <FormControlLabel value="false" control={<Radio />} label="No" />
+              </Paper>
             </RadioGroup>
+
           </FormControl>
 
 
@@ -416,11 +424,11 @@ const AddDogForm = () => {
             <FormGroup>
               <Paper elevation={5}>
                 <FormControlLabel defaultChecked='false' name='limit_water' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Limit water" />
-                <FormControlLabel defaultChecked='false'name='limit_toy_play' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Limit toy play" />
-                <FormControlLabel defaultChecked='false'name='watch_carefully' onChange={handleChangeCheckBox} required control={<Checkbox />} label="May destroy toys (watch carefully)" />
-                <FormControlLabel defaultChecked='false'name='ingest_toys' onChange={handleChangeCheckBox} required control={<Checkbox />} label="May ingest toys" />
-                <FormControlLabel defaultChecked='false'name='keep_away' onChange={handleChangeCheckBox} required control={<Checkbox />} label='Plays "Keep Away" ' />
-                <FormControlLabel defaultChecked='false'name='shares_toys' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Does not share toys with other dogs?" />
+                <FormControlLabel defaultChecked='false' name='limit_toy_play' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Limit toy play" />
+                <FormControlLabel defaultChecked='false' name='watch_carefully' onChange={handleChangeCheckBox} required control={<Checkbox />} label="May destroy toys (watch carefully)" />
+                <FormControlLabel defaultChecked='false' name='ingest_toys' onChange={handleChangeCheckBox} required control={<Checkbox />} label="May ingest toys" />
+                <FormControlLabel defaultChecked='false' name='keep_away' onChange={handleChangeCheckBox} required control={<Checkbox />} label='Plays "Keep Away" ' />
+                <FormControlLabel defaultChecked='false' name='shares_toys' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Does not share toys with other dogs?" />
               </Paper>
 
 
@@ -514,7 +522,7 @@ const AddDogForm = () => {
                 <FormControlLabel defaultChecked='false' name='living_with_small_animals' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Small Animals" />
                 <FormControlLabel defaultChecked='false' name='living_with_large_animals' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Large Animals" />
 
- 
+
 
 
               </FormGroup>
