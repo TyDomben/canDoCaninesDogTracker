@@ -6,7 +6,7 @@ import fetchOneDogProfile from './fetchonedog.reducer';
 import deleteDogProfile from './deletedog.reducer';
 import requestHost from './requesthost.reducer';
 import raiserDogReducer from './raiserDog.reducer';
-import volunteerHost from './volunteerHost.reducer';
+// import volunteerHost from './volunteerHost.reducer';
 
 
 // rootReducer is the primary reducer for our entire project
@@ -24,7 +24,7 @@ const rootReducer = combineReducers({
   deleteDogProfile,
   requestHost,
   raiserDogReducer,
-  volunteerHost,
+  // volunteerHost,
 
 });
 
