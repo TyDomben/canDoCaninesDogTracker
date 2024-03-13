@@ -76,4 +76,99 @@ router.get("/", (req, res) => {
     });
 });
 
+
+//Update Dog Router
+
+router.put('/:id', (req, res) => {
+  console.log('in dog UPDATE route')
+  console.log('req.body', req.user.id, req.body, req.params.id)
+if (req.isAuthenticated()) {
+  const dogId = req.params.id;
+  const user = req.user.id
+  const dogData = [
+    rec.body.dog_name,
+    rec.body.age,
+    rec.body.breed_id, 
+    rec.body.spayed.neutered,
+    rec.body.food_type_id,
+    rec.body.food_amount,
+    rec.body.meals_per_day,
+    rec.body.eating_times,
+    rec.body.medical_conditions,
+    rec.body.recovering_from_surgery,
+    rec.body.medications,
+    rec.body.in_heat_id,
+    rec.body.potty_routine,
+    rec.body.potty_habits_notes,
+    rec.body.limit_water,
+    rec.body.limit_toy_play,
+    rec.body.watch_carefully,
+    rec.body.ingest_toys,
+    rec.body.keep_away,
+    rec.body.shares_toys,
+    rec.body.exercise_equipment_id,
+    rec.body.crate_manners,
+    rec.body.house_manners,
+    rec.body.living_with_other_dogs_id,
+    rec.body.living_with_other_cats_id,
+    rec.body.living_with_children_id
+
+
+  ]
+      
+  
+  const queryText =`
+  UPDATE "dogs" 
+  SET 
+  "user_id"=$1,
+  "dog_name" =$2,
+  "age" =$3,
+  "breed"=$4,
+  "spayed_neutered"=$5,
+  "food_type"=$6,
+  "food_amount"=$7,
+  "meals_per_day" =$8,
+  "eating_times" =$9,
+  "medical_conditions"=$10,
+  "recovering_from_surgery"=$11,
+  "medications"=$12,
+  "in_heat"=$13,
+  "potty_routine"=$14,
+  "potty_habits_notes"=$15,
+  "limit_water"=$16,
+  "limit_toy_play"=$17,
+  "watch_carefully"=$18,
+  "ingest_toys"=$19,
+  "keep_away"=$20,
+  "shares_toys"=$21,
+  "excercise_equipment"=$22,
+  "crate_manners"=$23,
+  "house_manners"=$24,
+  "living_with_other_dogs"=$25,
+  "living_with_cats"=$26,
+  "living_with_children_ten_and_up"=$27,
+  "living_with_children_younger_ten"=$28,
+  "living_with_adults"=$29,
+  "living_with_small_animals"=$30,
+  "living_with_large_animals"=$31,
+  "behavior_with_other_dogs"
+
+
+  
+
+  WHERE "id" = $34;
+  `
+ queryParams =[user,dogData,dogId]
+  pool 
+      .query(queryText, queryParams)
+      .then((result)=> {
+          res.sendStatus(200);
+      })
+      .catch((err) => {
+          console.log('error updating dog', err)
+      })
+  }else {
+      sendStatus(403)
+  }
+})
 module.exports = router;

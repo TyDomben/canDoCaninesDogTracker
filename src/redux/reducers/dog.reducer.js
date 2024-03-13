@@ -27,11 +27,10 @@ const editDog = (state = {}, action) => {
         console.log('action.payload', action.payload);
         return {
             ...state,
-            // [action.payload.property]: action.payload.value,
             [action.payload.property]: action.payload.value
         }
-    // } else if (action.type === 'EDIT_CLEAR') {
-    //     return {};
+    } else if (action.type === 'EDIT_CLEAR') {
+        return {};
     }
     return state;
 }

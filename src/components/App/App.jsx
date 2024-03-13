@@ -116,7 +116,7 @@ function App() {
               {user.id ? <Redirect to="/user" /> : <LandingPage />}
             </Route>
             <Route path="/dogProfile/:dogId" component={DogProfile} />
-            <Route path="/editdogprofile/:id" component={EditDogProfile} />
+            <Route path="/editdogprofile/:dogId" component={EditDogProfile} />
             <Route path="/requestcareform/dogId" component={RequestCareForm} />
             <Route>
               <h1>404 - Page Not Found</h1>

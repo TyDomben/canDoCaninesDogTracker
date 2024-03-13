@@ -107,6 +107,7 @@ router.get("/:id", async (req, res) => {
       console.log("dogId server", dogId)
       const query = `SELECT
         "dogs"."user_id",
+        
         "dogs"."dog_name", 
         "dogs"."age", 
         "breed"."breed" as "breed", 

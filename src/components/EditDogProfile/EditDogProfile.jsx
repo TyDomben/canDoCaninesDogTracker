@@ -25,6 +25,7 @@ import FormLabel from '@mui/material/FormLabel';
 import Checkbox from '@mui/material/Checkbox';
 import FormGroup from '@mui/material/FormGroup';
 import { Label, PanToolAlt } from '@mui/icons-material';
+import axios from 'axios';
 
 
 const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
@@ -54,7 +55,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
     console.log('radio btn', name, value)
     dispatch({
       type: 'EDIT_DOG',
-      payload: { property: name, value: value }
+      payload: { property: name, value: Number(value) }
     })
 
   }
@@ -85,10 +86,24 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
       payload: { property: event.target.name, value: initVal }
     })
   }
-  const handleSave = () => {
-    dispatch({ type: 'UPDATE_DOG_PROFILE', payload: { dogId: dogProfile, updates: formValues } })
-    // Show confirmation alert
-  };
+  const handleSave = (event) => {
+    event.preventDefault();
+    console.log('inside handleSave in EditDogProfile', editDog, dogId)
+    // dispatch({ type: 'UPDATE_DOG_PROFILE', payload: editDog })
+
+   
+
+      axios.put(`api/raiser-dog/${dogId}`, editDog)
+          .then(response => {
+              console.log("Success Sending Dog Update")
+              // dispatch({ type: 'EDIT_CLEAR' })
+              // history.push('/')
+          }).catch(error => {
+              console.log("Error sending employee update:", error)
+          })
+
+  }
+  
 
   const handleGoBack = () => {
     // Confirm if the user wants to go back without saving
@@ -138,7 +153,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
             aria-labelledby="breed-label"
             value={editDog?.breed_id}
             onChange={handleChangeRadioBtn}
-            name="breed"
+            name="breed_id"
           >
             <FormControlLabel value={1} control={<Radio />} label="Labrador" />
             <FormControlLabel value={2} control={<Radio />} label="Golden Retriever" />
@@ -179,7 +194,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
             aria-labelledby="food_type"
             value={editDog?.food_type_id}
             onChange={handleChangeRadioBtn}
-            name="food_type"
+            name="food_type_id"
           >
             <FormControlLabel value={'1'} control={<Radio />} label="Purina Pro Plan Large Breed PUPPY" />
             <FormControlLabel value={'2'} control={<Radio />} label="Purina Pro Plan Large Breed ADULT" />
@@ -266,7 +281,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           <FormLabel id="in_heat">If you're fostering an spayed/neutered female are they in heat?</FormLabel>
           <RadioGroup
             // aria-labelledby="in_heat"
-            name="in_heat"
+            name="in_heat_id"
             value={editDog?.in_heat_id}
             onChange={handleChangeRadioBtn}
           >
@@ -341,7 +356,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           <RadioGroup
             aria-labelledby="exercise_equipment"
             value={editDog?.exercise_equipment_id}
-            name="exercise_equipment"
+            name="exercise_equipment_id"
             onChange={handleChangeRadioBtn}
           >
             
@@ -431,10 +446,10 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
 
           <FormControlLabel
 
-            id="living_with_children_older_ten"
-            name="living_with_children_older_ten"
+            id="living_with_children_ten_and_up"
+            name="living_with_children_ten_and_up"
             label="Living with children 10 and up"
-            checked={editDog?.living_with_children_older_ten}
+            checked={editDog?.living_with_children_ten_and_up}
             onChange={handleChangeCheckBox}
             required control={<Checkbox />}
           />
@@ -443,7 +458,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
           <FormControlLabel
 
             id="living_with_children_younger_ten"
-            name="living_with_children_yonger_ten"
+            name="living_with_children_younger_ten"
             label="Living with children under 10"
             value={editDog?.living_with_children_younger_ten}
             onChange={handleChangeCheckBox}
@@ -486,7 +501,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
               aria-labelledby="behavior type"
               // defaultValue="1"
               value={editDog?.behavior_with_other_dogs_id}
-              name="behavior_with_other_dogs"
+              name="behavior_with_other_dogs_id"
               onChange={handleChangeRadioBtn}
             >
               <FormControlLabel value={1} control={<Radio />} label="Unknown" />
@@ -502,9 +517,8 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
             <FormLabel id="Behavior1">How does this dog behave around cats?</FormLabel>
             <RadioGroup
               aria-labelledby="behavior type"
-              defaultValue="1"
               value={editDog?.behavior_with_cats_id}
-              name="behavior_with_cats"
+              name="behavior_with_cats_id"
               onChange={handleChangeRadioBtn}
             >
               <FormControlLabel value={1} control={<Radio />} label="Unknown" />
@@ -519,7 +533,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
             <RadioGroup
               aria-labelledby="behavior type"
               value={editDog?.behavior_with_children_id}
-              name="behavior_with_children"
+              name="behavior_with_children_id"
               onChange={handleChangeRadioBtn}
             >
               <FormControlLabel value={1} control={<Radio />} label="Unknown" />
