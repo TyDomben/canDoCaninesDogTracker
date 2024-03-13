@@ -1,7 +1,6 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {useParams, useHistory} from 'react-router-dom';
+import { useParams, useHistory } from "react-router-dom";
 import swal from "sweetalert";
 
 import {
@@ -12,80 +11,78 @@ import {
   AppBar,
   IconButton,
   Box,
-} from '@mui/material';
+} from "@mui/material";
 
-import MenuIcon from '@mui/icons-material/Menu';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import MenuIcon from "@mui/icons-material/Menu";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const RequestCareForm = () => {
   let dispatch = useDispatch("");
   let history = useHistory("");
 
-const dogProfile = useSelector((state) => state.fetchOneDogProfile);
-const { dogId } = useParams();
+  const dogProfile = useSelector((state) => state.fetchOneDogProfile);
+  const { dogId } = useParams();
 
+  console.log("dogId from useParams:", dogId);
 
-let [newRequest, setNewRequest] = useState({
-  start_date: "",
-  end_date:"",
-  date_comments:"",
-  appointments:"",
-})
+  let [newRequest, setNewRequest] = useState({
+    start_date: "",
+    end_date: "",
+    date_comments: "",
+    appointments: "",
+  });
 
-useEffect(() => {
-  if(dogId){
-  dispatch({ type: "FETCH_ONE_DOG_PROFILE", payload:{dogId} });
-  }
-}, [dogId]);
+  useEffect(() => {
+    if (dogId) {
+      dispatch({ type: "FETCH_ONE_DOG_PROFILE", payload: { dogId } });
+    }
+  }, [dogId]);
 
-const handleChange = (event) => {
+  const handleChange = (event) => {
     const { name, value } = event.target;
     setNewRequest({ ...newRequest, [name]: value });
   };
 
-  const handleSave = async(event) => {
+  const handleSave = async (event) => {
     event.preventDefault();
-      console.log('dispatching REQUEST HOST action')
-      dispatch({ type: 'REQUEST_HOST', payload: {dogId, formData: newRequest}})
-      history.push(`/dogprofile/${dogId}`)
-
-
-
+    console.log("dispatching REQUEST HOST action");
+    dispatch({
+      type: "REQUEST_HOST",
+      payload: { dogId, formData: newRequest },
+    });
+    history.push(`/dogprofile/${dogId}`);
   };
 
   const handleGoBack = async (event) => {
     event.preventDefault();
-try{
-  const value = await 
-swal({
-  title: "Are you sure?",
-  text: "Any data entered in your request will be lost.",
-  icon: "warning",
-  buttons: {
-    cancel: "Go back to your request",
-    delete: {
-      text: "Continue without saving",
-      value: "delete",
-    },
-  },
-  dangerMode: true,
-});
-if (value === "delete"){
-  console.log("going back to dog id:", dogId)
-  await swal("Request was not saved")
-  history.push(`/dogprofile/${dogId}`)
-} else {
-  swal("Cancelled.")
-}
-} catch (error) {
-  console.log("error", error)
-  swal("error", "error")
-}
-
-
-
+    try {
+      const value = await swal({
+        title: "Are you sure?",
+        text: "Any data entered in your request will be lost.",
+        icon: "warning",
+        buttons: {
+          cancel: "Go back to your request",
+          delete: {
+            text: "Continue without saving",
+            value: "delete",
+          },
+        },
+        dangerMode: true,
+      });
+      if (value === "delete") {
+        console.log("going back to dog id:", dogId);
+        await swal("Request was not saved");
+        history.push(`/dogprofile/${dogId}`);
+      } else {
+        swal("Cancelled.");
+      }
+    } catch (error) {
+      console.log("error", error);
+      swal("error", "error");
+    }
   };
 
+  const today = new Date().toISOString().split("T")[0];
 
   return (
     <Container maxWidth="sm">
@@ -125,6 +122,9 @@ if (value === "delete"){
           InputLabelProps={{
             shrink: true,
           }}
+          inputProps={{
+            min: today,
+          }}
         />
         <TextField
           label="End Date"
@@ -149,14 +149,14 @@ if (value === "delete"){
             variant="outlined"
             label="Comments"
             type="text"
-            name="Comments"
+            name="date_comments"
             onChange={handleChange}
             sx={{ width: 500, my: 2 }}
             InputLabelProps={{
               shrink: true,
             }}
-            multiline 
-            rows={4} 
+            multiline
+            rows={4}
           />
         </Box>
 
@@ -172,64 +172,25 @@ if (value === "delete"){
             variant="outlined"
             label="Appointment Notes"
             type="text"
-            name="Appointment"
+            name="appointments"
             onChange={handleChange}
             sx={{ width: 500, my: 2 }}
             InputLabelProps={{
               shrink: true,
             }}
-            multiline 
-            rows={4} 
+            multiline
+            rows={4}
           />
         </Box>
-
-<div
+        <Box
           sx={{
-            "& > :not(style)": { m: 1, width: "55ch" },
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+            mt: 2,
           }}
         >
-          <TextField
-            id="outlined-basic-comments"
-            variant="outlined"
-            label="Comments"
-            type="text"
-            name="date_comments"
-            value={newRequest.date_comments}
-            onChange={handleChange}
-            sx={{ width: 500, my: 2 }}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            multiline 
-            rows={4} 
-          />
-        </div>
-
-        <div
-          sx={{
-            "& > :not(style)": { m: 1, width: "55ch" },
-          }}
-        >
-          <TextField
-            id="outlined-basic-appointments"
-            variant="outlined"
-            label="Appointment Notes"
-            type="text"
-            name="appointments"
-            value={newRequest.appointments}
-            onChange={handleChange}
-            sx={{ width: 500, my: 2 }}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            multiline 
-            rows={4} 
-          />
-        </div>
-        
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', mt: 2 }}>
           <Button variant="outlined" color="secondary" onClick={handleGoBack}>
-
             Go Back
           </Button>
           <Button variant="contained" color="primary" onClick={handleSave}>

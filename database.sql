@@ -28,15 +28,7 @@ VALUES
     ('indifferent'),
     ('uncomfortable');
 
----------------------------------------------------------------- EXERCISE LIMITATION TABLE ------------------------------------------------------
---CREATE TABLE IF NOT EXISTS "exercise_limitations" (
---    "id" SERIAL PRIMARY KEY,
---    "exercise_limitations" VARCHAR(255) NOT NULL
---);
---
---INSERT INTO "exercise_limitations" ("exercise_limitations")
---VALUES ('limit water'), ('limit toy play'), ('may destroy toys(watch carefully)'), ('may ingest toys'),
---('plays keep away'), ('does not share toys with other dogs');
+
 ---------------------------------------------------------------- EXERCISE EQUIPMENT TABLE ------------------------------------------------------
 CREATE TABLE IF NOT EXISTS "exercise_equipment" (
     "id" SERIAL PRIMARY KEY,

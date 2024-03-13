@@ -195,7 +195,7 @@ router.post("/", (req, res) => {
     const user = req.user.id;
 
     const dogData = [
-      req.user.id, // assuming you're now including this in the insert
+      req.user.id, 
       req.body.dog_name,
       req.body.age,
       req.body.breed,
