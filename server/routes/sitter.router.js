@@ -179,9 +179,13 @@ router.post("/request/:id", async (req, res) => {
     return res.sendStatus(403);
   }
 
+ const dogId = req.params.id;
   const userId = req.user.id;
-  const dogId = req.params.id;
-  console.log("dogId server side", dogId);
+
+  console.log("dogId", dogId)
+ 
+
+ 
 
   const { start_date, end_date, date_comments, appointments, status } =
     req.body;
@@ -201,7 +205,7 @@ router.post("/request/:id", async (req, res) => {
         "date_comments",
         "appointments",
         "status"
-      ) VALUES ('1', '1', '4-10-2024', '4-17-2024', 'going on vacation', 'no appointments', false)
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING "id";`;
 
     const values = [
@@ -213,12 +217,12 @@ router.post("/request/:id", async (req, res) => {
       appointments,
       status,
     ];
-    const result = await connection.query(query, values);
+    const requestResult = await connection.query(query, values);
+console.log("request result", requestResult)
+    const requestId = result.rows[0].id;
+    console.log("hosting request created id:", requestId);
 
-    const hostingId = result.rows[0].id;
-    console.log("hosting request created id:", hostingId);
-
-    res.status(201).json({ hostingId });
+    res.status(201).json({ requestId });
   } catch (error) {
     console.error("error requesting sitter", error);
     res.sendStatus(500);
@@ -233,14 +237,14 @@ router.post("/request/:id", async (req, res) => {
  * GET route to view a submitted hosting request for single dog (POST sitter/request/:id)
  *  the :id here is the requestId of the corresponding request (hosting_request)
  */
-router.get("/request/volunteer/:id", async (req, res) => {
-  console.log("/sitter/request/volunteer/:id GET route");
+router.get("/request/:id", async (req, res) => {
+  console.log("/sitter/request/:id GET route");
 
   if (!req.isAuthenticated()) {
     return res.sendStatus(403);
   }
-  const hostingId = req.params.id;
-  console.log("fetching hosting request for id:", hostingId);
+  const requestId = req.params.id;
+  console.log("fetching hosting request for id:", requestId);
 
   let connection;
 
@@ -264,7 +268,7 @@ router.get("/request/volunteer/:id", async (req, res) => {
     WHERE 
     "hosting_request"."id" = $1;`;
 
-    const values = [hostingId];
+    const values = [requestId];
     const result = await connection.query(query, values);
 
     if (result.rows.length > 0) {
@@ -300,9 +304,9 @@ router.post("/volunteer/:id", async (req, res) => {
 
   const userId = req.user.id;
   const requestId = req.params.id;
-  console.log("hostingId server side", requestId);
+  console.log("requestId server side", requestId);
 
-  const { start_date, end_date, comments, status } = req.body;
+  const { start_date, end_date, comments } = req.body;
   console.log("req.body", req.body);
 
   let connection;
@@ -318,23 +322,23 @@ router.post("/volunteer/:id", async (req, res) => {
       "end_date",
       "comments",
       "status"
-    ) VALUES ($1, $2, $3, $4, $5, $6)
-    RETURNING "id";`;
+    ) VALUES ($1, $2, $3, $4, $5, false)
+    RETURNING "id";`
 
     const values = [
-      dogId,
+      requestId,
       userId,
       start_date,
       end_date,
-      comments,
-      status,
+      comments
     ];
+
     const result = await connection.query(query, values);
 
-    const hostingId = result.rows[0].id;
-    console.log("hosting request created id:", hostingId);
+    const hostId = result.rows[0].id;
+    console.log("volunteer request created hostId:", hostId);
 
-    res.status(201).json({ hostingId });
+    res.status(201).json({ hostId });
   } catch (error) {
     console.error("error requesting sitter", error);
     res.sendStatus(500);
@@ -349,14 +353,14 @@ router.post("/volunteer/:id", async (req, res) => {
  * GET route to view a submitted request a volunteer sends for single dog hosting experience (POST sitter/volunteer/:id)
  *  the :id here is the hostingId of the corresponding request (volunteer_hosting)
  */
-router.get("/request/volunteer/:id", async (req, res) => {
-  console.log("/sitter/request/volunteer/:id GET route");
+router.get("/volunteer/:id", async (req, res) => {
+  console.log("/sitter/volunteer/:id GET route");
 
   if (!req.isAuthenticated()) {
     return res.sendStatus(403);
   }
-  const hostingId = req.params.id;
-  console.log("fetching volunteer hosting for id:", hostingId);
+  const hostId = req.params.id;
+  console.log("fetching volunteer hosting for id:", hostId);
 
   let connection;
 
@@ -364,28 +368,28 @@ router.get("/request/volunteer/:id", async (req, res) => {
     connection = await pool.connect();
 
     const query = ` SELECT 
-    "dogs"."id" AS "dog_id",
+    "hosting_request"."id" AS "request_id",
     "user"."id" AS "user_id",
-    "hosting_request"."start_date",
-    "hosting_request"."end_date",
-    "hosting_request"."date_comments",
-    "hosting_request"."appointments",
-    "hosting_request"."status"
+    "volunteer_hosting"."start_date",
+    "volunteer_hosting"."end_date",
+    "volunteer_hosting"."comments",
+    "volunteer_hosting"."status"
     FROM 
-    "hosting_request"
+    "volunteer_hosting"
     JOIN 
-    "dogs" ON "dogs"."id" = "hosting_request"."dog_id"
+    "hosting_request" ON "hosting_request"."id" = "volunteer_hosting"."request_id"
     JOIN 
-    "user" ON "user"."id" = "hosting_request"."user_id"
+    "user" ON "user"."id" = "volunteer_hosting"."user_id"
     WHERE 
-    "hosting_request"."id" = $1;`;
+    "volunteer_hosting"."id" = $1;`
 
-    const values = [hostingId];
+    const values = [hostId];
+    console.log("values", values)
     const result = await connection.query(query, values);
 
     if (result.rows.length > 0) {
-      const hostingRequest = result.rows[0];
-      res.json(hostingRequest);
+      const volunteerHosting = result.rows[0];
+      res.json(volunteerHosting);
     } else {
       res.sendStatus(404);
     }
