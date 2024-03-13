@@ -24,6 +24,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Checkbox from '@mui/material/Checkbox';
 import FormGroup from '@mui/material/FormGroup';
+import { Label, PanToolAlt } from '@mui/icons-material';
 
 
 const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
@@ -313,7 +314,7 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
         />
         </Paper>
 
-        <Typography variant='5'>Crate and House Manners</Typography>
+        <Typography variant='h5'>Crate and House Manners</Typography>
         <Paper elevation={5}>
         <TextField
           fullWidth
@@ -337,16 +338,20 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
         />
         </Paper>
 
-        <FormControlLabel
+        <Typography variant ='h5'>Behavorial Information</Typography>
+
+        <Paper elevation={5}>
+        <Typography varient ='h6'>This dog is Comfortable:</Typography>
+        <FormControlLabel 
 
           id="living_with_other_dogs"
           name="living_with_other_dogs"
           label="Living with other dogs"
-          checked={editDog?.living_with_cats}
+          checked={editDog?.living_with_other_dogs}
           onChange={handleChangeCheckBox}
           required control={<Checkbox />}
         />
-
+        <Typography variant='h5'></Typography>
         {/* <TextField
           fullWidth
           margin="normal"
@@ -540,7 +545,9 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
             Save Information
           </Button>
         </Box>
+        </Paper>
       </Box>
+      
     </Container>
   );
 };
