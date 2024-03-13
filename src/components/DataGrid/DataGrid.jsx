@@ -8,10 +8,7 @@ import {
   TableRow,
   Paper,
   Button,
-  AppBar,
-  Toolbar,
   Typography,
-  IconButton,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import axios from "axios";
@@ -40,7 +37,7 @@ const DataGrid = () => {
   return (
     <>
       <Typography variant="h6" sx={{ flexGrow: 1 }}>
-      Can-Do Canines that Need Sitters
+        Can-Do Canines that Need Sitters
       </Typography>
       <TableContainer component={Paper} sx={{ my: 4 }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -56,11 +53,8 @@ const DataGrid = () => {
           <TableBody>
             {sittingDogs
               .filter((dog) => dog.status === "not confirmed")
-              .map((dog) => (
-                <TableRow
-                  key={dog.name}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
+              .map((dog, index) => (
+                <TableRow key={dog.name + index} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                   <TableCell component="th" scope="row">
                     {/* Replace with actual image */}
                     <img
