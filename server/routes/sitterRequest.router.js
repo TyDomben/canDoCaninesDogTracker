@@ -3,8 +3,8 @@ const pool = require("../modules/pool");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-    // This endpoint doesn't require authentication to see all dog hosting requests
-    let sqlText = `
+  // This endpoint doesn't require authentication to see all dog hosting requests
+  let sqlText = `
       SELECT
         "dog_hosting"."id" AS "hosting_id",
         "dog_hosting"."dog_id",
@@ -14,8 +14,8 @@ router.get("/", (req, res) => {
         "dog_hosting"."date_comments",
         "dog_hosting"."appointments",
         "dog_hosting"."status",
-        "dogs"."name" AS "dog_name",
-        "user"."name" AS "user_name"
+        "dogs"."dog_name" AS "dog_name", -- Corrected column name
+        "user"."name" AS "user_name" -- Assuming "name" is the correct column for the user's name
       FROM
         "dog_hosting"
       JOIN
@@ -23,16 +23,16 @@ router.get("/", (req, res) => {
       JOIN
         "user" ON "dog_hosting"."user_id" = "user"."id";
     `;
-  
-    pool.query(sqlText)
-      .then((result) => {
-        res.send(result.rows);
-      })
-      .catch((error) => {
-        console.error("Error fetching all dog hosting requests", error);
-        res.sendStatus(500); // Send a server error status code
-      });
-  });
-  
+
+  pool
+    .query(sqlText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.error("Error fetching all dog hosting requests", error);
+      res.sendStatus(500); // Send a server error status code
+    });
+});
 
 module.exports = router;

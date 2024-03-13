@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
   SELECT
   "dogs"."user_id",
   "dogs"."id" AS "dog_id",
-  "dogs"."name",
+  "dogs"."dog_name",
   "dogs"."age",
   "dogs"."breed",
   "dogs"."spayed_neutered",
@@ -28,7 +28,6 @@ router.get("/", (req, res) => {
   "dogs"."in_heat",
   "dogs"."potty_routine",
   "dogs"."potty_habits_notes",
-  "exercise_limitations"."exercise_limitations",
   "exercise_equipment"."exercise_equipment",
   "dogs"."crate_manners",
   "dogs"."house_manners",
@@ -52,8 +51,6 @@ FROM
   "user"
 JOIN
   "dogs" ON "user"."id" = "dogs"."user_id"
-JOIN
-  "exercise_limitations" ON "dogs"."exercise_limitations" = "exercise_limitations"."id"
 JOIN
   "exercise_equipment" ON "dogs"."exercise_equipment" = "exercise_equipment"."id"
 JOIN
@@ -76,7 +73,7 @@ WHERE
       res.send(result.rows);
     })
     .catch((error) => {
-      console.error("Error fetching user's dogs", error);
+      console.error("Error fetching user's dogs with SQL:", sqlText, "Parameters:", sqlParams, "Error:", error);
       res.sendStatus(500); // Send a server error status code
     });
 });
@@ -88,12 +85,13 @@ router.get("/:id", (req, res) => {
   }
 
   const userId = req.user.id; // Get the current user's ID
+  const dogId = req.params.id; // Extract the dog ID from the route parameter
 
   let sqlText = `
   SELECT
   "dogs"."user_id",
   "dogs"."id" AS "dog_id",
-  "dogs"."name",
+  "dogs"."dog_name",
   "dogs"."age",
   "dogs"."breed",
   "dogs"."spayed_neutered",
@@ -107,7 +105,6 @@ router.get("/:id", (req, res) => {
   "dogs"."in_heat",
   "dogs"."potty_routine",
   "dogs"."potty_habits_notes",
-  "exercise_limitations"."exercise_limitations",
   "exercise_equipment"."exercise_equipment",
   "dogs"."crate_manners",
   "dogs"."house_manners",
@@ -132,8 +129,6 @@ FROM
 JOIN
   "dogs" ON "user"."id" = "dogs"."user_id"
 JOIN
-  "exercise_limitations" ON "dogs"."exercise_limitations" = "exercise_limitations"."id"
-JOIN
   "exercise_equipment" ON "dogs"."exercise_equipment" = "exercise_equipment"."id"
 JOIN
   "behavior" AS "behavior_dog" ON "dogs"."behavior_with_other_dogs" = "behavior_dog"."id"
@@ -144,9 +139,10 @@ JOIN
 JOIN
   "dog_hosting" ON "dogs"."id" = "dog_hosting"."dog_id"
 WHERE
-  "dogs"."user_id" = $1;`
+  "dogs"."user_id" = $1 AND "dogs"."id" = $2;
+  `;
 
-  const sqlParams = [userId]; // Use the current user's ID as the parameter for the query
+  const sqlParams = [userId, dogId]; // Use the current user's ID and the dog ID as parameters for the query
 
   pool
     .query(sqlText, sqlParams)
@@ -154,9 +150,10 @@ WHERE
       res.send(result.rows);
     })
     .catch((error) => {
-      console.error("Error fetching user's dogs", error);
+      console.error("Error fetching user's dog with SQL:", sqlText, "Parameters:", sqlParams, "Error:", error);
       res.sendStatus(500); // Send a server error status code
     });
 });
 
 module.exports = router;
+

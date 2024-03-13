@@ -74,8 +74,8 @@ const HomePage = () => {
         </Typography>
         <Grid container spacing={2}>
           {/* Map your dog data to these cards */}
-          {doggos.map((dog) => (
-            <Grid item xs={12} sm={6} md={4}>
+          {doggos.map((dog, index) => (
+            <Grid item key={index} xs={12} sm={6} md={4}>
               <Card
                 key={dog.id}
                 onClick={() => history.push(`/dogprofile/${dog.id}`)}
