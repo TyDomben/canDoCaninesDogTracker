@@ -32,7 +32,6 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
   const dispatch = useDispatch();
   const editDog = useSelector((store) => store.dog.editDog);
   const dogProfile = useSelector((store) => store.dog.dogProfile)
-
   const { dogId } = useParams();
   const history = useHistory();
   console.log('edit dog initial', editDog)
@@ -96,8 +95,8 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
       axios.put(`api/raiser-dog/${dogId}`, editDog)
           .then(response => {
               console.log("Success Sending Dog Update")
-              // dispatch({ type: 'EDIT_CLEAR' })
-              // history.push('/')
+              dispatch({ type: 'EDIT_CLEAR' })
+              history.push(`/dogprofile/${dogId}`)
           }).catch(error => {
               console.log("Error sending employee update:", error)
           })

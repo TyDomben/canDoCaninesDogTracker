@@ -86,32 +86,39 @@ if (req.isAuthenticated()) {
   const dogId = req.params.id;
   const user = req.user.id
   const dogData = [
-    rec.body.dog_name,
-    rec.body.age,
-    rec.body.breed_id, 
-    rec.body.spayed.neutered,
-    rec.body.food_type_id,
-    rec.body.food_amount,
-    rec.body.meals_per_day,
-    rec.body.eating_times,
-    rec.body.medical_conditions,
-    rec.body.recovering_from_surgery,
-    rec.body.medications,
-    rec.body.in_heat_id,
-    rec.body.potty_routine,
-    rec.body.potty_habits_notes,
-    rec.body.limit_water,
-    rec.body.limit_toy_play,
-    rec.body.watch_carefully,
-    rec.body.ingest_toys,
-    rec.body.keep_away,
-    rec.body.shares_toys,
-    rec.body.exercise_equipment_id,
-    rec.body.crate_manners,
-    rec.body.house_manners,
-    rec.body.living_with_other_dogs_id,
-    rec.body.living_with_other_cats_id,
-    rec.body.living_with_children_id
+    req.body.dog_name,
+    req.body.age,
+    req.body.breed_id, 
+    req.body.spayed_neutered,
+    req.body.food_type_id,
+    req.body.food_amount,
+    req.body.meals_per_day,
+    req.body.eating_times,
+    req.body.medical_conditions,
+    req.body.recovering_from_surgery,
+    req.body.medications,
+    req.body.in_heat_id,
+    req.body.potty_routine,
+    req.body.potty_habits_notes,
+    req.body.limit_water,
+    req.body.limit_toy_play,
+    req.body.watch_carefully,
+    req.body.ingest_toys,
+    req.body.keep_away,
+    req.body.shares_toys,
+    req.body.exercise_equipment_id,
+    req.body.crate_manners,
+    req.body.house_manners,
+    req.body.living_with_other_dogs_id,
+    req.body.living_with_cats_id,
+    req.body.living_with_children_ten_and_up,
+    req.body.living_with_children_under_ten,
+    req.body.living_with_adults,
+    req.body.living_with_small_animals,
+    req.body.living_with_large_animals,
+    req.body.behavior_with_other_dogs_id,
+    req.body.behavior_with_cats_id,
+    req.body.behavior_with_children
 
 
   ]
@@ -141,7 +148,7 @@ if (req.isAuthenticated()) {
   "ingest_toys"=$19,
   "keep_away"=$20,
   "shares_toys"=$21,
-  "excercise_equipment"=$22,
+  "exercise_equipment"=$22,
   "crate_manners"=$23,
   "house_manners"=$24,
   "living_with_other_dogs"=$25,
@@ -151,14 +158,50 @@ if (req.isAuthenticated()) {
   "living_with_adults"=$29,
   "living_with_small_animals"=$30,
   "living_with_large_animals"=$31,
-  "behavior_with_other_dogs"
+  "behavior_with_other_dogs"=$32,
+  "behavior_with_cats"=$33,
+  "behavior_with_children"=$34
 
 
   
 
-  WHERE "id" = $34;
+  WHERE "id" = $35;
   `
- queryParams =[user,dogData,dogId]
+ queryParams =[user,
+  req.body.dog_name,
+  req.body.age,
+  req.body.breed_id, 
+  req.body.spayed_neutered,
+  req.body.food_type_id,
+  req.body.food_amount,
+  req.body.meals_per_day,
+  req.body.eating_times,
+  req.body.medical_conditions,
+  req.body.recovering_from_surgery,
+  req.body.medications,
+  req.body.in_heat_id,
+  req.body.potty_routine,
+  req.body.potty_habits_notes,
+  req.body.limit_water,
+  req.body.limit_toy_play,
+  req.body.watch_carefully,
+  req.body.ingest_toys,
+  req.body.keep_away,
+  req.body.shares_toys,
+  req.body.exercise_equipment_id,
+  req.body.crate_manners,
+  req.body.house_manners,
+  req.body.living_with_other_dogs,
+  req.body.living_with_cats,
+  req.body.living_with_children_ten_and_up,
+  req.body.living_with_children_younger_ten,
+  req.body.living_with_adults,
+  req.body.living_with_small_animals,
+  req.body.living_with_large_animals,
+  req.body.behavior_with_other_dogs_id,
+  req.body.behavior_with_cats_id,
+  req.body.behavior_with_children_id,
+  dogId]
   pool 
       .query(queryText, queryParams)
       .then((result)=> {
