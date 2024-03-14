@@ -29,6 +29,7 @@ import SitterHomePage from "../SitterHome/SitterHome";
 import UserPage from "../UserPage/UserPage";
 import UserProfileEdit from "../UserProfileEdit/UserProfileEdit";
 import VolunteerSitterForm from "../VolunteerSitterForm/VolunteerSitterForm";
+import RequestSitter from "../RequestSitter/RequestSitter";
 import "./App.css";
 function App() {
   const dispatch = useDispatch();
@@ -112,7 +113,9 @@ function App() {
               <DogProfile/>
             </ProtectedRoute>
             {/* //! right now the request care form is not working, UNLESS it is pulling the dog id */}
-  
+            <ProtectedRoute exact path="/dogprofile/:dogId">
+              <DogProfile />
+            </ProtectedRoute>
 
             <Route exact path="/login">
               {user.id ? <Redirect to="/user" /> : <LoginPage />}

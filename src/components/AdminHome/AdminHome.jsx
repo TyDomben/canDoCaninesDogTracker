@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Table,
   TableBody,
@@ -13,25 +13,30 @@ import {
   Tab,
   Box,
   Typography,
-} from '@mui/material';
+} from "@mui/material";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { format } from "date-fns";
 
-const AdminHome = ({ requests, onConfirm, onDeny }) => {
-  // Tab navigation state and handler
-  const [value, setValue] = React.useState(0);
-  const handleTabChange = (event, newValue) => {
-    setValue(newValue);
-  };
+const AdminHome = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const [requests, setRequests] = useState([]);
+  // const requests = useSelector((store) => store.raiserDogReducer);
+  // console.log(requests)
+
+  useEffect(() => {
+    // dispatch({ type: "FETCH_USER_DOGS" });
+    axios.get("/api/admin").then((response) => {
+      console.log(response.data);
+      setRequests(response.data);
+    });
+  }, []);
 
   return (
     <>
-      <AppBar position="static">
-        <Tabs value={value} onChange={handleTabChange} aria-label="admin navigation tabs">
-          <Tab label="Home Page" />
-          <Tab label="Data Grid" />
-          <Tab label="Care Requests" />
-          <Tab label="User Profile" />
-        </Tabs>
-      </AppBar>
       <TableContainer component={Paper} sx={{ my: 4 }}>
         <Table sx={{ minWidth: 650 }} aria-label="admin table">
           <TableHead>
@@ -49,17 +54,38 @@ const AdminHome = ({ requests, onConfirm, onDeny }) => {
               <TableRow key={index}>
                 <TableCell component="th" scope="row">
                   {/* Placeholder image, replace with actual */}
-                  <img src="/static/images/dog-placeholder.jpg" alt="Dog" style={{ width: 50, height: 50 }} />
+                  <img
+                    src="/public/images/dogoutline.jpeg"
+                    alt="Dog"
+                    style={{
+                      height: "100%",
+                      width: "auto",
+                      maxWidth: "100%",
+                      objectFit: "contain",
+                    }}
+                  />
                 </TableCell>
-                <TableCell>{request.dogName}</TableCell>
-                <TableCell>{request.datesNeeded}</TableCell>
+                <TableCell>{request.dog_name}</TableCell>
+                <TableCell>
+                  {format(new Date(request.start_date), "MMMM d, yyyy, h:mm a")}{" "}
+                  to{" "}
+                  {format(new Date(request.end_date), "MMMM d, yyyy, h:mm a")}
+                </TableCell>
                 <TableCell>{request.volunteerName}</TableCell>
                 <TableCell>{request.datesAvailable}</TableCell>
                 <TableCell>
-                  <Button variant="contained" color="primary" onClick={() => onConfirm(request)}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => onConfirm(request)}
+                  >
                     Confirm
                   </Button>
-                  <Button variant="outlined" color="secondary" onClick={() => onDeny(request)}>
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    onClick={() => onDeny(request)}
+                  >
                     Deny
                   </Button>
                 </TableCell>

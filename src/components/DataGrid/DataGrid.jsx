@@ -16,12 +16,15 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { format } from "date-fns";
 import { useHistory } from "react-router-dom";
+
 const DataGrid = () => {
   const [sittingDogs, setSittingDogs] = useState([]);
   const dispatch = useDispatch();
   const history = useHistory();
+
   useEffect(() => {
     dispatch({ type: "FETCH_USER_DOGS" });
+
     axios
       .get("/api/sitterRequest")
       .then((response) => {
@@ -32,6 +35,7 @@ const DataGrid = () => {
         console.error("Error fetching sitter requests:", error);
       });
   }, [dispatch]);
+
   return (
     <>
       <Typography variant="h6" sx={{ flexGrow: 1 }}>
@@ -80,7 +84,7 @@ const DataGrid = () => {
                     <Button
                       variant="outlined"
                       onClick={() => history.push(`/volunteerSitterForm/${dog.dog_id}`)}
-                    // this should go to the volunteer sitter form based on dog id
+                      // this should go to the volunteer sitter form based on dog id
                     >
                       Volunteer
                     </Button>
