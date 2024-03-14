@@ -40,13 +40,8 @@ router.get("/", (req, res) => {
   "dogs"."living_with_large_animals",
   "behavior_dog"."behavior_category_name" AS "behavior_with_other_dogs",
   "behavior_cat"."behavior_category_name" AS "behavior_with_cats",
-  "behavior_child"."behavior_category_name" AS "behavior_with_children",
-  "hosting_request"."id" AS "hosting_id",
-  "hosting_request"."start_date",
-  "hosting_request"."end_date",
-  "hosting_request"."date_comments",
-  "hosting_request"."appointments",
-  "hosting_request"."status"
+  "behavior_child"."behavior_category_name" AS "behavior_with_children"
+ 
 FROM
   "user"
 JOIN
@@ -59,8 +54,7 @@ JOIN
   "behavior" AS "behavior_cat" ON "dogs"."behavior_with_cats" = "behavior_cat"."id"
 JOIN
   "behavior" AS "behavior_child" ON "dogs"."behavior_with_children" = "behavior_child"."id"
-JOIN
-  "hosting_request" ON "dogs"."id" = "hosting_request"."dog_id"
+
 WHERE
   "dogs"."user_id" = $1;
   `;
@@ -110,7 +104,7 @@ router.get("/:id", (req, res) => {
   "dogs"."house_manners",
   "dogs"."living_with_other_dogs",
   "dogs"."living_with_cats",
-  "dogs"."living_with_children_10_and_up",
+  "dogs"."living_with_children_ten_and_up",
   "dogs"."living_with_children_younger_ten",
   "dogs"."living_with_adults",
   "dogs"."living_with_small_animals",

@@ -42,7 +42,7 @@ const DogCards = ({ dogs, onCardClick }) => {
   return (
     <Container maxWidth="lg">
       <Typography variant="h4" sx={{ my: 2 }}>
-        Can-Do Canines that Need Sitters
+        Can Do Canines that Need Sitters
       </Typography>
       <Grid container spacing={3}>
         {allDogs

@@ -35,7 +35,7 @@ const DataGrid = () => {
         console.error("Error fetching sitter requests:", error);
       });
   }, [dispatch]);
-
+  
   return (
     <>
       <Typography variant="h6" sx={{ flexGrow: 1 }}>
@@ -54,7 +54,7 @@ const DataGrid = () => {
           </TableHead>
           <TableBody>
             {sittingDogs
-              .filter((dog) => dog.status === "not confirmed")
+              .filter((dog) => dog.status !== "confirmed")
               .map((dog, index) => (
                 <TableRow
                   key={dog.name + index}
