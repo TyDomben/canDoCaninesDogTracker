@@ -31,17 +31,11 @@ const AdminHome = () => {
 
   const onConfirm = (id) => {
     dispatch({ type: "SET_CONFIRMATION", payload: { request_id: id } });
-    // axios
-    //   .put(`/api/admin/${id}`, { status: "confirmed" })
-    //   .then((response) => {
-    //     console.log(response);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   };
 
-  const onDeny = () => {};
+  const onDeny = (id) => {
+    dispatch({ type: "DENY_CONFIRMATION", payload: { request_id: id } });
+  };
 
   return (
     <>
@@ -86,7 +80,7 @@ const AdminHome = () => {
                     variant="contained"
                     color="primary"
                     onClick={() =>
-                      onConfirm(request.request_id, request.status)
+                      onConfirm(request.request_id)
                     }
                   >
                     Confirm
@@ -94,7 +88,7 @@ const AdminHome = () => {
                   <Button
                     variant="outlined"
                     color="secondary"
-                    onClick={() => onDeny(request)}
+                    onClick={() => onDeny(request.request_id)}
                   >
                     Deny
                   </Button>
