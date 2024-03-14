@@ -111,7 +111,6 @@ function App() {
               <EditDogProfile/>
             </ProtectedRoute>
             
-              </ProtectedRoute>
               <ProtectedRoute exact path="/all-profiles">
               <AllProfiles />
             </ProtectedRoute>
