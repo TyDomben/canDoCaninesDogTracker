@@ -12,7 +12,7 @@ function* fetchRequests(action) {
 
 function* confirmRequest(action) {
   try {
-    yield call(axios.put, `/api/admin/${action.payload.request_id}`, {
+    yield call(axios.put, `/api/admin/${action.payload}`, {
       status: "Confirmed",
     });
     yield put({ type: "FETCH_REQUESTS" });
@@ -22,15 +22,15 @@ function* confirmRequest(action) {
 }
 
 function* denyRequest(action) {
-    try {
-      yield call(axios.put, `/api/admin/${action.payload.request_id}`, {
-        status: "Deny",
-      });
-      yield put({ type: "FETCH_REQUESTS" });
-    } catch (error) {
-      console.log("dog get request failed", error);
-    }
+  try {
+    yield call(axios.put, `/api/admin/${action.payload}`, {
+      status: "Denied",
+    });
+    yield put({ type: "FETCH_REQUESTS" });
+  } catch (error) {
+    console.log("dog get request failed", error);
   }
+}
 
 function* requestsSaga() {
   yield takeLatest("FETCH_REQUESTS", fetchRequests);
