@@ -24,19 +24,7 @@ CREATE TABLE IF NOT EXISTS "behavior" (
 INSERT INTO "behavior" ("behavior_category_name")
 VALUES ('unknown'), ('comfortable'), ('indefferent'), ('uncomfortable');
 
----------------------------------------------------------------- EXERCISE LIMITATION TABLE ------------------------------------------------------
 
-
-CREATE TABLE IF NOT EXISTS "exercise_limitations" (
-    "id" SERIAL PRIMARY KEY,
-    "exercise_limitations" VARCHAR(255) NOT NULL
-);
-
-INSERT INTO "exercise_limitations" ("exercise_limitations")
-VALUES ('limit water'), ('limit toy play'), ('may destroy toys(watch carefully)'), ('may injest toys'),
-('plays keep away'), ('does not share toys with other dogs');
-
----------------------------------------------------------------- EXERCISE EQUIPMENT TABLE ------------------------------------------------------
 
 
 CREATE TABLE IF NOT EXISTS "exercise_equipment" (
@@ -158,8 +146,7 @@ INSERT INTO "dogs" (
 VALUES ('1','Loki', '2', '1', true, '1', '1 cup', '3', '6 am', 'none', false, 'none', '1', 'every 3 hours', 'takes a long time', '1', '1', 'feels safe in crate', 'gets on the couch', true, true, false, false, true, true, true, '1', '1', '1');
 
 ---------------------------------------------------------------- DOG HOSTING TABLE ----------------------------------------------------------------
-
-CREATE TABLE IF NOT EXISTS "dog_hosting" (
+CREATE TABLE IF NOT EXISTS "hosting_request" (
     "id" SERIAL PRIMARY KEY,
     "dog_id" INT NOT NULL,
     "user_id" INT NOT NULL,
@@ -167,12 +154,11 @@ CREATE TABLE IF NOT EXISTS "dog_hosting" (
     "end_date" DATE NOT NULL,
     "date_comments" VARCHAR(255) NOT NULL,
     "appointments" VARCHAR(255) NOT NULL,
-    "status" VARCHAR(50) NOT NULL,
+    "status" VARCHAR(50),
     FOREIGN KEY ("dog_id") REFERENCES "dogs"("id"),
     FOREIGN KEY ("user_id") REFERENCES "user"("id")
 );
-
-INSERT INTO "dog_hosting" (
+INSERT INTO "hosting_request" (
     "dog_id",
     "user_id",
     "start_date",
@@ -182,8 +168,21 @@ INSERT INTO "dog_hosting" (
     "status"
 )
 VALUES('1', '1', '4-1-2024', '4-7-2024', 'Vacation to Hawaii', 'no appointments', 'not confirmed');
---admin_id is not doing anything.. is there supposed to be an admin table with confirm and deny = 1 or 2 --
-
+-----------------------------------------VOLUNTEER TO HOST TABLE ----------------------
+CREATE TABLE IF NOT EXISTS "volunteer_hosting" (
+    "id" SERIAL PRIMARY KEY,
+    "request_id" INT NOT NULL,
+    "user_id" INT NOT NULL,
+    "start_date" DATE NOT NULL,
+    "end_date" DATE NOT NULL,
+    "comments" VARCHAR(500),
+    "status" BOOLEAN,
+    FOREIGN KEY ("request_id") REFERENCES "hosting_request"("id"),
+    FOREIGN KEY ("user_id") REFERENCES "user"("id")
+);
+INSERT INTO "volunteer_hosting" (
+"request_id", "user_id", "start_date", "end_date", "comments", "status")
+VALUES('1', '1', '4-1-2024', '4-7-2024', 'no comments', false);
 -------------------------------- QUERIES --------------------------
 
 ------------ GET --------------

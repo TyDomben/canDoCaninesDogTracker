@@ -102,7 +102,15 @@ function App() {
             <ProtectedRoute exact path="/volunteersitterform">
               <VolunteerSitterForm />
             </ProtectedRoute>
-            <ProtectedRoute exact path="requestcareform/:dogId"></ProtectedRoute>
+            <ProtectedRoute exact path="/requestcareform/:dogId">
+              <RequestCareForm />
+            </ProtectedRoute>
+            <ProtectedRoute exact path="/editdogprofile/:dogId">
+              <EditDogProfile/>
+            </ProtectedRoute>
+            <ProtectedRoute exact path="/dogProfile/:dogId">
+              <DogProfile/>
+            </ProtectedRoute>
             {/* //! right now the request care form is not working, UNLESS it is pulling the dog id */}
   
 
@@ -115,9 +123,6 @@ function App() {
             <Route exact path="/home">
               {user.id ? <Redirect to="/user" /> : <LandingPage />}
             </Route>
-            <Route path="/dogProfile/:dogId" component={DogProfile} />
-            <Route path="/editdogprofile/:dogId" component={EditDogProfile} />
-            <Route path="/requestcareform/dogId" component={RequestCareForm} />
             <Route>
               <h1>404 - Page Not Found</h1>
             </Route>
