@@ -3,6 +3,8 @@
 -- ex. SELECT * FROM "user";
 -- Otherwise you will have errors!
 ---------------------------------------------------------------- USER TABLE ----------------------------------------------------------------
+
+
 CREATE TABLE IF NOT EXISTS "user" (
     "id" SERIAL PRIMARY KEY,
     "name" VARCHAR(255),
@@ -19,62 +21,40 @@ CREATE TABLE IF NOT EXISTS "behavior" (
     "id" SERIAL PRIMARY KEY,
     "behavior_category_name" VARCHAR(255) NOT NULL
 );
-
-INSERT INTO
-    "behavior" ("behavior_category_name")
-VALUES
-    ('unknown'),
-    ('comfortable'),
-    ('indifferent'),
-    ('uncomfortable');
+INSERT INTO "behavior" ("behavior_category_name")
+VALUES ('unknown'), ('comfortable'), ('indefferent'), ('uncomfortable');
 
 
 ---------------------------------------------------------------- EXERCISE EQUIPMENT TABLE ------------------------------------------------------
+
+
 CREATE TABLE IF NOT EXISTS "exercise_equipment" (
     "id" SERIAL PRIMARY KEY,
     "exercise_equipment" VARCHAR(255) NOT NULL
 );
 
-INSERT INTO
-    "exercise_equipment" ("exercise_equipment")
-VALUES
-    ('gentle leader'),
-    ('halti head caller'),
-    ('collar only(unless pulling)'),
-    ('no pull front clip harness'),
-    ('walks not recommended for exercise');
+INSERT INTO "exercise_equipment" ("exercise_equipment")
+VALUES ('gentle leader'), ('halti head caller'), ('collar only(unless pulling)'), ('no pull front clip harness'), ('walks not recommended for exercise');
 
 ---------------------------------------------------------------- Food Type ------------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS "food_type" (
     "id" SERIAL PRIMARY KEY,
     "food_type" VARCHAR(255) NOT NULL
 );
 
-INSERT INTO
-    "food_type" ("food_type")
-VALUES
-    ('Purina Pro Plan Large Breed Puppy'),
-    ('Purina Pro Plan Large Breed Adult'),
-    ('Purina Pro Plan Sensitive Skin and Stomach'),
-    ('Purina Pro Plan Sport 30/20'),
-    ('Other');
+INSERT INTO "food_type" ("food_type")
+VALUES ('Purina Pro Plan Large Breed Puppy'), ('Purina Pro Plan Large Breed Adult'), ('Purina Pro Plan Sensitive Skin and Stomach'), ('Purina Pro Plan Sport 30/20'), ('Other');
 
 ---------------------------------------------------------------- Breed ------------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS "breed" (
     "id" SERIAL PRIMARY KEY,
     "breed" VARCHAR(255) NOT NULL
 );
 
-INSERT INTO
-    "breed" ("breed")
-VALUES
-    ('Labrador'),
-    ('Golden Retriever'),
-    ('Labrador Mix'),
-    ('Golden Retriever Mix'),
-    ('Poodle/Poodle Mix'),
-    ('Collie'),
-    ('I Dont Know');
+INSERT INTO "breed" ("breed")
+VALUES ('Labrador'), ('Golden Retriever'), ('Labrador Mix'), ('Golden Retriever Mix'), ('Poodle/Poodle Mix'), ('Collie'), ('I Dont Know');
 
 ---------------------------------------------------------------- In Heat Table-----------------------------------------------------------
 CREATE TABLE IF NOT EXISTS "in_heat" (
@@ -90,6 +70,7 @@ VALUES
     ('unknown');
 
 ---------------------------------------------------------------- DOGS TABLE ----------------------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS "dogs" (
     "id" SERIAL PRIMARY KEY,
     "user_id" INT REFERENCES "user"("id") NOT NULL,
@@ -112,7 +93,7 @@ CREATE TABLE IF NOT EXISTS "dogs" (
     "watch_carefully" BOOLEAN NOT NULL,
     "ingest_toys" BOOLEAN NOT NULL,
     "keep_away" BOOLEAN NOT NULL,
-    "shares_toys" BOOLEAN NOT NULL,
+    "shares_toys" BOOLEAN NOT NULL,    
     "exercise_equipment" INT NOT NULL,
     "crate_manners" VARCHAR(255) NOT NULL,
     "house_manners" VARCHAR(255) NOT NULL,
@@ -134,6 +115,7 @@ CREATE TABLE IF NOT EXISTS "dogs" (
     FOREIGN KEY ("food_type") REFERENCES "food_type"("id"),
     FOREIGN KEY ("breed") REFERENCES "breed"("id"),
     FOREIGN KEY ("in_heat") REFERENCES "in_heat"("id")
+    
 );
 
 INSERT INTO

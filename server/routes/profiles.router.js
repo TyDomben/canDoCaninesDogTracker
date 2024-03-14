@@ -9,23 +9,7 @@ router.get("/", (req, res) => {
   }
 
   const sqlText = `
-  SELECT 
-    hr."id" AS "request_id",
-    hr."dog_id",
-    d."dog_name",
-    hr."user_id",
-    u."name" AS "requester_name",
-    hr."start_date",
-    hr."end_date",
-    hr."date_comments",
-    hr."appointments",
-    hr."status"
-FROM 
-    "hosting_request" hr
-JOIN 
-    "dogs" d ON hr."dog_id" = d."id"
-JOIN 
-    "user" u ON hr."user_id" = u."id";
+  SELECT * FROM "user"
 `;
 
   pool
@@ -34,16 +18,16 @@ JOIN
       res.send(result.rows);
     })
     .catch((error) => {
-      console.error("Error fetching user's dogs with SQL:", error);
-      res.sendStatus(500); // Send a server error status code
+      console.error("Error user with SQL:", error);
+      res.sendStatus(500);
     });
 });
 
 router.put("/:id", (req, res) => {
   const requestId = req.params.id;
   const sqlText = `
-    UPDATE "hosting_request"
-    SET "status" = $1
+    UPDATE "user"
+    SET "admin" = $1
     WHERE "id" = $2;
   `;
 

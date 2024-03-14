@@ -7,6 +7,8 @@ import oneDogSaga from './fetchonedog.saga';
 import deleteDogSaga from './deletedog.saga';
 import requestHostSaga from './requesthost.saga';
 import volunteerHostSaga from './volunteerhost.saga';
+import requestsSaga from './admin.saga';
+
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -24,6 +26,7 @@ export default function* rootSaga() {
     oneDogSaga(),
     deleteDogSaga(),
     requestHostSaga(),
-    volunteerHostSaga()
+    volunteerHostSaga(),
+    requestsSaga(),
   ]);
 }

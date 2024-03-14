@@ -43,21 +43,26 @@ router.get("/", (req, res) => {
   "behavior_child"."behavior_category_name" AS "behavior_with_children"
  
 FROM
-  "user"
+  "dogs" d
 JOIN
-  "dogs" ON "user"."id" = "dogs"."user_id"
+  "breed" b ON d."breed" = b."id"
 JOIN
-  "exercise_equipment" ON "dogs"."exercise_equipment" = "exercise_equipment"."id"
+  "food_type" ft ON d."food_type" = ft."id"
 JOIN
-  "behavior" AS "behavior_dog" ON "dogs"."behavior_with_other_dogs" = "behavior_dog"."id"
+  "exercise_equipment" ee ON d."exercise_equipment" = ee."id"
 JOIN
-  "behavior" AS "behavior_cat" ON "dogs"."behavior_with_cats" = "behavior_cat"."id"
+  "in_heat" ih ON d."in_heat" = ih."id"
+JOIN
+  "behavior" beh ON d."behavior_with_other_dogs" = beh."id"
+JOIN
+  "behavior" beh_cats ON d."behavior_with_cats" = beh_cats."id"
 JOIN
   "behavior" AS "behavior_child" ON "dogs"."behavior_with_children" = "behavior_child"."id"
 
 WHERE
-  "dogs"."user_id" = $1;
-  `;
+  d."user_id" = $1;
+
+`;
 
   const sqlParams = [userId]; // Use the current user's ID as the parameter for the query
 
@@ -67,7 +72,14 @@ WHERE
       res.send(result.rows);
     })
     .catch((error) => {
-      console.error("Error fetching user's dogs with SQL:", sqlText, "Parameters:", sqlParams, "Error:", error);
+      console.error(
+        "Error fetching user's dogs with SQL:",
+        sqlText,
+        "Parameters:",
+        sqlParams,
+        "Error:",
+        error
+      );
       res.sendStatus(500); // Send a server error status code
     });
 });
@@ -144,7 +156,14 @@ WHERE
       res.send(result.rows);
     })
     .catch((error) => {
-      console.error("Error fetching user's dog with SQL:", sqlText, "Parameters:", sqlParams, "Error:", error);
+      console.error(
+        "Error fetching user's dog with SQL:",
+        sqlText,
+        "Parameters:",
+        sqlParams,
+        "Error:",
+        error
+      );
       res.sendStatus(500); // Send a server error status code
     });
 });
@@ -288,4 +307,3 @@ if (req.isAuthenticated()) {
   }
 })
 module.exports = router;
-
