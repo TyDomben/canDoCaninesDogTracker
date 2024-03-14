@@ -230,7 +230,7 @@ router.post("/", (req, res) => {
       req.body.house_manners,
       req.body.living_with_other_dogs,
       req.body.living_with_cats,
-      req.body.living_with_children_10_and_up,
+      req.body.living_with_children_ten_and_up,
       req.body.living_with_children_younger_ten,
       req.body.living_with_adults,
       req.body.living_with_small_animals,

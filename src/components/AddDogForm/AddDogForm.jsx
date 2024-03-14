@@ -58,7 +58,7 @@ const AddDogForm = () => {
     // environmentalPreferences: '',
     living_with_other_dogs: false,
     living_with_cats: false,
-    living_with_children_younger_than_ten: false,
+    living_with_children_younger_ten: false,
     living_with_children_ten_and_up: false,
     living_with_adults: false,
     living_with_small_animals: false,
@@ -514,8 +514,8 @@ const AddDogForm = () => {
               <FormGroup>
                 <FormControlLabel defaultChecked='false' name='living_with_other_dogs' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Other dogs" />
                 <FormControlLabel defaultChecked='false' name='living_with_cats' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Cats" />
-                <FormControlLabel defaultChecked='false' name='living_with_children_younger_than_ten' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Childred (under 10)" />
-                <FormControlLabel defaultChecked='false' name='living_with_children_over_ten' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Children (10 and over)" />
+                <FormControlLabel defaultChecked='false' name='living_with_children_younger_ten' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Childred (under 10)" />
+                <FormControlLabel defaultChecked='false' name='living_with_children_ten_and_up' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Children (10 and over)" />
                 <FormControlLabel defaultChecked='false' name='living_with_adults' onChange={handleChangeCheckBox} required control={<Checkbox />} label='Adults" ' />
                 <FormControlLabel defaultChecked='false' name='living_with_small_animals' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Small Animals" />
                 <FormControlLabel defaultChecked='false' name='living_with_large_animals' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Large Animals" />
