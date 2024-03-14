@@ -79,11 +79,11 @@ VALUES
 ---------------------------------------------------------------- In Heat Table-----------------------------------------------------------
 CREATE TABLE IF NOT EXISTS "in_heat" (
     "id" SERIAL PRIMARY KEY,
-    "condition" VARCHAR(20) NOT NULL
+    "in_heat" VARCHAR(20) NOT NULL
 );
 
 INSERT INTO
-    "in_heat" ("condition")
+    "in_heat" ("in_heat")
 VALUES
     ('yes'),
     ('no'),
