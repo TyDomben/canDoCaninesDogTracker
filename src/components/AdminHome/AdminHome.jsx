@@ -30,14 +30,15 @@ const AdminHome = () => {
   }, []);
 
   const onConfirm = (id) => {
-    axios
-      .put(`/api/admin/${id}`, { status: "confirmed" })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    dispatch({ type: "SET_CONFIRMATION", payload: { request_id: id } });
+    // axios
+    //   .put(`/api/admin/${id}`, { status: "confirmed" })
+    //   .then((response) => {
+    //     console.log(response);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   };
 
   const onDeny = () => {};
