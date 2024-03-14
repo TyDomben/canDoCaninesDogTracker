@@ -28,7 +28,6 @@ VALUES
     ('indifferent'),
     ('uncomfortable');
 
-
 ---------------------------------------------------------------- EXERCISE EQUIPMENT TABLE ------------------------------------------------------
 CREATE TABLE IF NOT EXISTS "exercise_equipment" (
     "id" SERIAL PRIMARY KEY,
@@ -212,158 +211,28 @@ VALUES
     );
 
 ---------------------------------------------------------------- DOG HOSTING TABLE ----------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS "dog_hosting" (
+CREATE TABLE IF NOT EXISTS "hosting_request" (
     "id" SERIAL PRIMARY KEY,
-    "dog_id" INT NOT NULL,
-    "user_id" INT NOT NULL,
+    "dog_id" INT REFERENCES "dogs"("id") NOT NULL,
+    "user_id" INT REFERENCES "user"("id") NOT NULL,
     "start_date" DATE NOT NULL,
     "end_date" DATE NOT NULL,
     "date_comments" VARCHAR(255) NOT NULL,
     "appointments" VARCHAR(255) NOT NULL,
-    "status" VARCHAR(50) NOT NULL,
-    FOREIGN KEY ("dog_id") REFERENCES "dogs"("id") ON DELETE CASCADE,
-    FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE CASCADE
+    "status" VARCHAR(50),
+    FOREIGN KEY ("dog_id") REFERENCES "dogs"("id"),
+    FOREIGN KEY ("user_id") REFERENCES "user"("id")
 );
 
-INSERT INTO
-    "dog_hosting" (
-        "dog_id",
-        "user_id",
-        "start_date",
-        "end_date",
-        "date_comments",
-        "appointments",
-        "status"
-    )
-VALUES
-(
-        3,
-        1,
-        '2024-04-01',
-        '2024-04-07',
-        'Vacation to Hawaii',
-        'no appointments',
-        'not confirmed'
-    );
-
---admin_id is not doing anything.. is there supposed to be an admin table with confirm and deny = 1 or 2 --
--------------------------------- QUERIES --------------------------
------------- GET --------------
-SELECT
-    "dogs"."user_id",
-    "dogs"."dog_name",
-    "dogs"."age",
-    "dogs"."breed",
-    "dogs"."spayed_neutered",
-    "dogs"."food_type",
-    "dogs"."food_amount",
-    "dogs"."meals_per_day",
-    "dogs"."eating_times",
-    "dogs"."medical_conditions",
-    "dogs"."recovering_from_surgery",
-    "dogs"."medications",
-    "dogs"."in_heat",
-    "dogs"."potty_routine",
-    "dogs"."potty_habits_notes",
-    "exercise_equipment"."exercise_equipment",
-    "dogs"."crate_manners",
-    "dogs"."house_manners",
-    "dogs"."living_with_other_dogs",
-    "dogs"."living_with_cats",
-    "dogs"."living_with_children_older_ten",
-    "dogs"."living_with_children_younger_ten",
-    "dogs"."living_with_adults",
-    "dogs"."living_with_small_animals",
-    "dogs"."living_with_large_animals",
-    "behavior_dog"."behavior_category_name" AS "behavior_with_other_dogs",
-    "behavior_cat"."behavior_category_name" AS "behavior_with_cats",
-    "behavior_child"."behavior_category_name" AS "behavior_with_children"
-FROM
-    "dogs"
-    JOIN "dog_hosting" ON "dogs"."id" = "dog_hosting"."dog_id"
-    JOIN "exercise_equipment" AS "exercise_equipment" ON "dogs"."exercise_equipment" = "exercise_equipment"."id"
-    JOIN "behavior" AS "behavior_dog" ON "dogs"."behavior_with_other_dogs" = "behavior_dog"."id"
-    JOIN "behavior" AS "behavior_cat" ON "dogs"."behavior_with_cats" = "behavior_cat"."id"
-    JOIN "behavior" AS "behavior_child" ON "dogs"."behavior_with_children" = "behavior_child"."id"
-WHERE
-    "dog_hosting"."user_id" = 4;
-
-;
-
------------- POST --------------
-INSERT INTO
-    "dogs" (
-        "user_id",
-        "dog_name",
-        "age",
-        "breed",
-        "spayed_neutered",
-        "food_type",
-        "food_amount",
-        "meals_per_day",
-        "eating_times",
-        "medical_conditions",
-        "recovering_from_surgery",
-        "medications",
-        "in_heat",
-        "potty_routine",
-        "potty_habits_notes",
-        "exercise_equipment",
-        "crate_manners",
-        "house_manners",
-        "living_with_other_dogs",
-        "living_with_cats",
-        "living_with_children_older_ten",
-        "living_with_children_younger_ten",
-        "living_with_adults",
-        "living_with_small_animals",
-        "living_with_large_animals",
-        "behavior_with_other_dogs",
-        "behavior_with_cats",
-        "behavior_with_children",
-        "limit_water",
-        "limit_toy_play",
-        "watch_carefully",
-        "ingest_toys",
-        "keep_away",
-        "shares_toys"
-    )
-VALUES
-    (
-        $ 1,
-        $ 2,
-        $ 3,
-        $ 4,
-        $ 5,
-        $ 6,
-        $ 7,
-        $ 8,
-        $ 9,
-        $ 10,
-        $ 11,
-        $ 12,
-        $ 13,
-        $ 14,
-        $ 15,
-        $ 16,
-        $ 17,
-        $ 18,
-        $ 19,
-        $ 20,
-        $ 21,
-        $ 22,
-        $ 23,
-        $ 24,
-        $ 25,
-        $ 26,
-        $ 27,
-        $ 28,
-        $ 29,
-        $ 30,
-        $ 31,
-        $ 32,
-        $ 33,
-        $ 34
-    );
-
--- 34 values?
+---------------------------------------------------------------- VOLUNTEER TO HOST TABLE ----------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS "volunteer_hosting" (
+    "id" SERIAL PRIMARY KEY,
+    "request_id" INT REFERENCES "hosting_request"("id") NOT NULL,
+    "user_id" INT REFERENCES "user"("id") NOT NULL,
+    "start_date" DATE NOT NULL,
+    "end_date" DATE NOT NULL,
+    "comments" VARCHAR(500),
+    "status" BOOLEAN,
+    FOREIGN KEY ("request_id") REFERENCES "hosting_request"("id"),
+    FOREIGN KEY ("user_id") REFERENCES "user"("id")
+);
