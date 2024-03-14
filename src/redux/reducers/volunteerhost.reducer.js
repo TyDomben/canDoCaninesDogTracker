@@ -1,11 +1,15 @@
 const volunteerHost = (state = [], action) => {
-    switch(action){
-        case 'VOLUNTEER_TO_HOST':
-            console.log("inside volunteerHost reducer")
-            return [...state, action.payload]
-            default: 
-            return state;
-    }
-}
+  switch (action.type) {
+    case "VOLUNTEER_HOST_SUCCESS":
+      return [...state, action.payload];
+
+    case "VOLUNTEER_HOST_FAILURE":
+      console.error("Volunteer host failed:", action.error);
+      return state;
+
+    default:
+      return state;
+  }
+};
 
 export default volunteerHost;

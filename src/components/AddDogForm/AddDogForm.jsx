@@ -420,7 +420,7 @@ const AddDogForm = () => {
                 <FormControlLabel defaultChecked='false'name='watch_carefully' onChange={handleChangeCheckBox} required control={<Checkbox />} label="May destroy toys (watch carefully)" />
                 <FormControlLabel defaultChecked='false'name='ingest_toys' onChange={handleChangeCheckBox} required control={<Checkbox />} label="May ingest toys" />
                 <FormControlLabel defaultChecked='false'name='keep_away' onChange={handleChangeCheckBox} required control={<Checkbox />} label='Plays "Keep Away" ' />
-                <FormControlLabel defaultChecked='false'name='shares_toys' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Does not share toys wiht other dogs?" />
+                <FormControlLabel defaultChecked='false'name='shares_toys' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Does not share toys with other dogs?" />
               </Paper>
 
 
@@ -429,7 +429,7 @@ const AddDogForm = () => {
             <p>Please indicate what equipment this dog uses for walks.</p>
             <RadioGroup
               aria-labelledby="exercise_equipment"
-              defaultValue="1"
+              // defaultValue="1"
               name="exercise_equipment"
               onChange={handleChangeRadioBtn}
             >

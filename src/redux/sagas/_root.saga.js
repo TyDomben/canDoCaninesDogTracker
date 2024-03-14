@@ -6,7 +6,8 @@ import dogSaga from './dog.saga';
 import oneDogSaga from './fetchonedog.saga';
 import deleteDogSaga from './deletedog.saga';
 import requestHostSaga from './requesthost.saga';
-import volunteerHostSaga from '../reducers/volunteerhost.reducer';
+import volunteerHostSaga from './volunteerhost.saga';
+import requestsSaga from './admin.saga';
 
 
 // rootSaga is the primary saga.
@@ -26,5 +27,6 @@ export default function* rootSaga() {
     deleteDogSaga(),
     requestHostSaga(),
     volunteerHostSaga(),
+    requestsSaga(),
   ]);
 }

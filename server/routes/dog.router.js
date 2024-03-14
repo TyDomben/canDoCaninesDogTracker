@@ -21,54 +21,60 @@ router.get("/", async (req, res) => {
 
       const query = `
       SELECT
-      "dogs"."id",
-      "dogs"."user_id",
-      "dogs"."dog_name", 
-      "dogs"."age", 
-      "dogs"."breed", 
-      "dogs"."spayed_neutered", 
-      "dogs"."food_type", 
-      "dogs"."food_amount", 
-      "dogs"."meals_per_day", 
-      "dogs"."eating_times", 
-      "dogs"."medical_conditions", 
-      "dogs"."recovering_from_surgery", 
-      "dogs"."medications", 
-      "dogs"."in_heat", 
-      "dogs"."potty_routine", 
-      "dogs"."potty_habits_notes", 
-      "dogs"."limit_water",
-      "dogs"."limit_toy_play",
-      "dogs"."watch_carefully",
-      "dogs"."ingest_toys",
-      "dogs"."keep_away",
-      "dogs"."shares_toys", 
-      "exercise_equipment"."exercise_equipment", 
-      "dogs"."crate_manners", 
-      "dogs"."house_manners", 
-      "dogs"."living_with_other_dogs", 
-      "dogs"."living_with_cats", 
-      "dogs"."living_with_children_ten_and_up", 
-      "dogs"."living_with_children_younger_ten", 
-      "dogs"."living_with_adults", 
-      "dogs"."living_with_small_animals", 
-      "dogs"."living_with_large_animals", 
-      "behavior_dog"."behavior_category_name" AS "behavior_with_other_dogs",
-      "behavior_cat"."behavior_category_name" AS "behavior_with_cats",
-      "behavior_child"."behavior_category_name" AS "behavior_with_children"
-  FROM 
-      "dogs"
-  
-  JOIN 
-      "exercise_equipment" AS "exercise_equipment" ON "dogs"."exercise_equipment" = "exercise_equipment"."id"
-  JOIN 
-      "behavior" AS "behavior_dog" ON "dogs"."behavior_with_other_dogs" = "behavior_dog"."id"
-  JOIN 
-      "behavior" AS "behavior_cat" ON "dogs"."behavior_with_cats" = "behavior_cat"."id"
-  JOIN 
-      "behavior" AS "behavior_child" ON "dogs"."behavior_with_children" = "behavior_child"."id"
-  WHERE
-      "dogs"."user_id" = $1;
+  d."id",
+  d."user_id",
+  d."dog_name", 
+  d."age", 
+  b."breed" AS "breed_name", 
+  d."spayed_neutered", 
+  ft."food_type" AS "food_type_name", 
+  d."food_amount", 
+  d."meals_per_day", 
+  d."eating_times", 
+  d."medical_conditions", 
+  d."recovering_from_surgery", 
+  d."medications", 
+  ih."condition" AS "in_heat_condition", 
+  d."potty_routine", 
+  d."potty_habits_notes", 
+  d."limit_water",
+  d."limit_toy_play",
+  d."watch_carefully",
+  d."ingest_toys",
+  d."keep_away",
+  d."shares_toys", 
+  ee."exercise_equipment" AS "exercise_equipment_name", 
+  d."crate_manners", 
+  d."house_manners", 
+  d."living_with_other_dogs", 
+  d."living_with_cats", 
+  d."living_with_children_ten_and_up" AS "living_with_children_older_ten",
+  d."living_with_children_younger_ten", 
+  d."living_with_adults", 
+  d."living_with_small_animals", 
+  d."living_with_large_animals", 
+  beh_dogs."behavior_category_name" AS "behavior_with_other_dogs",
+  beh_cats."behavior_category_name" AS "behavior_with_cats",
+  beh_children."behavior_category_name" AS "behavior_with_children"
+FROM 
+  "dogs" d
+JOIN 
+  "breed" b ON d."breed" = b."id"
+JOIN 
+  "food_type" ft ON d."food_type" = ft."id"
+JOIN 
+  "exercise_equipment" ee ON d."exercise_equipment" = ee."id"
+JOIN 
+  "in_heat" ih ON d."in_heat" = ih."id"
+JOIN 
+  "behavior" beh_dogs ON d."behavior_with_other_dogs" = beh_dogs."id"
+JOIN 
+  "behavior" beh_cats ON d."behavior_with_cats" = beh_cats."id"
+JOIN 
+  "behavior" beh_children ON d."behavior_with_children" = beh_children."id"
+WHERE
+  d."user_id" = $1;
+
             `;
 
       const result = await connection.query(query, [userId]);
@@ -93,19 +99,19 @@ router.get("/", async (req, res) => {
  * GET route to retrieve a single dog from "dogs" table from the DB
  * The dog's ID is passed as a URL parameter named 'id'
 */
-  router.get("/:id", async (req, res) => {
-    console.log("/dog/:id GET route");
-    console.log("is authenticated?", req.isAuthenticated());
-    console.log("user", req.user);
-  
-    if (req.isAuthenticated()) {
-      let connection;
-      try {
-        connection = await pool.connect(); 
-        const dogId = req.params.id; 
-  
-        console.log("dogId server", dogId)
-        const query = `SELECT
+router.get("/:id", async (req, res) => {
+  console.log("/dog/:id GET route");
+  console.log("is authenticated?", req.isAuthenticated());
+  console.log("user", req.user);
+
+  if (req.isAuthenticated()) {
+    let connection;
+    try {
+      connection = await pool.connect();
+      const dogId = req.params.id;
+
+      console.log("dogId server", dogId)
+      const query = `SELECT
         "dogs"."user_id",
         "dogs"."dog_name", 
         "dogs"."age", 
@@ -132,8 +138,8 @@ router.get("/", async (req, res) => {
         "dogs"."house_manners", 
         "dogs"."living_with_other_dogs", 
         "dogs"."living_with_cats", 
-        "dogs"."living_with_children_ten_and_up", 
-        "dogs"."living_with_children_younger_ten", 
+        "living_with_children_older_ten",
+        "living_with_children_younger_ten", 
         "dogs"."living_with_adults", 
         "dogs"."living_with_small_animals", 
         "dogs"."living_with_large_animals", 
@@ -154,31 +160,33 @@ router.get("/", async (req, res) => {
         "behavior" AS "behavior_cat" ON "dogs"."behavior_with_cats" = "behavior_cat"."id"
     JOIN 
         "behavior" AS "behavior_child" ON "dogs"."behavior_with_children" = "behavior_child"."id"
-    WHERE
+    JOIN "in_heat" AS "in_heat" ON "dogs"."in_heat" = "in_heat"."id"
+
+        WHERE
         "dogs"."id" = $1;
         `;
-        const result = await connection.query(query, [dogId]); 
-        const dog = result.rows[0]; 
+      const result = await connection.query(query, [dogId]);
+      const dog = result.rows[0];
 
-        console.log("dog result.rows", dog)
-        
-  if (dog) {
-          res.json(dog);
-        } else {
-          res.status(404).send('Dog not found');
-        }
-      } catch (error) {
-        console.error("Error fetching dog", error);
-        res.sendStatus(500);
-      } finally {
-        if (connection) {
-          connection.release();
-        }
+      console.log("dog result.rows", dog)
+
+      if (dog) {
+        res.json(dog);
+      } else {
+        res.status(404).send('Dog not found');
       }
-    } else {
-      res.sendStatus(403);
+    } catch (error) {
+      console.error("Error fetching dog", error);
+      res.sendStatus(500);
+    } finally {
+      if (connection) {
+        connection.release();
+      }
     }
-  });
+  } else {
+    res.sendStatus(403);
+  }
+});
 
 /**
  * POST route to create a new dog profile
@@ -193,7 +201,7 @@ router.post("/", (req, res) => {
     const user = req.user.id;
 
     const dogData = [
-      req.user.id, // assuming you're now including this in the insert
+      req.user.id, 
       req.body.dog_name,
       req.body.age,
       req.body.breed,
@@ -219,8 +227,8 @@ router.post("/", (req, res) => {
       req.body.house_manners,
       req.body.living_with_other_dogs,
       req.body.living_with_cats,
-      req.body.living_with_children_ten_and_up,
-      req.body.living_with_children_younger_than_ten,
+      req.body.living_with_children_older_ten,
+      req.body.living_with_children_younger_ten,
       req.body.living_with_adults,
       req.body.living_with_small_animals,
       req.body.living_with_large_animals,
@@ -260,7 +268,7 @@ router.post("/", (req, res) => {
                 "house_manners",
                 "living_with_other_dogs",
                 "living_with_cats",
-                "living_with_children_ten_and_up",
+                "living_with_children_older_ten",
                 "living_with_children_younger_ten",
                 "living_with_adults",
                 "living_with_small_animals",
@@ -320,9 +328,8 @@ router.put("/:id", async (req, res) => {
 
       //construct the SQL Query Text using setClause and values.length +1 = dog id
       //RETURNING is just asking PostgreSQL to return the updated row of data
-      const queryText = `UPDATE "dogs" SET ${setClause} WHERE "id" = $${
-        values.length + 1
-      } RETURNING *;`;
+      const queryText = `UPDATE "dogs" SET ${setClause} WHERE "id" = $${values.length + 1
+        } RETURNING *;`;
 
       // Execute the update query ...values = placeholder values ($1, $2, $3, etc.)
       const result = await connection.query(queryText, [...values, dogId]);
