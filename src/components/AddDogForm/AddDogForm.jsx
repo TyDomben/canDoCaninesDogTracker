@@ -27,16 +27,16 @@ const AddDogForm = () => {
     breed: '',
     spayed_neutered: '',
     //food info
-    food_type: '',
+    food_type: 5,
     food_amount: '',
     meals_per_day: '',
     eating_times: '',
 
     // medicalAppointments: '',
     medical_conditions: '',
-    recovering_from_surgery: '',
+    recovering_from_surgery: false,
     medications: '',
-    in_heat: '',
+    in_heat: 3,
     //pottyHabitis
     potty_routine: '',
     // potty_indicators: '',
@@ -222,7 +222,6 @@ const AddDogForm = () => {
               <FormLabel id="breed-label">Dog Breed</FormLabel>
               <RadioGroup
                 aria-labelledby="breed-label"
-                defaultValue="1"
                 value={formValues.breed}
                 onChange={handleChangeRadioBtn}
                 name="breed"
@@ -267,7 +266,6 @@ const AddDogForm = () => {
             <FormLabel id="food_type">Food Information</FormLabel>
             <RadioGroup
               aria-labelledby="food_type"
-              defaultValue="1"
               value={formValues.food_type}
               onChange={handleChangeRadioBtn}
               name="food_type"
