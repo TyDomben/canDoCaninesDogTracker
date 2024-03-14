@@ -23,17 +23,24 @@ import { format } from "date-fns";
 const AdminHome = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [requests, setRequests] = useState([]);
-  // const requests = useSelector((store) => store.raiserDogReducer);
-  // console.log(requests)
+  const requests = useSelector((store) => store.adminReducer);
 
   useEffect(() => {
-    // dispatch({ type: "FETCH_USER_DOGS" });
-    axios.get("/api/admin").then((response) => {
-      console.log(response.data);
-      setRequests(response.data);
-    });
+    dispatch({ type: "FETCH_REQUESTS" });
   }, []);
+
+  const onConfirm = (id) => {
+    axios
+      .put(`/api/admin/${id}`, { status: "confirmed" })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const onDeny = () => {};
 
   return (
     <>
@@ -71,13 +78,15 @@ const AdminHome = () => {
                   to{" "}
                   {format(new Date(request.end_date), "MMMM d, yyyy, h:mm a")}
                 </TableCell>
-                <TableCell>{request.volunteerName}</TableCell>
-                <TableCell>{request.datesAvailable}</TableCell>
+                <TableCell>{request.requester_name}</TableCell>
+                <TableCell>{request.status}</TableCell>
                 <TableCell>
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => onConfirm(request)}
+                    onClick={() =>
+                      onConfirm(request.request_id, request.status)
+                    }
                   >
                     Confirm
                   </Button>
