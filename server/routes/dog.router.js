@@ -107,18 +107,22 @@ router.get("/:id", async (req, res) => {
       console.log("dogId server", dogId)
       const query = `SELECT
         "dogs"."user_id",
+        
         "dogs"."dog_name", 
         "dogs"."age", 
         "breed"."breed" as "breed", 
+        "dogs"."breed" as "breed_id",
         "dogs"."spayed_neutered", 
         "food_type"."food_type" AS "food_type", 
+        "dogs"."food_type" AS "food_type_id",
         "dogs"."food_amount", 
         "dogs"."meals_per_day", 
         "dogs"."eating_times", 
         "dogs"."medical_conditions", 
         "dogs"."recovering_from_surgery", 
         "dogs"."medications", 
-        "dogs"."in_heat", 
+        "in_heat"."in_heat", 
+        "dogs"."in_heat" AS "in_heat_id",
         "dogs"."potty_routine", 
         "dogs"."potty_habits_notes",  
         "dogs"."limit_water",
@@ -128,6 +132,7 @@ router.get("/:id", async (req, res) => {
         "dogs"."keep_away",
         "dogs"."shares_toys",
         "exercise_equipment"."exercise_equipment", 
+        "dogs"."exercise_equipment" AS "exercise_equipment_id", 
         "dogs"."crate_manners", 
         "dogs"."house_manners", 
         "dogs"."living_with_other_dogs", 
@@ -138,8 +143,12 @@ router.get("/:id", async (req, res) => {
         "dogs"."living_with_small_animals", 
         "dogs"."living_with_large_animals", 
         "behavior_dog"."behavior_category_name" AS "behavior_with_other_dogs",
+        "dogs"."behavior_with_other_dogs" AS "behavior_with_other_dogs_id",
         "behavior_cat"."behavior_category_name" AS "behavior_with_cats",
-        "behavior_child"."behavior_category_name" AS "behavior_with_children"
+        "dogs"."behavior_with_cats" AS  "behavior_with_cats_id",
+        "behavior_child"."behavior_category_name" AS "behavior_with_children",
+        "dogs"."behavior_with_children" AS "behavior_with_children_id"
+
     FROM 
         "dogs"
     JOIN

@@ -76,4 +76,142 @@ router.get("/", (req, res) => {
     });
 });
 
+
+//Update Dog Router
+
+router.put('/:id', (req, res) => {
+  console.log('in dog UPDATE route')
+  console.log('req.body', req.user.id, req.body, req.params.id)
+if (req.isAuthenticated()) {
+  const dogId = req.params.id;
+  const user = req.user.id
+  const dogData = [
+    req.body.dog_name,
+    req.body.age,
+    req.body.breed_id, 
+    req.body.spayed_neutered,
+    req.body.food_type_id,
+    req.body.food_amount,
+    req.body.meals_per_day,
+    req.body.eating_times,
+    req.body.medical_conditions,
+    req.body.recovering_from_surgery,
+    req.body.medications,
+    req.body.in_heat_id,
+    req.body.potty_routine,
+    req.body.potty_habits_notes,
+    req.body.limit_water,
+    req.body.limit_toy_play,
+    req.body.watch_carefully,
+    req.body.ingest_toys,
+    req.body.keep_away,
+    req.body.shares_toys,
+    req.body.exercise_equipment_id,
+    req.body.crate_manners,
+    req.body.house_manners,
+    req.body.living_with_other_dogs_id,
+    req.body.living_with_cats_id,
+    req.body.living_with_children_ten_and_up,
+    req.body.living_with_children_under_ten,
+    req.body.living_with_adults,
+    req.body.living_with_small_animals,
+    req.body.living_with_large_animals,
+    req.body.behavior_with_other_dogs_id,
+    req.body.behavior_with_cats_id,
+    req.body.behavior_with_children
+
+
+  ]
+      
+  
+  const queryText =`
+  UPDATE "dogs" 
+  SET 
+  "user_id"=$1,
+  "dog_name" =$2,
+  "age" =$3,
+  "breed"=$4,
+  "spayed_neutered"=$5,
+  "food_type"=$6,
+  "food_amount"=$7,
+  "meals_per_day" =$8,
+  "eating_times" =$9,
+  "medical_conditions"=$10,
+  "recovering_from_surgery"=$11,
+  "medications"=$12,
+  "in_heat"=$13,
+  "potty_routine"=$14,
+  "potty_habits_notes"=$15,
+  "limit_water"=$16,
+  "limit_toy_play"=$17,
+  "watch_carefully"=$18,
+  "ingest_toys"=$19,
+  "keep_away"=$20,
+  "shares_toys"=$21,
+  "exercise_equipment"=$22,
+  "crate_manners"=$23,
+  "house_manners"=$24,
+  "living_with_other_dogs"=$25,
+  "living_with_cats"=$26,
+  "living_with_children_ten_and_up"=$27,
+  "living_with_children_younger_ten"=$28,
+  "living_with_adults"=$29,
+  "living_with_small_animals"=$30,
+  "living_with_large_animals"=$31,
+  "behavior_with_other_dogs"=$32,
+  "behavior_with_cats"=$33,
+  "behavior_with_children"=$34
+
+
+  
+
+  WHERE "id" = $35;
+  `
+ queryParams =[user,
+  req.body.dog_name,
+  req.body.age,
+  req.body.breed_id, 
+  req.body.spayed_neutered,
+  req.body.food_type_id,
+  req.body.food_amount,
+  req.body.meals_per_day,
+  req.body.eating_times,
+  req.body.medical_conditions,
+  req.body.recovering_from_surgery,
+  req.body.medications,
+  req.body.in_heat_id,
+  req.body.potty_routine,
+  req.body.potty_habits_notes,
+  req.body.limit_water,
+  req.body.limit_toy_play,
+  req.body.watch_carefully,
+  req.body.ingest_toys,
+  req.body.keep_away,
+  req.body.shares_toys,
+  req.body.exercise_equipment_id,
+  req.body.crate_manners,
+  req.body.house_manners,
+  req.body.living_with_other_dogs,
+  req.body.living_with_cats,
+  req.body.living_with_children_ten_and_up,
+  req.body.living_with_children_younger_ten,
+  req.body.living_with_adults,
+  req.body.living_with_small_animals,
+  req.body.living_with_large_animals,
+  req.body.behavior_with_other_dogs_id,
+  req.body.behavior_with_cats_id,
+  req.body.behavior_with_children_id,
+  dogId]
+  pool 
+      .query(queryText, queryParams)
+      .then((result)=> {
+          res.sendStatus(200);
+      })
+      .catch((err) => {
+          console.log('error updating dog', err)
+      })
+  }else {
+      sendStatus(403)
+  }
+})
 module.exports = router;

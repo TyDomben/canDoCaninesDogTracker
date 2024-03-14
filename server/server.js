@@ -39,7 +39,7 @@ app.use('/api/raiser-dog', raiserRouter);
 
 app.use('/api/sitter', sitterRouter);
 
-app.use('/api/mail', mailRouter);
+// app.use('/api/mail', mailRouter);
 
 
 // Listen Server & Port
