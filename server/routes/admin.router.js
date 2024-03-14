@@ -38,7 +38,7 @@ router.get("/", (req, res) => {
     u."name" AS owner_name,
     u."phone" AS owner_phone,
     u."email" AS owner_email
-FROM "dog_hosting" dh
+FROM "hosting_request" dh
 INNER JOIN "dogs" d ON dh."dog_id" = d."id"
 INNER JOIN "user" u ON dh."user_id" = u."id"
 LEFT JOIN "breed" br ON d."breed" = br."id"

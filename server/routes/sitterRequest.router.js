@@ -6,22 +6,22 @@ router.get("/", (req, res) => {
   // This endpoint doesn't require authentication to see all dog hosting requests
   let sqlText = `
       SELECT
-        "dog_hosting"."id" AS "hosting_id",
-        "dog_hosting"."dog_id",
-        "dog_hosting"."user_id",
-        "dog_hosting"."start_date",
-        "dog_hosting"."end_date",
-        "dog_hosting"."date_comments",
-        "dog_hosting"."appointments",
-        "dog_hosting"."status",
+        "hosting_request"."id" AS "hosting_id",
+        "hosting_request"."dog_id",
+        "hosting_request"."user_id",
+        "hosting_request"."start_date",
+        "hosting_request"."end_date",
+        "hosting_request"."date_comments",
+        "hosting_request"."appointments",
+        "hosting_request"."status",
         "dogs"."dog_name" AS "dog_name", -- Corrected column name
         "user"."name" AS "user_name" -- Assuming "name" is the correct column for the user's name
       FROM
-        "dog_hosting"
+        "hosting_request"
       JOIN
-        "dogs" ON "dog_hosting"."dog_id" = "dogs"."id"
+        "dogs" ON "hosting_request"."dog_id" = "dogs"."id"
       JOIN
-        "user" ON "dog_hosting"."user_id" = "user"."id";
+        "user" ON "hosting_request"."user_id" = "user"."id";
     `;
 
   pool

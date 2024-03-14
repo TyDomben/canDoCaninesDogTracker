@@ -109,10 +109,7 @@ function App() {
             <ProtectedRoute exact path="/editdogprofile/:dogId">
               <EditDogProfile/>
             </ProtectedRoute>
-            <ProtectedRoute exact path="/dogProfile/:dogId">
-              <DogProfile/>
-            </ProtectedRoute>
-            {/* //! right now the request care form is not working, UNLESS it is pulling the dog id */}
+            
             <ProtectedRoute exact path="/dogprofile/:dogId">
               <DogProfile />
             </ProtectedRoute>

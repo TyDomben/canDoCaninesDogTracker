@@ -29,7 +29,6 @@ const HomePage = () => {
   const doggos = useSelector((store) => store.raiserDogReducer);
   const sitterData = useSelector((store) => store.dog);
   const [sitterDates, setSitterDates] = useState([]);
-
   console.log("doggos", doggos);
   console.log("sitter date", sitterData);
 
@@ -77,8 +76,8 @@ const HomePage = () => {
           {doggos.map((dog, index) => (
             <Grid item key={index} xs={12} sm={6} md={4}>
               <Card
-                key={dog.id}
-                onClick={() => history.push(`/dogprofile/${dog.id}`)}
+                key={dog.dog_id}
+                onClick={() => history.push(`/dogprofile/${dog.dog_id}`)}
               >
                 {/* <Card key={dog.id} onClick={() => console.log(dog)}> */}
                 <Box

@@ -33,7 +33,7 @@ router.get("/", (req, res) => {
   "dogs"."house_manners",
   "dogs"."living_with_other_dogs",
   "dogs"."living_with_cats",
-  "dogs"."living_with_children_older_ten",
+  "dogs"."living_with_children_ten_and_up",
   "dogs"."living_with_children_younger_ten",
   "dogs"."living_with_adults",
   "dogs"."living_with_small_animals",
@@ -41,12 +41,12 @@ router.get("/", (req, res) => {
   "behavior_dog"."behavior_category_name" AS "behavior_with_other_dogs",
   "behavior_cat"."behavior_category_name" AS "behavior_with_cats",
   "behavior_child"."behavior_category_name" AS "behavior_with_children",
-  "dog_hosting"."id" AS "hosting_id",
-  "dog_hosting"."start_date",
-  "dog_hosting"."end_date",
-  "dog_hosting"."date_comments",
-  "dog_hosting"."appointments",
-  "dog_hosting"."status"
+  "hosting_request"."id" AS "hosting_id",
+  "hosting_request"."start_date",
+  "hosting_request"."end_date",
+  "hosting_request"."date_comments",
+  "hosting_request"."appointments",
+  "hosting_request"."status"
 FROM
   "user"
 JOIN
@@ -60,7 +60,7 @@ JOIN
 JOIN
   "behavior" AS "behavior_child" ON "dogs"."behavior_with_children" = "behavior_child"."id"
 JOIN
-  "dog_hosting" ON "dogs"."id" = "dog_hosting"."dog_id"
+  "hosting_request" ON "dogs"."id" = "hosting_request"."dog_id"
 WHERE
   "dogs"."user_id" = $1;
   `;
@@ -110,7 +110,7 @@ router.get("/:id", (req, res) => {
   "dogs"."house_manners",
   "dogs"."living_with_other_dogs",
   "dogs"."living_with_cats",
-  "dogs"."living_with_children_older_ten",
+  "dogs"."living_with_children_10_and_up",
   "dogs"."living_with_children_younger_ten",
   "dogs"."living_with_adults",
   "dogs"."living_with_small_animals",
@@ -118,12 +118,12 @@ router.get("/:id", (req, res) => {
   "behavior_dog"."behavior_category_name" AS "behavior_with_other_dogs",
   "behavior_cat"."behavior_category_name" AS "behavior_with_cats",
   "behavior_child"."behavior_category_name" AS "behavior_with_children",
-  "dog_hosting"."id" AS "hosting_id",
-  "dog_hosting"."start_date",
-  "dog_hosting"."end_date",
-  "dog_hosting"."date_comments",
-  "dog_hosting"."appointments",
-  "dog_hosting"."status"
+  "hosting_request"."id" AS "hosting_id",
+  "hosting_request"."start_date",
+  "hosting_request"."end_date",
+  "hosting_request"."date_comments",
+  "hosting_request"."appointments",
+  "hosting_request"."status"
 FROM
   "user"
 JOIN
@@ -137,7 +137,7 @@ JOIN
 JOIN
   "behavior" AS "behavior_child" ON "dogs"."behavior_with_children" = "behavior_child"."id"
 JOIN
-  "dog_hosting" ON "dogs"."id" = "dog_hosting"."dog_id"
+  "hosting_request" ON "dogs"."id" = "hosting_request"."dog_id"
 WHERE
   "dogs"."user_id" = $1 AND "dogs"."id" = $2;
   `;

@@ -107,14 +107,14 @@ router.get("/history", async (req, res) => {
       const query = `
         SELECT
           "dogs"."name",
-          "dog_hosting"."start_date",
-          "dog_hosting"."end_date"
+          "hosting_request"."start_date",
+          "hosting_request"."end_date"
         FROM
-          "dog_hosting"
+          "hosting_request"
         JOIN
-          "dogs" ON "dog_hosting"."dog_id" = "dogs"."id"
+          "dogs" ON "hosting_request"."dog_id" = "dogs"."id"
         WHERE
-          "dog_hosting"."user_id" = $1;
+          "hosting_request"."user_id" = $1;
       `;
 
       const result = await connection.query(query, [userId]);
@@ -145,7 +145,7 @@ router.get("/requests", async (req, res) => {
       connection = await pool.connect();
       const userId = req.user.id;
       const query = `
-        SELECT * FROM "dog_hosting"
+        SELECT * FROM "hosting_request"
         WHERE "user_id" = $1;
       `;
       const result = await connection.query(query, [userId]);
@@ -416,7 +416,7 @@ router.delete("/request/:id", async (req, res) => {
       const hostingId = req.params.id;
       const userId = req.user.id;
       const query = `
-        DELETE FROM "dog_hosting"
+        DELETE FROM "hosting_request"
         WHERE "id" = $1 AND "user_id" = $2;
       `;
       await connection.query(query, [hostingId, userId]);

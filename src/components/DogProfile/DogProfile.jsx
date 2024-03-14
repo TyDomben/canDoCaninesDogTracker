@@ -136,7 +136,7 @@ function DogProfile() {
           <Typography variant="body1">House Manners: {dogProfile?.house_manners}</Typography>
           <Typography variant="body1">Lives with other dogs? {dogProfile?.living_with_other_dogs ? 'Yes' : 'No'}</Typography>
           <Typography variant="body1">Lives with cats? {dogProfile?.living_with_cats ? 'Yes' : 'No'}</Typography>
-          <Typography variant="body1">Lives with children older than 10? {dogProfile?.living_with_children_older_ten ? 'Yes' : 'No'}</Typography>
+          <Typography variant="body1">Lives with children older than 10? {dogProfile?.living_with_children_10_and_up ? 'Yes' : 'No'}</Typography>
           <Typography variant="body1">Lives with children younger than 10? {dogProfile?.living_with_children_younger_ten ? 'Yes' : 'No'}</Typography>
           <Typography variant="body1">Lives with adults? {dogProfile?.living_with_adults ? 'Yes' : 'No'}</Typography>
           <Typography variant="body1">Lives with other small animals? {dogProfile?.living_with_small_animals ? 'Yes' : 'No'}</Typography>

@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS "dogs" (
     "house_manners" VARCHAR(255) NOT NULL,
     "living_with_other_dogs" BOOLEAN NOT NULL,
     "living_with_cats" BOOLEAN NOT NULL,
-    "living_with_children_older_ten" BOOLEAN NOT NULL,
+    "living_with_children_10_and_up" BOOLEAN NOT NULL,
     "living_with_children_younger_ten" BOOLEAN NOT NULL,
     "living_with_adults" BOOLEAN NOT NULL,
     "living_with_small_animals" BOOLEAN NOT NULL,
@@ -164,7 +164,7 @@ INSERT INTO
         "house_manners",
         "living_with_other_dogs",
         "living_with_cats",
-        "living_with_children_older_ten",
+        "living_with_children_10_and_up",
         "living_with_children_younger_ten",
         "living_with_adults",
         "living_with_small_animals",
@@ -272,7 +272,7 @@ SELECT
     "dogs"."house_manners",
     "dogs"."living_with_other_dogs",
     "dogs"."living_with_cats",
-    "dogs"."living_with_children_older_ten",
+    "dogs"."living_with_children_10_and_up",
     "dogs"."living_with_children_younger_ten",
     "dogs"."living_with_adults",
     "dogs"."living_with_small_animals",
@@ -282,13 +282,13 @@ SELECT
     "behavior_child"."behavior_category_name" AS "behavior_with_children"
 FROM
     "dogs"
-    JOIN "dog_hosting" ON "dogs"."id" = "dog_hosting"."dog_id"
+    JOIN "hosting_request" ON "dogs"."id" = "hosting_request"."dog_id"
     JOIN "exercise_equipment" AS "exercise_equipment" ON "dogs"."exercise_equipment" = "exercise_equipment"."id"
     JOIN "behavior" AS "behavior_dog" ON "dogs"."behavior_with_other_dogs" = "behavior_dog"."id"
     JOIN "behavior" AS "behavior_cat" ON "dogs"."behavior_with_cats" = "behavior_cat"."id"
     JOIN "behavior" AS "behavior_child" ON "dogs"."behavior_with_children" = "behavior_child"."id"
 WHERE
-    "dog_hosting"."user_id" = 4;
+    "hosting_request"."user_id" = 4;
 
 ;
 
@@ -315,7 +315,7 @@ INSERT INTO
         "house_manners",
         "living_with_other_dogs",
         "living_with_cats",
-        "living_with_children_older_ten",
+        "living_with_children_10_and_up",
         "living_with_children_younger_ten",
         "living_with_adults",
         "living_with_small_animals",
