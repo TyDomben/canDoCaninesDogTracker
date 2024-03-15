@@ -62,7 +62,7 @@ router.post("/confirmation", async (req, res) => {
   let MailGenerator = new Mailgen({
     theme: "default",
     product: {
-      name: "Can Do Canines",
+      name: "Puppy Program Team",
       link: "https://candocanines.org/",
     },
   });
@@ -73,8 +73,8 @@ router.post("/confirmation", async (req, res) => {
         //name: user.name,
       name: "jswanson97",
       intro:
-        "Confirmation email to watch (dogs name) for dates (start date) through (end date)",
-      signature: "Thank you for volunteering",
+        [`Hello (Host Name)`, `You have been confirmed for a host assignement for (Dog Name)!`, `Please log into the host opportunities site to review the details fot the opportunity. You will be connected with the current host home via email to arrange a handoff.`, `Please contact puppyprogram@candocanines.org if you have any questions or if anything changes`],
+      signature: "Thank you for all you do",
     },
   };
   let mail = MailGenerator.generate(response);
