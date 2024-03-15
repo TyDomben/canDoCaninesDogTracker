@@ -1,47 +1,49 @@
-const express = require("express");
-const pool = require("../modules/pool");
-const router = express.Router();
-const nodemailer = require("nodemailer");
-const { EMAIL, PASSWORD } = require("../../.env");
-const Mailgen = require("mailgen");
+// const express = require("express");
+// const pool = require("../modules/pool");
+// const router = express.Router();
+// const nodemailer = require("nodemailer");
+// const { EMAIL, PASSWORD } = require("../../.env");
+// const Mailgen = require("mailgen");
 
 //This is a test emai function that sends an email to a fake randomly generated email and sends a link to ethereal email to view it
 router.post("/testemail", async (req, res) => {
   let testAccount = await nodemailer.createTestAccount();
+// router.post("/testemail", async (req, res) => {
+//   let testAccount = await nodemailer.createTestAccount();
 
-  const transporter = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
-    port: 587,
-    secure: false, // Use `true` for port 465, `false` for all other ports
-    auth: {
-      user: testAccount.user,
-      pass: testAccount.pass,
-    },
-  });
+//   const transporter = nodemailer.createTransport({
+//     host: "smtp.ethereal.email",
+//     port: 587,
+//     secure: false, // Use `true` for port 465, `false` for all other ports
+//     auth: {
+//       user: testAccount.user,
+//       pass: testAccount.pass,
+//     },
+//   });
 
-  let message = {
-    from: '"Maddison Foo Koch 👻" <maddison53@ethereal.email>', // sender address
-    to: "bar@example.com, baz@example.com", // list of receivers
-    subject: "Hello ✔", // Subject line
-    text: "Hello world?", // plain text body
-    html: "<b>Hello world?</b>", // html body
-  };
+//   let message = {
+//     from: '"Maddison Foo Koch 👻" <maddison53@ethereal.email>', // sender address
+//     to: "bar@example.com, baz@example.com", // list of receivers
+//     subject: "Hello ✔", // Subject line
+//     text: "Hello world?", // plain text body
+//     html: "<b>Hello world?</b>", // html body
+//   };
 
-  transporter
-    .sendMail(message)
-    .then((info) => {
-      return res.status(201).json({
-        msg: "you should have gotten an email",
-        info: info.messageId,
-        preview: nodemailer.getTestMessageUrl(info),
-      });
-    })
-    .catch((err) => {
-      return res.status(500).json({ err });
-    });
+//   transporter
+//     .sendMail(message)
+//     .then((info) => {
+//       return res.status(201).json({
+//         msg: "you should have gotten an email",
+//         info: info.messageId,
+//         preview: nodemailer.getTestMessageUrl(info),
+//       });
+//     })
+//     .catch((err) => {
+//       return res.status(500).json({ err });
+//     });
 
-  // res.status(201).json("Signup Successfull")
-});
+//   // res.status(201).json("Signup Successfull")
+// });
 
 router.post("/confirmation", async (req, res) => {
     const { userEmail } = req.body;
@@ -88,4 +90,4 @@ router.post("/confirmation", async (req, res) => {
   })
 });
 
-module.exports = router;
+// module.exports = router;

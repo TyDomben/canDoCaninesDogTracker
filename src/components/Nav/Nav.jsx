@@ -34,11 +34,11 @@ function Nav() {
     { text: "Data Grid", path: "/data-grid" },
     { text: "All Dog Cards", path: "/allDogCards" },
     // Conditional authentication links are handled outside of this array
-    { text: "Sitter Home", path: "/sitter-home" },
+    // { text: "Sitter Home", path: "/sitter-home" },
     { text: "Admin Home", path: "/admin-home" },
     { text: "Edit Profile", path: "/user-edit" },
     { text: "Info", path: "/info" },
-    { text: "Volunteer Sitter Form", path: "/volunteerSitterForm" },
+    // { text: "Volunteer Sitter Form", path: "/volunteerSitterForm" },
   ];
   // Nav bar
   return (

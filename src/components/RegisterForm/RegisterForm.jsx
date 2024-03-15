@@ -8,6 +8,7 @@ function RegisterForm() {
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
   const [email, setEmail] = useState('');
+  
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
 
