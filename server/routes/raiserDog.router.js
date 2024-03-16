@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
   let sqlText = `
   SELECT
     "dogs"."user_id",
-    "dogs"."id",
+    "dogs"."id" AS "dog_id",
     "dogs"."dog_name",
     "dogs"."age",
     "dogs"."breed",

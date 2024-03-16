@@ -77,7 +77,7 @@ const HomePage = () => {
             <Grid item key={index} xs={12} sm={6} md={4}>
               <Card
                 key={dog.dog_id}
-                onClick={() => history.push(`/dogprofile/${dog.id}`)}
+                onClick={() => history.push(`/dogprofile/${dog.dog_id}`)}
               >
                 {/* <Card key={dog.id} onClick={() => console.log(dog)}> */}
                 <Box
