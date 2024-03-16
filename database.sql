@@ -203,7 +203,7 @@ CREATE TABLE IF NOT EXISTS "hosting_request" (
     "date_comments" VARCHAR(255) NOT NULL,
     "appointments" VARCHAR(255) NOT NULL,
     "status" VARCHAR(50),
-    FOREIGN KEY ("dog_id") REFERENCES "dogs"("id"),
+    FOREIGN KEY ("dog_id") REFERENCES "dogs"("id") ON DELETE CASCADE,
     FOREIGN KEY ("user_id") REFERENCES "user"("id")
 );
 INSERT INTO "hosting_request" (
