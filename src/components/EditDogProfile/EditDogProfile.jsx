@@ -106,7 +106,8 @@ const EditDogProfile = ({ dogData, onGoBack, onSave }) => {
 
   const handleGoBack = () => {
     // Confirm if the user wants to go back without saving
-    onGoBack();
+    history.push(`/dogprofile/${dogId}`)
+        // onGoBack();
     // Show confirmation alert
   };
 
