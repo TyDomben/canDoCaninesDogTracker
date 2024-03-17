@@ -13,7 +13,7 @@ function* fetchRequests(action) {
 function* confirmRequest(action) {
   try {
     yield call(axios.put, `/api/admin/${action.payload}`, {
-      status: "Confirmed",
+      status: "confirmed",
     });
     yield put({ type: "FETCH_REQUESTS" });
   } catch (error) {
@@ -24,7 +24,7 @@ function* confirmRequest(action) {
 function* denyRequest(action) {
   try {
     yield call(axios.put, `/api/admin/${action.payload}`, {
-      status: "Denied",
+      status: "denied",
     });
     yield put({ type: "FETCH_REQUESTS" });
   } catch (error) {
