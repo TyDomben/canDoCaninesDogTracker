@@ -43,13 +43,21 @@ const theme = createTheme({
       textTransform: 'none', // Buttons don't have uppercase text by default
     },
     // Custom styles for headings, body text, etc.
-    h1: {
-      fontSize: '2.2rem',
-      fontWeight: 500,
-    },
-    body1: {
-      fontSize: '1rem',
-    },
+    // h1: {
+    //   fontSize: '2.2rem',
+    //   fontWeight: 500,
+    // },
+    // body1: {
+    //   fontSize: '1rem',
+    // },
+    // h2: {
+    //   fontSize: '2.0rem',
+    //   fontWeight: 400,
+    // },
+    // h3: {
+    //   fontSize: '1.8rem',
+    //   fontWeight: 300,
+    // }
   },
   overrides: {
     // Override MUI component styles here
