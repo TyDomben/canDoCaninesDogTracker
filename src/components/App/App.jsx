@@ -48,96 +48,96 @@ function App() {
         <div>
           <Nav />
           <Box
-        sx={{
-          pb: '100px', // Adjust based on the footer's height
-        }}
-      >
-          <Switch>
-            <Redirect exact from="/" to="/home" />
-            <Route exact path="/about">
-              <AboutPage />
-            </Route>
-            {/* Add the new ProtectedRoutes here */}
+            sx={{
+              pb: "100px",
+            }}
+          >
+            <Switch>
+              <Redirect exact from="/" to="/home" />
+              <Route exact path="/about">
+                <AboutPage />
+              </Route>
+              {/* Add the new ProtectedRoutes here */}
 
-            <ProtectedRoute exact path="/sitter-home">
-              <SitterHomePage />
-            </ProtectedRoute>
-            <ProtectedRoute exact path="/admin-home">
-              <AdminHome />
-            </ProtectedRoute>
-            <ProtectedRoute exact path="/add-dog-form">
-              <AddDogForm />
-            </ProtectedRoute>
-            <ProtectedRoute exact path="/data-grid">
-              <DataGrid />
-            </ProtectedRoute>
-            <ProtectedRoute exact path="/raiser-home">
-              <RaiserDogPage />
-            </ProtectedRoute>
-            <ProtectedRoute exact path="/user-edit">
-              <UserProfileEdit />{" "}
-            </ProtectedRoute>
-            <ProtectedRoute exact path="/user">
-              <UserPage />
-            </ProtectedRoute>
-            <ProtectedRoute exact path="/info">
-              <InfoPage />
-            </ProtectedRoute>
-            <ProtectedRoute exact path="/home">
-              <RaiserDogPage />
-            </ProtectedRoute>
-            <ProtectedRoute exact path="/sitterHome">
-              <SitterHomePage />
-            </ProtectedRoute>
-            <ProtectedRoute exact path="/adminHome">
-              <AdminHome />
-            </ProtectedRoute>
-            <ProtectedRoute exact path="/allDogCards">
-              <DogCards />
-            </ProtectedRoute>
-            <ProtectedRoute exact path="/dataGrid">
-              <DataGrid />
-            </ProtectedRoute>
-            <ProtectedRoute exact path="/userEdit">
-              <UserProfileEdit />
-            </ProtectedRoute>
-            <ProtectedRoute exact path="/user">
-              <UserPage />
-            </ProtectedRoute>
-            <ProtectedRoute exact path="/info">
-              <InfoPage />
-            </ProtectedRoute>
-            <ProtectedRoute exact path="/volunteersitterform/:requestId">
-              <VolunteerSitterForm />
-            </ProtectedRoute>
-            <ProtectedRoute exact path="/requestcareform/:dogId">
-              <RequestCareForm />
-            </ProtectedRoute>
-            <ProtectedRoute exact path="/editdogprofile/:dogId">
-              <EditDogProfile/>
-            </ProtectedRoute>
-            
+              <ProtectedRoute exact path="/sitter-home">
+                <SitterHomePage />
+              </ProtectedRoute>
+              <ProtectedRoute exact path="/admin-home">
+                <AdminHome />
+              </ProtectedRoute>
+              <ProtectedRoute exact path="/add-dog-form">
+                <AddDogForm />
+              </ProtectedRoute>
+              <ProtectedRoute exact path="/data-grid">
+                <DataGrid />
+              </ProtectedRoute>
+              <ProtectedRoute exact path="/raiser-home">
+                <RaiserDogPage />
+              </ProtectedRoute>
+              <ProtectedRoute exact path="/user-edit">
+                <UserProfileEdit />{" "}
+              </ProtectedRoute>
+              <ProtectedRoute exact path="/user">
+                <UserPage />
+              </ProtectedRoute>
+              <ProtectedRoute exact path="/info">
+                <InfoPage />
+              </ProtectedRoute>
+              <ProtectedRoute exact path="/home">
+                <RaiserDogPage />
+              </ProtectedRoute>
+              <ProtectedRoute exact path="/sitterHome">
+                <SitterHomePage />
+              </ProtectedRoute>
+              <ProtectedRoute exact path="/adminHome">
+                <AdminHome />
+              </ProtectedRoute>
+              <ProtectedRoute exact path="/allDogCards">
+                <DogCards />
+              </ProtectedRoute>
+              <ProtectedRoute exact path="/dataGrid">
+                <DataGrid />
+              </ProtectedRoute>
+              <ProtectedRoute exact path="/userEdit">
+                <UserProfileEdit />
+              </ProtectedRoute>
+              <ProtectedRoute exact path="/user">
+                <UserPage />
+              </ProtectedRoute>
+              <ProtectedRoute exact path="/info">
+                <InfoPage />
+              </ProtectedRoute>
+              <ProtectedRoute exact path="/volunteersitterform/:requestId">
+                <VolunteerSitterForm />
+              </ProtectedRoute>
+              <ProtectedRoute exact path="/requestcareform/:dogId">
+                <RequestCareForm />
+              </ProtectedRoute>
+              <ProtectedRoute exact path="/editdogprofile/:dogId">
+                <EditDogProfile />
+              </ProtectedRoute>
+
               <ProtectedRoute exact path="/all-profiles">
-              <AllProfiles />
-            </ProtectedRoute>
+                <AllProfiles />
+              </ProtectedRoute>
 
-            <ProtectedRoute exact path="/dogprofile/:dogId">
-              <DogProfile />
-            </ProtectedRoute>
+              <ProtectedRoute exact path="/dogprofile/:dogId">
+                <DogProfile />
+              </ProtectedRoute>
 
-            <Route exact path="/login">
-              {user.id ? <Redirect to="/user" /> : <LoginPage />}
-            </Route>
-            <Route exact path="/registration">
-              {user.id ? <Redirect to="/user" /> : <RegisterPage />}
-            </Route>
-            <Route exact path="/home">
-              {user.id ? <Redirect to="/user" /> : <LandingPage />}
-            </Route>
-            <Route>
-              <h1>404 - Page Not Found</h1>
-            </Route>
-          </Switch>
+              <Route exact path="/login">
+                {user.id ? <Redirect to="/user" /> : <LoginPage />}
+              </Route>
+              <Route exact path="/registration">
+                {user.id ? <Redirect to="/user" /> : <RegisterPage />}
+              </Route>
+              <Route exact path="/home">
+                {user.id ? <Redirect to="/user" /> : <LandingPage />}
+              </Route>
+              <Route>
+                <h1>404 - Page Not Found</h1>
+              </Route>
+            </Switch>
           </Box>
           <Footer />
         </div>
