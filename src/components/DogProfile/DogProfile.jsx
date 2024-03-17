@@ -108,7 +108,7 @@ function DogProfile() {
       </Card>
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={1}>
-          <Grid item xs={12}>
+          <Grid item xs={6}>""
           <Paper>
           <Typography variant="h6">Basic Information</Typography>
 
@@ -118,7 +118,7 @@ function DogProfile() {
             <Typography variant="body1">Spayed or Neutered: {dogProfile?.spayed_neutered ? 'Yes' : 'No'}</Typography>
           </Paper>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
 
           <Paper>
           <Typography variant="h6">Meals</Typography>
