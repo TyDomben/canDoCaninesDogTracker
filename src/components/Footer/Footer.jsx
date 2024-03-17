@@ -9,10 +9,20 @@ const Footer = () => {
     <Box
       component="footer"
       sx={{
-        py: 3,
-        px: 2,
-        mt: "auto",
-        backgroundColor: theme.palette.background.default,
+        position: 'fixed',
+        left: 0,
+        bottom: 0,
+        width: '100%',
+        backgroundColor: 'primary.main', // Use your theme color
+        color: 'white',
+        textAlign: 'center',
+        p: 2, // Padding, adjust as needed
+
+
+        // py: 3,
+        // px: 2,
+        // mt: "auto",
+        // backgroundColor: theme.palette.background.default,
       }}
     >
       <Container maxWidth="sm">
