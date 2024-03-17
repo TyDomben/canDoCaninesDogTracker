@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Box from "@mui/material/Box";
 import theme from "../../theme";
 // import components
 import AboutPage from "../AboutPage/AboutPage";
@@ -46,6 +47,11 @@ function App() {
       <Router>
         <div>
           <Nav />
+          <Box
+        sx={{
+          pb: '100px', // Adjust based on the footer's height
+        }}
+      >
           <Switch>
             <Redirect exact from="/" to="/home" />
             <Route exact path="/about">
@@ -115,7 +121,6 @@ function App() {
               <AllProfiles />
             </ProtectedRoute>
 
-            {/* //! right now the request care form is not working, UNLESS it is pulling the dog id */}
             <ProtectedRoute exact path="/dogprofile/:dogId">
               <DogProfile />
             </ProtectedRoute>
@@ -133,6 +138,7 @@ function App() {
               <h1>404 - Page Not Found</h1>
             </Route>
           </Switch>
+          </Box>
           <Footer />
         </div>
       </Router>
