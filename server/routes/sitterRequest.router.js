@@ -21,11 +21,12 @@ router.get("/", (req, res) => {
       JOIN
         "dogs" ON "hosting_request"."dog_id" = "dogs"."id"
       JOIN
-        "user" ON "hosting_request"."user_id" = "user"."id";
+        "user" ON "hosting_request"."user_id" = "user"."id"
+     ;
     `;
 
   pool
-    .query(sqlText)
+    .query(sqlText, )
     .then((result) => {
       res.send(result.rows);
     })

@@ -105,10 +105,17 @@ router.get("/history", async (req, res) => {
       const userId = req.user.id;
 
       const query = `
-        SELECT
-          "dogs"."name",
-          "hosting_request"."start_date",
-          "hosting_request"."end_date"
+      SELECT
+      "hosting_request"."id" AS "hosting_id",
+      "hosting_request"."dog_id",
+      "hosting_request"."user_id",
+      "hosting_request"."start_date",
+      "hosting_request"."end_date",
+      "hosting_request"."date_comments",
+      "hosting_request"."appointments",
+      "hosting_request"."status",
+      "dogs"."dog_name" AS "dog_name", -- Corrected column name
+      "user"."name" AS "user_name" -- Assuming "name" is the correct column for the user's name
         FROM
           "hosting_request"
         JOIN

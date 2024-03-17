@@ -50,7 +50,7 @@ const HomePage = () => {
     dispatch({ type: "FETCH_USER_DOGS" });
     console.log("Updated sitterDates", sitterDates);
     axios
-      .get("/api/sitterRequest")
+      .get("/api/sitter/history")
       .then((response) => {
         setSitterDates(response.data);
         // Assuming response.data is your sitterDates array
