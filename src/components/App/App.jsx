@@ -35,6 +35,7 @@ function App() {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
   const customTheme = createTheme(theme);
+  const isAdmin = useSelector((store) => store.user.admin);
 
   useEffect(() => {
     dispatch({ type: "FETCH_USER" });
@@ -82,9 +83,13 @@ function App() {
             <ProtectedRoute exact path="/sitterHome">
               <SitterHomePage />
             </ProtectedRoute>
-            <ProtectedRoute exact path="/adminHome">
-              <AdminHome />
-            </ProtectedRoute>
+
+            {isAdmin === true && 
+              <ProtectedRoute exact path="/adminHome">
+                <AdminHome />
+              </ProtectedRoute>
+            }
+
             <ProtectedRoute exact path="/allDogCards">
               <DogCards />
             </ProtectedRoute>
@@ -105,7 +110,7 @@ function App() {
             </ProtectedRoute>
             <ProtectedRoute exact path="/requestcareform/:dogId">
               <RequestCareForm />
-              </ProtectedRoute>
+            </ProtectedRoute>
 
             {/* //! right now the request care form is not working, UNLESS it is pulling the dog id */}
             <ProtectedRoute exact path="/dogprofile/:dogId">

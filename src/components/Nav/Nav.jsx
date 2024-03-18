@@ -16,6 +16,7 @@ import Toolbar from "@mui/material/Toolbar";
 function Nav() {
   const user = useSelector((store) => store.user);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const isAdmin = useSelector((store) => store.user.admin);
 
   // Drawer toggle function
   const toggleDrawer = (open) => (event) => {
@@ -27,19 +28,24 @@ function Nav() {
     }
     setDrawerOpen(open);
   };
+
   // Nav links
   const navLinks = [
     { text: "Home", path: "/home" },
     { text: "About", path: "/about" },
     { text: "Data Grid", path: "/data-grid" },
     { text: "All Dog Cards", path: "/allDogCards" },
-    // Conditional authentication links are handled outside of this array
-    { text: "Sitter Home", path: "/sitter-home" },
-    { text: "Admin Home", path: "/admin-home" },
     { text: "Edit Profile", path: "/user-edit" },
     { text: "Info", path: "/info" },
     { text: "Volunteer Sitter Form", path: "/volunteerSitterForm" },
   ];
+
+  console.log(isAdmin)
+  // Conditionally add "Admin Home" link if the user is an admin
+  if (isAdmin === true) {
+    navLinks.push({ text: "Admin Home", path: "/admin-home" });
+  }
+
   // Nav bar
   return (
     <AppBar position="static">
@@ -58,40 +64,18 @@ function Nav() {
         <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
           {/* Drawer List */}
           <List>
-            {user.id && (
-              <>
-                {user.role === "admin" && (
-                  <ListItem
-                    button
-                    component={NavLink}
-                    to="/admin-home"
-                    onClick={toggleDrawer(false)}
-                  >
-                    <ListItemText primary="Admin" />
-                  </ListItem>
-                )}
-                {user.role === "raiser" && (
-                  <ListItem
-                    button
-                    component={NavLink}
-                    to="/raiser-dog-page"
-                    onClick={toggleDrawer(false)}
-                  >
-                    <ListItemText primary="Raiser" />
-                  </ListItem>
-                )}
-                {user.role === "sitter" && (
-                  <ListItem
-                    button
-                    component={NavLink}
-                    to="/sitter-home"
-                    onClick={toggleDrawer(false)}
-                  >
-                    <ListItemText primary="Sitter" />
-                  </ListItem>
-                )}
-              </>
+            {/* Conditional rendering for admin links */}
+            {user.id && user.role === "admin" && (
+              <ListItem
+                button
+                component={NavLink}
+                to="/admin-home"
+                onClick={toggleDrawer(false)}
+              >
+                <ListItemText primary="Admin" />
+              </ListItem>
             )}
+            {/* Render other navigation links */}
             {navLinks.map((link) => (
               <ListItem
                 key={link.path}
@@ -103,6 +87,7 @@ function Nav() {
                 <ListItemText primary={link.text} />
               </ListItem>
             ))}
+            {/* Render logout button if user is logged in */}
             {user.id && (
               <ListItem button onClick={toggleDrawer(false)}>
                 <LogOutButton />
@@ -110,6 +95,7 @@ function Nav() {
             )}
           </List>
         </Drawer>
+        {/* Render navigation buttons */}
         <Button color="inherit" component={NavLink} to="/">
           Home
         </Button>
