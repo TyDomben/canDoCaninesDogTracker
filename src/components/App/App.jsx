@@ -26,7 +26,6 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import RaiserDogPage from "../RaiserDogPage/RaiserDogPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
 import RequestCareForm from "../RequestCareForm/RequestCareForm";
-import SitterHomePage from "../SitterHome/SitterHome";
 import UserPage from "../UserPage/UserPage";
 import UserProfileEdit from "../UserProfileEdit/UserProfileEdit";
 import VolunteerSitterForm from "../VolunteerSitterForm/VolunteerSitterForm";
@@ -59,9 +58,6 @@ function App() {
               </Route>
               {/* Add the new ProtectedRoutes here */}
 
-              <ProtectedRoute exact path="/sitter-home">
-                <SitterHomePage />
-              </ProtectedRoute>
               <ProtectedRoute exact path="/admin-home">
                 <AdminHome />
               </ProtectedRoute>
@@ -70,9 +66,6 @@ function App() {
               </ProtectedRoute>
               <ProtectedRoute exact path="/data-grid">
                 <DataGrid />
-              </ProtectedRoute>
-              <ProtectedRoute exact path="/raiser-home">
-                <RaiserDogPage />
               </ProtectedRoute>
               <ProtectedRoute exact path="/user-edit">
                 <UserProfileEdit />{" "}
@@ -85,9 +78,6 @@ function App() {
               </ProtectedRoute>
               <ProtectedRoute exact path="/home">
                 <RaiserDogPage />
-              </ProtectedRoute>
-              <ProtectedRoute exact path="/sitterHome">
-                <SitterHomePage />
               </ProtectedRoute>
               <ProtectedRoute exact path="/adminHome">
                 <AdminHome />

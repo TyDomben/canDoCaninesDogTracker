@@ -23,6 +23,8 @@ function DogProfile() {
   let dispatch = useDispatch();
 
   const dogProfile = useSelector((state) => state.fetchOneDogProfile);
+  const userId = useSelector((state) => state.user.id)
+
   console.log("dogProfile", dogProfile);
   const { dogId } = useParams();
   console.log("dogId front end", dogId);
@@ -398,6 +400,8 @@ function DogProfile() {
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "center", p: 2 }}>
+       {dogProfile?.user_id === userId && (
+        <>
         <Button variant="outlined" color="error" onClick={handleDelete}>
           Delete Profile
         </Button>
@@ -411,7 +415,26 @@ function DogProfile() {
         >
           Request Care Dates
         </Button>
+        </>
+       )}
+
       </Box>
+
+      <Box sx={{ display: "flex", justifyContent: "center", p: 2 }}>
+  {dogProfile?.user_id !== userId && (
+    <Button
+      variant="contained"
+      color="primary"
+      onClick={() => {
+        console.log("This button is visible to users other than the owner.");
+
+        history.push(`/volunteerSitterForm/${dogId}`)
+      }}
+    >
+     Volunteer
+    </Button>
+  )}
+</Box>
     </Container>
   );
 }

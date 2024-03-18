@@ -9,6 +9,9 @@ import {
   Paper,
   Button,
   Typography,
+  Box,
+  ToggleButton,
+  ToggleButtonGroup,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import axios from "axios";
@@ -21,6 +24,17 @@ const DataGrid = () => {
   const [sittingDogs, setSittingDogs] = useState([]);
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const [toggle, setToggle] = React.useState("left");
+
+  const handleToggle = (event, newToggle) => {
+    setToggle(newToggle);
+    if (newToggle === "left") {
+      history.push("/datagrid");
+    } else if (newToggle === "right") {
+      history.push("/alldogcards");
+    }
+  };
 
   useEffect(() => {
     dispatch({ type: "FETCH_USER_DOGS" });
@@ -35,26 +49,59 @@ const DataGrid = () => {
         console.error("Error fetching sitter requests:", error);
       });
   }, [dispatch]);
-  
+
   return (
     <>
-      <Typography variant="h6" sx={{ flexGrow: 1 }}>
-        Can-Do Canines that Need Sitters
-      </Typography>
+      <Box
+        sx={{
+          height: 100,
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          borderBottom: "1px solid rgba(255, 0, 0, 0.25)",
+        }}
+      >
+        <Typography variant="h3">Hosting Opportunities</Typography>
+      </Box>
+
+      <Box sx={{ mt: 1, mb: 2, display: "flex", justifyContent: "center" }}>
+        <ToggleButtonGroup
+          color="primary"
+          value={toggle}
+          exclusive
+          onChange={handleToggle}
+        >
+          <ToggleButton value="left">List View</ToggleButton>
+          <ToggleButton value="right">Dog Profiles View</ToggleButton>
+        </ToggleButtonGroup>
+      </Box>
+
       <TableContainer component={Paper} sx={{ my: 4 }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
+          <TableHead sx={{ textAlign: "center" }}>
             <TableRow>
-              <TableCell>Photo</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Start Date</TableCell>
-              <TableCell>End Date</TableCell>
-              <TableCell align="right">Volunteer</TableCell>
+              <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                Photo
+              </TableCell>
+              <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                Name
+              </TableCell>
+              <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                Start Date
+              </TableCell>
+              <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                End Date
+              </TableCell>
+              <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                Volunteer
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {sittingDogs
               .filter((dog) => dog.status !== "confirmed")
+              .sort((a, b) => new Date(a.start_date) - new Date(b.start_date))
               .map((dog, index) => (
                 <TableRow
                   key={dog.name + index}
@@ -63,27 +110,31 @@ const DataGrid = () => {
                   <TableCell component="th" scope="row">
                     {/* Replace with actual image */}
                     <img
+                    onClick={() => history.push(`/dogprofile/${dog.dog_id}`)}
                       src="/public/images/dogoutline.jpeg"
                       alt="Dog"
                       style={{
-                        height: "100%",
+                        maxHeight: "100px",
+                        maxWidth: "100px",
                         width: "auto",
-                        maxWidth: "100%",
+                        height: "auto",
                         objectFit: "contain",
                       }}
                     />
                   </TableCell>
-                  <TableCell>{dog.dog_name}</TableCell>
-                  <TableCell>
+                  <TableCell align="center">{dog.dog_name}</TableCell>
+                  <TableCell align="center">
                     {format(new Date(dog.start_date), "MMMM d, yyyy, h:mm a")}
                   </TableCell>
-                  <TableCell>
+                  <TableCell align="center">
                     {format(new Date(dog.end_date), "MMMM d, yyyy, h:mm a")}
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell align="center">
                     <Button
                       variant="outlined"
-                      onClick={() => history.push(`/volunteerSitterForm/${dog.dog_id}`)}
+                      onClick={() =>
+                        history.push(`/volunteerSitterForm/${dog.dog_id}`)
+                      }
                       // this should go to the volunteer sitter form based on dog id
                     >
                       Volunteer

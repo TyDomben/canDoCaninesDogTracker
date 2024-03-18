@@ -14,10 +14,12 @@ import Toolbar from "@mui/material/Toolbar";
 import {useTheme} from "@mui/material/styles"
 import Box from "@mui/material/Box";
 import logo from "../../../public/Images/CanDoCanines.jpeg";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 // The Header creates links that can be used to navigate
 // between routes.
 function Nav() {
+  const history = useHistory();
   const theme = useTheme();
   const user = useSelector((store) => store.user);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -36,7 +38,7 @@ function Nav() {
   // Hamburger Menu links
   const navLinks = [
     
-    { text: "Landing Page", path: "/home" },
+    { text: "Home", path: "/home" },
     { text: "Hosting Opportunities", path: "/data-grid" },
     { text: "Edit Profile", path: "/user-edit" },
     { text: "Info", path: "/info" },
@@ -49,7 +51,7 @@ function Nav() {
     <AppBar position="static" sx={{ background: `linear-gradient(to right, white 0%, white 20%, ${theme.palette.primary.main} 80%, ${theme.palette.primary.main} 100%)` }}>
       {/* Drawer */}
       <Toolbar sx={{ justifyContent: 'space-between', maxHeight: '200px' }}>
-      <img src={logo} alt="Logo" style={{ maxHeight: '150px' }} />
+      <img  onClick={() => history.push('/home')} src={logo} alt="Logo" style={{ maxHeight: '150px' }}/>
 
         {/* Red Nav Bar components */}
         <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'right' }}>
