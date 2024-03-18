@@ -101,7 +101,6 @@ const HomePage = () => {
                 key={dog.dog_id}
                 onClick={() => history.push(`/dogprofile/${dog.dog_id}`)}
               >
-                {/* <Card key={dog.id} onClick={() => console.log(dog)}> */}
                 <Box
                   sx={{
                     height: 300,
@@ -124,7 +123,12 @@ const HomePage = () => {
                 </Box>
 
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
+                  <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="div"
+                    sx={{ textAlign: "center" }}
+                  >
                     {dog.dog_name}
                   </Typography>
                 </CardContent>
@@ -135,14 +139,7 @@ const HomePage = () => {
       </Container>
 
       <Container>
-        <Box
-          sx={{
-            padding: "25px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <Box sx={{ textAlign: "center", mt: 2, mb: 2 }}>
           <Button
             variant="contained"
             onClick={() => history.push("/add-dog-form")}
@@ -169,8 +166,6 @@ const HomePage = () => {
           </Typography>
         </Box>
         <Grid container spacing={2}>
-
-
           {/* Past Dogs Hosted */}
           <Grid item xs={12} sm={6} md={4}>
             <Typography

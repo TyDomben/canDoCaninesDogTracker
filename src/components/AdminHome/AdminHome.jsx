@@ -100,6 +100,7 @@ axios.get('/api/admin-profile').then((response) => {
         </Table>
       </TableContainer>
     </>
+    
   );
 };
 
