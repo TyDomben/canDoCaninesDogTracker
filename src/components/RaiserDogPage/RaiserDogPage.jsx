@@ -124,7 +124,7 @@ const HomePage = () => {
                 </Box>
 
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
+                  <Typography gutterBottom variant="h5" component="div" sx={{textAlign: 'center'}}>
                     {dog.dog_name}
                   </Typography>
                 </CardContent>
@@ -137,10 +137,7 @@ const HomePage = () => {
       <Container>
         <Box
           sx={{
-            padding: "25px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+
           }}
         >
           <Button
