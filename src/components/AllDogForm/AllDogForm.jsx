@@ -93,7 +93,7 @@ const DogCards = () => {
                 >
                   <CardMedia
                     component="img"
-                    image="/public/images/dogoutline.jpeg"
+                    image={dog.photo}
                     alt={dog.dog_name}
                     sx={{
                       height: 200, 

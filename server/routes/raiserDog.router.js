@@ -46,8 +46,9 @@ router.get("/", (req, res) => {
     "dogs"."living_with_large_animals",
     "behavior_dog"."behavior_category_name" AS "behavior_with_other_dogs",
     "behavior_cat"."behavior_category_name" AS "behavior_with_cats",
-    "behavior_child"."behavior_category_name" AS "behavior_with_children"
-  FROM
+    "behavior_child"."behavior_category_name" AS "behavior_with_children",
+    "photo"."photo" AS "photo"
+    FROM
     "user"
   JOIN
     "dogs" ON "user"."id" ="dogs"."user_id"
@@ -59,9 +60,12 @@ router.get("/", (req, res) => {
     "behavior" AS "behavior_cat" ON "dogs"."behavior_with_cats" = "behavior_cat"."id"
   JOIN
     "behavior" AS "behavior_child" ON "dogs"."behavior_with_children" = "behavior_child"."id"
-  WHERE
-    "dogs"."user_id" = $1;
-`;
+    LEFT JOIN LATERAL (
+      SELECT "photo"."photo" FROM "photo" WHERE "photo"."dog_id" = "dogs"."id"
+      ORDER BY "photo"."id" DESC
+      LIMIT 1) "photo" ON true
+    WHERE
+    "dogs"."user_id" = $1;`
 
 
 
@@ -131,7 +135,9 @@ router.get("/:id", (req, res) => {
   "hosting_request"."date_comments",
   "hosting_request"."appointments",
   "hosting_request"."status"
-FROM
+  "photo"."photo" AS "photo"
+
+  FROM
   "user"
 JOIN
   "dogs" ON "user"."id" = "dogs"."user_id"
@@ -145,7 +151,11 @@ JOIN
   "behavior" AS "behavior_child" ON "dogs"."behavior_with_children" = "behavior_child"."id"
 JOIN
   "hosting_request" ON "dogs"."id" = "hosting_request"."dog_id"
-WHERE
+  LEFT JOIN LATERAL (
+    SELECT "photo"."photo" FROM "photo" WHERE "photo"."dog_id" = "dogs"."id"
+    ORDER BY "photo"."id" DESC
+    LIMIT 1) "photo" ON true
+  WHERE
   "dogs"."user_id" = $1 AND "dogs"."id" = $2;
   `;
 

@@ -178,7 +178,7 @@ const AddDogForm = () => {
 
     // ... other fields as needed
   });
-    history.push('/raiser-home')
+    history.push('/home')
   }
   // Show confirmation alert
   const handleNext = () => {

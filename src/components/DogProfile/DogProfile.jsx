@@ -93,7 +93,10 @@ function DogProfile() {
 
   return (
     <Container maxWidth="lg">
-      <AppBar position="static"></AppBar>
+      <IconButton onClick={onGoBack} sx={{ color: "red", fontSize: "2.5rem" }}>
+        <ArrowBackIcon sx={{ fontSize: "inherit" }} />
+      </IconButton>
+      
       <Typography
         gutterBottom
         variant="h2"
@@ -102,9 +105,24 @@ function DogProfile() {
       >
         {dogProfile?.dog_name}
       </Typography>
-      <IconButton onClick={onGoBack} sx={{ color: "red", fontSize: "2.5rem" }}>
-        <ArrowBackIcon sx={{ fontSize: "inherit" }} />
-      </IconButton>
+<Box sx={{textAlign: 'center'}}>
+      {dogProfile.photo && (
+        <img src={dogProfile.photo} alt={`Profile of ${dogProfile.dog_name}`} />)}
+</Box>
+
+      
+      <Box sx={{ display: "flex", justifyContent: "center", p: 2 }}>
+  {dogProfile?.user_id === userId && (
+    
+    <Button
+      variant="contained"
+      color="secondary"
+      onClick={() => history.push(`/profilephoto/${dogId}`)}
+    >
+      Add Profile Picture
+    </Button>
+  )}
+</Box>
 
       <Box
         sx={{
