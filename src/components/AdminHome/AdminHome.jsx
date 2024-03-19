@@ -22,7 +22,7 @@ import axios from "axios";
 const AdminHome = () => {
   const dispatch = useDispatch();
   const requests = useSelector((store) => store.adminReducer);
-console.log('requests',requests[0].volunteer_end_date)
+// console.log('requests',format(new Date(requests[0].volunteer_end_date)))
   useEffect(() => {
     dispatch({ type: "FETCH_REQUESTS" });
   }, []);
@@ -69,7 +69,11 @@ console.log('requests',requests[0].volunteer_end_date)
                 </TableCell>
                 <TableCell>{request.host_name}</TableCell>
                 <TableCell>{request.volunteer_name}</TableCell>
-                <TableCell>{request.status}</TableCell>
+                {/* <TableCell>{request.status}</TableCell> */}
+                <TableCell>
+                {format(new Date(request.host_start_date), "MM/dd/yyyy, h:mm a")}{" "}
+                  to {format(new Date(request.host_end_date), "MM/dd/yyyy, h:mm a")}
+                </TableCell>
                 <TableCell>
                   <Button
                     variant="contained"
