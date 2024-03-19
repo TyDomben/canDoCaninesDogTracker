@@ -14,14 +14,19 @@ router.get("/", (req, res) => {
         "hosting_request"."date_comments",
         "hosting_request"."appointments",
         "hosting_request"."status",
-        "dogs"."dog_name" AS "dog_name", -- Corrected column name
-        "user"."name" AS "user_name" -- Assuming "name" is the correct column for the user's name
-      FROM
+        "dogs"."dog_name" AS "dog_name",
+        "user"."name" AS "user_name",
+        "photo"."photo" AS "photo"     
+        FROM
         "hosting_request"
       JOIN
         "dogs" ON "hosting_request"."dog_id" = "dogs"."id"
       JOIN
-        "user" ON "hosting_request"."user_id" = "user"."id";
+        "user" ON "hosting_request"."user_id" = "user"."id"
+        LEFT JOIN LATERAL (
+          SELECT "photo"."photo" FROM "photo" WHERE "photo"."dog_id" = "dogs"."id"
+          ORDER BY "photo"."id" DESC
+          LIMIT 1) "photo" ON true;
     `;
 
   pool

@@ -111,7 +111,7 @@ const DataGrid = () => {
                     {/* Replace with actual image */}
                     <img
                     onClick={() => history.push(`/dogprofile/${dog.dog_id}`)}
-                      src="/public/images/dogoutline.jpeg"
+                      src={dog.photo}
                       alt="Dog"
                       style={{
                         maxHeight: "100px",

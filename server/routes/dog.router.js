@@ -1,6 +1,8 @@
 const express = require("express");
 const pool = require("../modules/pool");
 const router = express.Router();
+const multer = require("multer");
+const path = require('path');
 
 //! clean up console logs and comments before client handoff
 /**
@@ -147,8 +149,8 @@ router.get("/:id", async (req, res) => {
         "behavior_cat"."behavior_category_name" AS "behavior_with_cats",
         "dogs"."behavior_with_cats" AS  "behavior_with_cats_id",
         "behavior_child"."behavior_category_name" AS "behavior_with_children",
-        "dogs"."behavior_with_children" AS "behavior_with_children_id"
-
+        "dogs"."behavior_with_children" AS "behavior_with_children_id",
+        "photo"."photo" AS "photo"
     FROM 
         "dogs"
     JOIN
@@ -164,7 +166,10 @@ router.get("/:id", async (req, res) => {
     JOIN 
         "behavior" AS "behavior_child" ON "dogs"."behavior_with_children" = "behavior_child"."id"
     JOIN "in_heat" AS "in_heat" ON "dogs"."in_heat" = "in_heat"."id"
-
+    LEFT JOIN LATERAL (
+      SELECT "photo"."photo" FROM "photo" WHERE "photo"."dog_id" = "dogs"."id"
+      ORDER BY "photo"."id" DESC
+      LIMIT 1) "photo" ON true
         WHERE
         "dogs"."id" = $1;
         `;
@@ -356,5 +361,70 @@ router.put("/:id", async (req, res) => {
     res.sendStatus(403); // Not authenticated
   }
 });
+
+
+
+// Set up multer storage
+const storage = multer.diskStorage({
+  destination: path.resolve(__dirname,'../..', 'public/Images/'),
+  filename: function (req, file, cb) {
+    // Define how files should be named
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, file.fieldname + '-' + uniqueSuffix + file.originalname);
+  }
+});
+
+// Configure multer instance
+const upload = multer({ storage: storage });
+
+
+router.post("/photo/:id", upload.single('photo'), async (req,res) => {
+  console.log("uploaded file:", req.file)
+
+if(req.isAuthenticated()){
+  let connection;
+
+  try{
+
+    const photoUrl = req.file ? `/Images/${req.file.filename}` : null;
+
+    console.log("photoUrl", photoUrl);
+    connection = await pool.connect();
+
+    const dogId = req.params.id;
+    // const photoPath = `/public/Images/`; // Adjust path as necessary
+
+
+    console.log("req.body", JSON.stringify(req.body));
+    
+    console.log("Dog ID:", dogId);
+
+
+
+    const queryText = `
+    INSERT INTO "photo"("dog_id", "photo")
+    VALUES ($1, $2)
+    RETURNING "id";
+  `;
+    
+  const result = await connection.query(queryText, [dogId, photoUrl]);
+
+
+    console.log("result", result)
+
+    const photoResults = result.rows;
+    res.json(photoResults)
+  } catch(error){
+    console.error("error adding photo")
+    console.error(error.stack)
+    res.sendStatus(500)
+  }finally {
+    if(connection){
+      connection.release();
+    }
+  }
+}else{res.sendStatus(403);
+}})
+
 
 module.exports = router;

@@ -30,6 +30,7 @@ import UserPage from "../UserPage/UserPage";
 import UserProfileEdit from "../UserProfileEdit/UserProfileEdit";
 import VolunteerSitterForm from "../VolunteerSitterForm/VolunteerSitterForm";
 import AllProfiles from "../AllProfiles/AllProfiles";
+import PhotoUpload from "../PhotoUpload/PhotoUpload";
 
 import "./App.css";
 function App() {
@@ -113,6 +114,11 @@ function App() {
 
               <ProtectedRoute exact path="/dogprofile/:dogId">
                 <DogProfile />
+              </ProtectedRoute>
+
+
+              <ProtectedRoute exact path="/profilephoto/:dogId">
+                <PhotoUpload />
               </ProtectedRoute>
 
               <Route exact path="/login">

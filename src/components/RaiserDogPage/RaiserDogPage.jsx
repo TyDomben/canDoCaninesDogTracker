@@ -111,7 +111,7 @@ const HomePage = () => {
                   }}
                 >
                   <img
-                    src="/public/images/dogoutline.jpeg"
+                    src={dog.photo}
                     alt="Dog"
                     style={{
                       height: "100%",

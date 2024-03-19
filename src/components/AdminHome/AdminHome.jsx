@@ -51,7 +51,7 @@ axios.get('/api/admin-profile').then((response) => {
                 <TableCell component="th" scope="row">
                   {/* Placeholder image, replace with actual */}
                   <img
-                    src="/public/images/dogoutline.jpeg"
+                    src={"/public/images/dogoutline.jpeg"}
                     alt="Dog"
                     style={{
                       height: "100%",
