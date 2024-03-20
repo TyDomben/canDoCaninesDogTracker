@@ -22,7 +22,7 @@ import axios from "axios";
 const AdminHome = () => {
   const dispatch = useDispatch();
   const requests = useSelector((store) => store.adminReducer);
-// console.log('requests',format(new Date(requests[0].volunteer_end_date)))
+console.log('requests',requests)
   useEffect(() => {
     dispatch({ type: "FETCH_REQUESTS" });
   }, []);

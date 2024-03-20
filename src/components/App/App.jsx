@@ -101,7 +101,7 @@ function App() {
             <ProtectedRoute exact path="/info">
               <InfoPage />
             </ProtectedRoute>
-            <ProtectedRoute exact path="/volunteersitterform/:requestId">
+            <ProtectedRoute exact path="/volunteersitterform/:requestId/:startDate/:endDate">
               <VolunteerSitterForm />
             </ProtectedRoute>
             <ProtectedRoute exact path="/requestcareform/:dogId">
