@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import swal from "sweetalert";
-
 import {
   Container,
   TextField,
@@ -12,37 +11,30 @@ import {
   IconButton,
   Box,
 } from "@mui/material";
-
-import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const RequestCareForm = () => {
   let dispatch = useDispatch("");
   let history = useHistory("");
-
   const dogProfile = useSelector((state) => state.fetchOneDogProfile);
   const { dogId } = useParams();
-
   console.log("dogId from useParams:", dogId);
-
+  
   let [newRequest, setNewRequest] = useState({
     start_date: "",
     end_date: "",
     date_comments: "",
     appointments: "",
   });
-
   useEffect(() => {
     if (dogId) {
       dispatch({ type: "FETCH_ONE_DOG_PROFILE", payload: { dogId } });
     }
   }, [dogId]);
-
   const handleChange = (event) => {
     const { name, value } = event.target;
     setNewRequest({ ...newRequest, [name]: value });
   };
-
   const handleSave = async (event) => {
     event.preventDefault();
     console.log("dispatching REQUEST HOST action");
@@ -53,7 +45,7 @@ const RequestCareForm = () => {
     history.push(`/dogprofile/${dogId}`);
   };
 
-  const handleGoBack = async (event) => {
+  const onGoBack = async (event) => {
     event.preventDefault();
     try {
       const value = await swal({
@@ -81,23 +73,15 @@ const RequestCareForm = () => {
       swal("error", "error");
     }
   };
-
   const today = new Date().toISOString().split("T")[0];
-
   return (
     <Container maxWidth="sm">
-      <AppBar position="static">
-        <IconButton
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          sx={{ mr: 2 }}
-          onClick={handleGoBack}
+              <IconButton
+          onClick={onGoBack}
+          sx={{ color: "red", fontSize: "2.5rem" }}
         >
-          <ArrowBackIcon />
+          <ArrowBackIcon sx={{ fontSize: "inherit" }} />
         </IconButton>
-      </AppBar>
       <Box
         component="form"
         noValidate
@@ -110,7 +94,7 @@ const RequestCareForm = () => {
         }}
       >
         <Typography variant="h5" align="center" gutterBottom>
-          Request a Sitter for {dogProfile?.name}
+          Request a Sitter for {dogProfile?.dog_name}
         </Typography>
         <TextField
           label="Start Date"
@@ -159,7 +143,6 @@ const RequestCareForm = () => {
             rows={4}
           />
         </Box>
-
         <Box
           sx={{
             "& > :not(style)": { m: 1, width: "55ch" },
@@ -190,9 +173,6 @@ const RequestCareForm = () => {
             mt: 2,
           }}
         >
-          <Button variant="outlined" color="secondary" onClick={handleGoBack}>
-            Go Back
-          </Button>
           <Button variant="contained" color="primary" onClick={handleSave}>
             Save
           </Button>
@@ -201,5 +181,4 @@ const RequestCareForm = () => {
     </Container>
   );
 };
-
 export default RequestCareForm;

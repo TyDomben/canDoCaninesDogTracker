@@ -11,9 +11,16 @@ import ListItemText from "@mui/material/ListItemText";
 import LogOutButton from "../LogOutButton/LogOutButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
+import {useTheme} from "@mui/material/styles"
+import Box from "@mui/material/Box";
+import logo from "../../../public/Images/CanDoCanines.jpeg";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
 // The Header creates links that can be used to navigate
 // between routes.
 function Nav() {
+  const history = useHistory();
+  const theme = useTheme();
   const user = useSelector((store) => store.user);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -27,35 +34,68 @@ function Nav() {
     }
     setDrawerOpen(open);
   };
-  // Nav links
+
+  // Hamburger Menu links
   const navLinks = [
+    
     { text: "Home", path: "/home" },
-    { text: "About", path: "/about" },
-    { text: "Data Grid", path: "/data-grid" },
-    { text: "All Dog Cards", path: "/allDogCards" },
-    // Conditional authentication links are handled outside of this array
-    { text: "Sitter Home", path: "/sitter-home" },
-    { text: "Admin Home", path: "/admin-home" },
+    { text: "Hosting Opportunities", path: "/data-grid" },
     { text: "Edit Profile", path: "/user-edit" },
     { text: "Info", path: "/info" },
-    { text: "Volunteer Sitter Form", path: "/volunteerSitterForm" },
+    { text: "About", path: "/about" },
+    { text: "Admin Home", path: "/admin-home" },
   ];
-  // Nav bar
-  return (
-    <AppBar position="static">
+
+  // Nav bar (links)
+  return ( 
+    <AppBar position="static" sx={{ background: `linear-gradient(to right, white 0%, white 20%, ${theme.palette.primary.main} 80%, ${theme.palette.primary.main} 100%)` }}>
       {/* Drawer */}
-      <Toolbar>
-        {/* Hamburger Menu */}
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          onClick={toggleDrawer(true)}
-        >
-          <MenuIcon />
-        </IconButton>
+      <Toolbar sx={{ justifyContent: 'space-between', maxHeight: '200px' }}>
+      <img  onClick={() => history.push('/home')} src={logo} alt="Logo" style={{ maxHeight: '150px' }}/>
+
+        {/* Red Nav Bar components */}
+        <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'right' }}>
+         
+          {!user.id ? (
+            <>
+              <Button color="inherit" component={NavLink} to="/login">
+                Login
+              </Button>
+              <Button color="inherit" component={NavLink} to="/registration">
+                Register
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                color="inherit"
+                component={NavLink}
+                to="/data-grid"
+                sx={{ fontSize: "1.0rem" }}
+              >
+                Hosting Opportunities
+              </Button>
+
+              
+              
+            </>
+          )}
+          </Box>
+
+          {/* Hamburger Menu */}
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', marginTop: 0, marginBottom: 0 }}>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            onClick={toggleDrawer(true)}
+          >
+            <MenuIcon sx={{ fontSize: 50 }}/>
+          </IconButton>
+        </Box>
+
         {/* Drawer */}
-        <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
+        <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
           {/* Drawer List */}
           <List>
             {user.id && (
@@ -70,28 +110,10 @@ function Nav() {
                     <ListItemText primary="Admin" />
                   </ListItem>
                 )}
-                {user.role === "raiser" && (
-                  <ListItem
-                    button
-                    component={NavLink}
-                    to="/raiser-dog-page"
-                    onClick={toggleDrawer(false)}
-                  >
-                    <ListItemText primary="Raiser" />
-                  </ListItem>
-                )}
-                {user.role === "sitter" && (
-                  <ListItem
-                    button
-                    component={NavLink}
-                    to="/sitter-home"
-                    onClick={toggleDrawer(false)}
-                  >
-                    <ListItemText primary="Sitter" />
-                  </ListItem>
-                )}
               </>
             )}
+
+            {/* Links inside the Hamburger Menu */}
             {navLinks.map((link) => (
               <ListItem
                 key={link.path}
@@ -110,24 +132,6 @@ function Nav() {
             )}
           </List>
         </Drawer>
-        <Button color="inherit" component={NavLink} to="/">
-          Home
-        </Button>
-        {!user.id && (
-          <>
-            <Button color="inherit" component={NavLink} to="/login">
-              Login
-            </Button>
-            <Button color="inherit" component={NavLink} to="/registration">
-              Register
-            </Button>
-          </>
-        )}
-        {user.id && (
-          <Button color="inherit" component={NavLink} to="/user">
-            Profile
-          </Button>
-        )}
       </Toolbar>
     </AppBar>
   );

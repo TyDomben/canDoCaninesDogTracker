@@ -1,6 +1,8 @@
 const express = require("express");
 const pool = require("../modules/pool");
 const router = express.Router();
+const multer = require("multer");
+const path = require('path');
 
 //! clean up console logs and comments before client handoff
 /**
@@ -21,60 +23,54 @@ router.get("/", async (req, res) => {
 
       const query = `
       SELECT
-  d."id",
-  d."user_id",
-  d."dog_name", 
-  d."age", 
-  b."breed" AS "breed_name", 
-  d."spayed_neutered", 
-  ft."food_type" AS "food_type_name", 
-  d."food_amount", 
-  d."meals_per_day", 
-  d."eating_times", 
-  d."medical_conditions", 
-  d."recovering_from_surgery", 
-  d."medications", 
-  ih."condition" AS "in_heat_condition", 
-  d."potty_routine", 
-  d."potty_habits_notes", 
-  d."limit_water",
-  d."limit_toy_play",
-  d."watch_carefully",
-  d."ingest_toys",
-  d."keep_away",
-  d."shares_toys", 
-  ee."exercise_equipment" AS "exercise_equipment_name", 
-  d."crate_manners", 
-  d."house_manners", 
-  d."living_with_other_dogs", 
-  d."living_with_cats", 
-  d."living_with_children_ten_and_up" AS "living_with_children_older_ten",
-  d."living_with_children_younger_ten", 
-  d."living_with_adults", 
-  d."living_with_small_animals", 
-  d."living_with_large_animals", 
-  beh_dogs."behavior_category_name" AS "behavior_with_other_dogs",
-  beh_cats."behavior_category_name" AS "behavior_with_cats",
-  beh_children."behavior_category_name" AS "behavior_with_children"
-FROM 
-  "dogs" d
-JOIN 
-  "breed" b ON d."breed" = b."id"
-JOIN 
-  "food_type" ft ON d."food_type" = ft."id"
-JOIN 
-  "exercise_equipment" ee ON d."exercise_equipment" = ee."id"
-JOIN 
-  "in_heat" ih ON d."in_heat" = ih."id"
-JOIN 
-  "behavior" beh_dogs ON d."behavior_with_other_dogs" = beh_dogs."id"
-JOIN 
-  "behavior" beh_cats ON d."behavior_with_cats" = beh_cats."id"
-JOIN 
-  "behavior" beh_children ON d."behavior_with_children" = beh_children."id"
-WHERE
-  d."user_id" = $1;
-
+      "dogs"."id",
+      "dogs"."user_id",
+      "dogs"."dog_name", 
+      "dogs"."age", 
+      "dogs"."breed", 
+      "dogs"."spayed_neutered", 
+      "dogs"."food_type", 
+      "dogs"."food_amount", 
+      "dogs"."meals_per_day", 
+      "dogs"."eating_times", 
+      "dogs"."medical_conditions", 
+      "dogs"."recovering_from_surgery", 
+      "dogs"."medications", 
+      "dogs"."in_heat", 
+      "dogs"."potty_routine", 
+      "dogs"."potty_habits_notes", 
+      "dogs"."limit_water",
+      "dogs"."limit_toy_play",
+      "dogs"."watch_carefully",
+      "dogs"."ingest_toys",
+      "dogs"."keep_away",
+      "dogs"."shares_toys", 
+      "exercise_equipment"."exercise_equipment", 
+      "dogs"."crate_manners", 
+      "dogs"."house_manners", 
+      "dogs"."living_with_other_dogs", 
+      "dogs"."living_with_cats", 
+      "living_with_children_ten_and_up",
+      "living_with_children_younger_ten", 
+      "dogs"."living_with_adults", 
+      "dogs"."living_with_small_animals", 
+      "dogs"."living_with_large_animals", 
+      "behavior_dog"."behavior_category_name" AS "behavior_with_other_dogs",
+      "behavior_cat"."behavior_category_name" AS "behavior_with_cats",
+      "behavior_child"."behavior_category_name" AS "behavior_with_children"
+  FROM 
+      "dogs"
+  
+  JOIN 
+      "exercise_equipment" AS "exercise_equipment" ON "dogs"."exercise_equipment" = "exercise_equipment"."id"
+  JOIN 
+      "behavior" AS "behavior_dog" ON "dogs"."behavior_with_other_dogs" = "behavior_dog"."id"
+  JOIN 
+      "behavior" AS "behavior_cat" ON "dogs"."behavior_with_cats" = "behavior_cat"."id"
+  JOIN 
+      "behavior" AS "behavior_child" ON "dogs"."behavior_with_children" = "behavior_child"."id"
+  WHERE
+      "dogs"."user_id" = $1;
             `;
 
       const result = await connection.query(query, [userId]);
@@ -113,18 +109,22 @@ router.get("/:id", async (req, res) => {
       console.log("dogId server", dogId)
       const query = `SELECT
         "dogs"."user_id",
+        
         "dogs"."dog_name", 
         "dogs"."age", 
         "breed"."breed" as "breed", 
+        "dogs"."breed" as "breed_id",
         "dogs"."spayed_neutered", 
         "food_type"."food_type" AS "food_type", 
+        "dogs"."food_type" AS "food_type_id",
         "dogs"."food_amount", 
         "dogs"."meals_per_day", 
         "dogs"."eating_times", 
         "dogs"."medical_conditions", 
         "dogs"."recovering_from_surgery", 
         "dogs"."medications", 
-        "dogs"."in_heat", 
+        "in_heat"."in_heat", 
+        "dogs"."in_heat" AS "in_heat_id",
         "dogs"."potty_routine", 
         "dogs"."potty_habits_notes",  
         "dogs"."limit_water",
@@ -134,18 +134,23 @@ router.get("/:id", async (req, res) => {
         "dogs"."keep_away",
         "dogs"."shares_toys",
         "exercise_equipment"."exercise_equipment", 
+        "dogs"."exercise_equipment" AS "exercise_equipment_id", 
         "dogs"."crate_manners", 
         "dogs"."house_manners", 
         "dogs"."living_with_other_dogs", 
         "dogs"."living_with_cats", 
-        "living_with_children_older_ten",
+        "living_with_children_ten_and_up",
         "living_with_children_younger_ten", 
         "dogs"."living_with_adults", 
         "dogs"."living_with_small_animals", 
         "dogs"."living_with_large_animals", 
         "behavior_dog"."behavior_category_name" AS "behavior_with_other_dogs",
+        "dogs"."behavior_with_other_dogs" AS "behavior_with_other_dogs_id",
         "behavior_cat"."behavior_category_name" AS "behavior_with_cats",
-        "behavior_child"."behavior_category_name" AS "behavior_with_children"
+        "dogs"."behavior_with_cats" AS  "behavior_with_cats_id",
+        "behavior_child"."behavior_category_name" AS "behavior_with_children",
+        "dogs"."behavior_with_children" AS "behavior_with_children_id",
+        "photo"."photo" AS "photo"
     FROM 
         "dogs"
     JOIN
@@ -161,7 +166,10 @@ router.get("/:id", async (req, res) => {
     JOIN 
         "behavior" AS "behavior_child" ON "dogs"."behavior_with_children" = "behavior_child"."id"
     JOIN "in_heat" AS "in_heat" ON "dogs"."in_heat" = "in_heat"."id"
-
+    LEFT JOIN LATERAL (
+      SELECT "photo"."photo" FROM "photo" WHERE "photo"."dog_id" = "dogs"."id"
+      ORDER BY "photo"."id" DESC
+      LIMIT 1) "photo" ON true
         WHERE
         "dogs"."id" = $1;
         `;
@@ -227,7 +235,7 @@ router.post("/", (req, res) => {
       req.body.house_manners,
       req.body.living_with_other_dogs,
       req.body.living_with_cats,
-      req.body.living_with_children_older_ten,
+      req.body.living_with_children_ten_and_up,
       req.body.living_with_children_younger_ten,
       req.body.living_with_adults,
       req.body.living_with_small_animals,
@@ -268,7 +276,7 @@ router.post("/", (req, res) => {
                 "house_manners",
                 "living_with_other_dogs",
                 "living_with_cats",
-                "living_with_children_older_ten",
+                "living_with_children_ten_and_up",
                 "living_with_children_younger_ten",
                 "living_with_adults",
                 "living_with_small_animals",
@@ -353,5 +361,70 @@ router.put("/:id", async (req, res) => {
     res.sendStatus(403); // Not authenticated
   }
 });
+
+
+
+// Set up multer storage
+const storage = multer.diskStorage({
+  destination: path.resolve(__dirname,'../..', 'public/Images/'),
+  filename: function (req, file, cb) {
+    // Define how files should be named
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, file.fieldname + '-' + uniqueSuffix + file.originalname);
+  }
+});
+
+// Configure multer instance
+const upload = multer({ storage: storage });
+
+
+router.post("/photo/:id", upload.single('photo'), async (req,res) => {
+  console.log("uploaded file:", req.file)
+
+if(req.isAuthenticated()){
+  let connection;
+
+  try{
+
+    const photoUrl = req.file ? `/Images/${req.file.filename}` : null;
+
+    console.log("photoUrl", photoUrl);
+    connection = await pool.connect();
+
+    const dogId = req.params.id;
+    // const photoPath = `/public/Images/`; // Adjust path as necessary
+
+
+    console.log("req.body", JSON.stringify(req.body));
+    
+    console.log("Dog ID:", dogId);
+
+
+
+    const queryText = `
+    INSERT INTO "photo"("dog_id", "photo")
+    VALUES ($1, $2)
+    RETURNING "id";
+  `;
+    
+  const result = await connection.query(queryText, [dogId, photoUrl]);
+
+
+    console.log("result", result)
+
+    const photoResults = result.rows;
+    res.json(photoResults)
+  } catch(error){
+    console.error("error adding photo")
+    console.error(error.stack)
+    res.sendStatus(500)
+  }finally {
+    if(connection){
+      connection.release();
+    }
+  }
+}else{res.sendStatus(403);
+}})
+
 
 module.exports = router;

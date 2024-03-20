@@ -15,7 +15,7 @@ const raiserRouter = require('./routes/raiserDog.router')
 const sitterRequestRouter = require('./routes/sitterRequest.router')
 const adminRouter = require('./routes/admin.router')
 const sitterRouter = require('./routes/sitter.router');
-
+const profilesRouter = require('./routes/profiles.router')
 // const mailRouter = require('./routes/mail.router');
 
 
@@ -37,7 +37,7 @@ app.use('/api/dog', dogRouter);
 app.use('/api/sitterRequest', sitterRequestRouter)
 app.use('/api/raiser-dog', raiserRouter);
 app.use('/api/admin', adminRouter);
-
+app.use('/api/admin-profile', profilesRouter);
 app.use('/api/sitter', sitterRouter);
 
 // app.use('/api/mail', mailRouter);

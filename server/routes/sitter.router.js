@@ -107,14 +107,19 @@ router.get("/history", async (req, res) => {
       const query = `
         SELECT
           "dogs"."name",
-          "dog_hosting"."start_date",
-          "dog_hosting"."end_date"
+          "hosting_request"."start_date",
+          "hosting_request"."end_date",
+          "photo"."photo" AS "photo"
         FROM
-          "dog_hosting"
+          "hosting_request"
         JOIN
-          "dogs" ON "dog_hosting"."dog_id" = "dogs"."id"
+          "dogs" ON "hosting_request"."dog_id" = "dogs"."id"
+          LEFT JOIN LATERAL (
+            SELECT "photo"."photo" FROM "photo" WHERE "photo"."dog_id" = "dogs"."id"
+            ORDER BY "photo"."id" DESC
+            LIMIT 1) "photo" ON true
         WHERE
-          "dog_hosting"."user_id" = $1;
+          "hosting_request"."user_id" = $1;
       `;
 
       const result = await connection.query(query, [userId]);
@@ -145,7 +150,7 @@ router.get("/requests", async (req, res) => {
       connection = await pool.connect();
       const userId = req.user.id;
       const query = `
-        SELECT * FROM "dog_hosting"
+        SELECT * FROM "hosting_request"
         WHERE "user_id" = $1;
       `;
       const result = await connection.query(query, [userId]);
@@ -258,13 +263,18 @@ router.get("/request/:id", async (req, res) => {
     "hosting_request"."end_date",
     "hosting_request"."date_comments",
     "hosting_request"."appointments",
-    "hosting_request"."status"
+    "hosting_request"."status",
+    "photo"."photo" AS "photo"
     FROM 
     "hosting_request"
     JOIN 
     "dogs" ON "dogs"."id" = "hosting_request"."dog_id"
     JOIN 
     "user" ON "user"."id" = "hosting_request"."user_id"
+    LEFT JOIN LATERAL (
+      SELECT "photo"."photo" FROM "photo" WHERE "photo"."dog_id" = "dogs"."id"
+      ORDER BY "photo"."id" DESC
+      LIMIT 1) "photo" ON true
     WHERE 
     "hosting_request"."id" = $1;`;
 
@@ -373,13 +383,18 @@ router.get("/volunteer/:id", async (req, res) => {
     "volunteer_hosting"."start_date",
     "volunteer_hosting"."end_date",
     "volunteer_hosting"."comments",
-    "volunteer_hosting"."status"
+    "volunteer_hosting"."status",
+    "photo"."photo" AS "photo"
     FROM 
     "volunteer_hosting"
     JOIN 
     "hosting_request" ON "hosting_request"."id" = "volunteer_hosting"."request_id"
     JOIN 
     "user" ON "user"."id" = "volunteer_hosting"."user_id"
+    LEFT JOIN LATERAL (
+      SELECT "photo"."photo" FROM "photo" WHERE "photo"."dog_id" = "dogs"."id"
+      ORDER BY "photo"."id" DESC
+      LIMIT 1) "photo" ON true
     WHERE 
     "volunteer_hosting"."id" = $1;`
 
@@ -416,7 +431,7 @@ router.delete("/request/:id", async (req, res) => {
       const hostingId = req.params.id;
       const userId = req.user.id;
       const query = `
-        DELETE FROM "dog_hosting"
+        DELETE FROM "hosting_request"
         WHERE "id" = $1 AND "user_id" = $2;
       `;
       await connection.query(query, [hostingId, userId]);

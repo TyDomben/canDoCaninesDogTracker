@@ -27,16 +27,16 @@ const AddDogForm = () => {
     breed: '',
     spayed_neutered: '',
     //food info
-    food_type: '',
+    food_type: 5,
     food_amount: '',
     meals_per_day: '',
     eating_times: '',
 
     // medicalAppointments: '',
     medical_conditions: '',
-    recovering_from_surgery: '',
+    recovering_from_surgery: false,
     medications: '',
-    in_heat: '',
+    in_heat: 3,
     //pottyHabitis
     potty_routine: '',
     // potty_indicators: '',
@@ -58,7 +58,7 @@ const AddDogForm = () => {
     // environmentalPreferences: '',
     living_with_other_dogs: false,
     living_with_cats: false,
-    living_with_children_younger_than_ten: false,
+    living_with_children_younger_ten: false,
     living_with_children_ten_and_up: false,
     living_with_adults: false,
     living_with_small_animals: false,
@@ -125,53 +125,60 @@ const AddDogForm = () => {
 
     event.preventDefault();
     dispatch({ type: "POST_DOG", payload: formValues });
-    // setFormValues({
-    //   dog_name: '',
-    //   age: '',
-    //   breed: '',
-    //   spayed_neutered: '',
-    //   //food info
-    //   food_type: '',
-    //   food_amount: '',
-    //   meals_per_day: '',
-    //   eating_times: '',
-  
-    //   // medicalAppointments: '',
-    //   medical_conditions: '',
-    //   recovering_from_surgery: '',
-    //   medications: '',
-    //   in_heat: '',
-    //   //pottyHabitis
-    //   potty_routine: '',
-    //   // potty_indicators: '',
-    //   potty_habits_notes: '',
-    //   //excercise
-    //   limit_water: false,
-    //   limit_toy_play: false,
-    //   watch_carefully: false,
-    //   ingest_toys: false,
-    //   keep_away: false,
-    //   shares_toys: false,
-  
-  
-    //   exercise_equipment: '',
-    //   //crating
-    //   crate_manners: '',
-    //   //houseManners
-    //   house_manners: '',
-    //   // environmentalPreferences: '',
-    //   living_with_other_dogs: false,
-    //   living_with_cats: false,
-    //   living_with_children_younger_than_ten: false,
-    //   living_with_children_ten_and_up: false,
-    //   living_with_adults: false,
-    //   living_with_small_animals: false,
-    //   living_with_large_animals: false,
-    //   behavior_with_other_dogs: '',
-    //   behavior_with_cats: '',
-    //   behavior_with_children: ''
-    // })
-    // history.push('/')
+    setFormValues({
+      //dog basic information
+    dog_name: '',
+    age: '',
+    breed: '',
+    spayed_neutered: '',
+    //food info
+    food_type: 5,
+    food_amount: '',
+    meals_per_day: '',
+    eating_times: '',
+
+    // medicalAppointments: '',
+    medical_conditions: '',
+    recovering_from_surgery: false,
+    medications: '',
+    in_heat: 3,
+    //pottyHabitis
+    potty_routine: '',
+    // potty_indicators: '',
+    potty_habits_notes: '',
+    //excercise
+    limit_water: false,
+    limit_toy_play: false,
+    watch_carefully: false,
+    ingest_toys: false,
+    keep_away: false,
+    shares_toys: false,
+
+
+    exercise_equipment: '',
+    //crating
+    crate_manners: '',
+    //houseManners
+    house_manners: '',
+    // environmentalPreferences: '',
+    living_with_other_dogs: false,
+    living_with_cats: false,
+    living_with_children_younger_ten: false,
+    living_with_children_ten_and_up: false,
+    living_with_adults: false,
+    living_with_small_animals: false,
+    living_with_large_animals: false,
+    behavior_with_other_dogs: '',
+    behavior_with_cats: '',
+    behavior_with_children: ''
+
+
+
+
+
+    // ... other fields as needed
+  });
+    history.push('/home')
   }
   // Show confirmation alert
   const handleNext = () => {
@@ -192,51 +199,53 @@ const AddDogForm = () => {
       case 0:
         return (
           <FormControl>
-            <TextField
-              fullWidth
-              margin="normal"
-              required id="dog_name"
-              name="dog_name"
-              label="Dog Name"
-              value={formValues.dog_name}
-              onChange={handleChange}
-              variant="outlined"
-            />
+            <Paper elevation={5}>
 
-            <TextField
-              fullWidth
-              margin="normal"
-              id="age"
-              name="age"
-              label="Dog Age"
-              value={formValues.age}
-              onChange={handleChange}
-              variant="outlined"
-            />
+              <TextField
+                fullWidth
+                margin="normal"
+                required id="dog_name"
+                name="dog_name"
+                label="Dog Name"
+                value={formValues.dog_name}
+                onChange={handleChange}
+                variant="outlined"
+              />
 
+              <TextField
+                fullWidth
+                margin="normal"
+                id="age"
+                name="age"
+                label="Dog Age"
+                value={formValues.age}
+                onChange={handleChange}
+                variant="outlined"
+              />
 
+            </Paper>
+            <Paper elevation={5}>
 
-            <FormLabel id="breed-label">Dog Breed</FormLabel>
-            <RadioGroup
-              aria-labelledby="breed-label"
-              defaultValue="1"
-              value={formValues.breed}
-              onChange={handleChangeRadioBtn}
-              name="breed"
-            >
-              <FormControlLabel value={1} control={<Radio />} label="Labrador" />
-              <FormControlLabel value={2} control={<Radio />} label="Golden Retriever" />
-              <FormControlLabel value={3} control={<Radio />} label="Labrador Mix" />
-              <FormControlLabel value={4} control={<Radio />} label="Golden Retriever Mix" />
-              <FormControlLabel value={5} control={<Radio />} label="Poodle/Poodle Mix" />
-              <FormControlLabel value={6} control={<Radio />} label="Collie" />
-              <FormControlLabel value={7} control={<Radio />} label="I don't know" />
-
-
-
-            </RadioGroup>
+              <FormLabel id="breed-label">Dog Breed</FormLabel>
+              <RadioGroup
+                aria-labelledby="breed-label"
+                value={formValues.breed}
+                onChange={handleChangeRadioBtn}
+                name="breed"
+              >
+                <FormControlLabel value={1} control={<Radio />} label="Labrador" />
+                <FormControlLabel value={2} control={<Radio />} label="Golden Retriever" />
+                <FormControlLabel value={3} control={<Radio />} label="Labrador Mix" />
+                <FormControlLabel value={4} control={<Radio />} label="Golden Retriever Mix" />
+                <FormControlLabel value={5} control={<Radio />} label="Poodle/Poodle Mix" />
+                <FormControlLabel value={6} control={<Radio />} label="Collie" />
+                <FormControlLabel value={7} control={<Radio />} label="I don't know" />
 
 
+
+              </RadioGroup>
+
+            </Paper>
 
             <FormLabel id="spayed_neutered">Is the dog spayed or neutered?</FormLabel>
             <RadioGroup
@@ -245,9 +254,14 @@ const AddDogForm = () => {
               onChange={handleChangeBool}
               name="spayed_neutered"
             >
-              <FormControlLabel value="true" control={<Radio />} label="Yes" />
-              <FormControlLabel value="false" control={<Radio />} label="No" />
+              <Paper elevation={5}>
+
+                <FormControlLabel value="true" control={<Radio />} label="Yes" />
+
+                <FormControlLabel value="false" control={<Radio />} label="No" />
+              </Paper>
             </RadioGroup>
+
           </FormControl>
 
 
@@ -259,7 +273,6 @@ const AddDogForm = () => {
             <FormLabel id="food_type">Food Information</FormLabel>
             <RadioGroup
               aria-labelledby="food_type"
-              defaultValue="1"
               value={formValues.food_type}
               onChange={handleChangeRadioBtn}
               name="food_type"
@@ -416,11 +429,11 @@ const AddDogForm = () => {
             <FormGroup>
               <Paper elevation={5}>
                 <FormControlLabel defaultChecked='false' name='limit_water' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Limit water" />
-                <FormControlLabel defaultChecked='false'name='limit_toy_play' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Limit toy play" />
-                <FormControlLabel defaultChecked='false'name='watch_carefully' onChange={handleChangeCheckBox} required control={<Checkbox />} label="May destroy toys (watch carefully)" />
-                <FormControlLabel defaultChecked='false'name='ingest_toys' onChange={handleChangeCheckBox} required control={<Checkbox />} label="May ingest toys" />
-                <FormControlLabel defaultChecked='false'name='keep_away' onChange={handleChangeCheckBox} required control={<Checkbox />} label='Plays "Keep Away" ' />
-                <FormControlLabel defaultChecked='false'name='shares_toys' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Does not share toys with other dogs?" />
+                <FormControlLabel defaultChecked='false' name='limit_toy_play' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Limit toy play" />
+                <FormControlLabel defaultChecked='false' name='watch_carefully' onChange={handleChangeCheckBox} required control={<Checkbox />} label="May destroy toys (watch carefully)" />
+                <FormControlLabel defaultChecked='false' name='ingest_toys' onChange={handleChangeCheckBox} required control={<Checkbox />} label="May ingest toys" />
+                <FormControlLabel defaultChecked='false' name='keep_away' onChange={handleChangeCheckBox} required control={<Checkbox />} label='Plays "Keep Away" ' />
+                <FormControlLabel defaultChecked='false' name='shares_toys' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Does not share toys with other dogs?" />
               </Paper>
 
 
@@ -508,13 +521,13 @@ const AddDogForm = () => {
               <FormGroup>
                 <FormControlLabel defaultChecked='false' name='living_with_other_dogs' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Other dogs" />
                 <FormControlLabel defaultChecked='false' name='living_with_cats' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Cats" />
-                <FormControlLabel defaultChecked='false' name='living_with_children_younger_than_ten' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Childred (under 10)" />
-                <FormControlLabel defaultChecked='false' name='living_with_children_over_ten' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Children (10 and over)" />
+                <FormControlLabel defaultChecked='false' name='living_with_children_younger_ten' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Childred (under 10)" />
+                <FormControlLabel defaultChecked='false' name='living_with_children_ten_and_up' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Children (10 and over)" />
                 <FormControlLabel defaultChecked='false' name='living_with_adults' onChange={handleChangeCheckBox} required control={<Checkbox />} label='Adults" ' />
                 <FormControlLabel defaultChecked='false' name='living_with_small_animals' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Small Animals" />
                 <FormControlLabel defaultChecked='false' name='living_with_large_animals' onChange={handleChangeCheckBox} required control={<Checkbox />} label="Large Animals" />
 
- 
+
 
 
               </FormGroup>

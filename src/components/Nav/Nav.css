@@ -1,12 +1,11 @@
 .nav {
-  /* flex box layout */
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   margin: 0 0 30px;
   background-color: #00acb0;
   overflow: hidden;
+  padding-left: 0; /* Add this line if not already present */
 }
 
 .nav a {
@@ -40,3 +39,11 @@
 .navLink:hover {
   background-color: #008183;
 }
+
+.nav-logo {
+  height: 100%;
+  padding-left: 0;
+}
+
+
+

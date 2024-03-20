@@ -13,7 +13,7 @@ function* fetchRequests(action) {
 function* confirmRequest(action) {
   try {
     yield call(axios.put, `/api/admin/${action.payload}`, {
-      status: "Confirmed",
+      status: "confirmed",
     });
     yield put({ type: "FETCH_REQUESTS" });
   } catch (error) {
@@ -24,7 +24,7 @@ function* confirmRequest(action) {
 function* denyRequest(action) {
   try {
     yield call(axios.put, `/api/admin/${action.payload}`, {
-      status: "Denied",
+      status: "denied",
     });
     yield put({ type: "FETCH_REQUESTS" });
   } catch (error) {
@@ -32,10 +32,32 @@ function* denyRequest(action) {
   }
 }
 
+function* fetchAllUsers(action) {
+    try {
+      const response = yield axios.get("/api/admin-profile");
+      yield put({ type: "SET_USER_ADMIN", payload: response.data });
+    } catch (error) {
+      console.log("fetching requests failed", error);
+    }
+  }
+  
+  function* confirmAdmin(action) {
+    try {
+      yield call(axios.put, `/api/admin-profile/${action.payload}`, {
+        status: true,
+      });
+      yield put({ type: "FETCH_ALL_USERS" });
+    } catch (error) {
+      console.log("change user admin failed", error);
+    }
+  }
+
 function* requestsSaga() {
   yield takeLatest("FETCH_REQUESTS", fetchRequests);
   yield takeLatest("SET_CONFIRMATION", confirmRequest);
   yield takeLatest("DENY_CONFIRMATION", denyRequest);
+  yield takeLatest("FETCH_ALL_USERS", fetchAllUsers);
+  yield takeLatest("CONFIRM_ADMIN", confirmAdmin);
 }
 
 export default requestsSaga;
