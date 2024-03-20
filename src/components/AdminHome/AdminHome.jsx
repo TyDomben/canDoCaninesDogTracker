@@ -14,25 +14,16 @@ import {
   Box,
   Typography,
 } from "@mui/material";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import { format } from "date-fns";
 
 const AdminHome = () => {
-  const history = useHistory();
   const dispatch = useDispatch();
-  const [requests, setRequests] = useState([]);
-  // const requests = useSelector((store) => store.raiserDogReducer);
-  // console.log(requests)
+  const requests = useSelector((store) => store.adminReducer);
 
   useEffect(() => {
-    // dispatch({ type: "FETCH_USER_DOGS" });
-    axios.get("/api/admin").then((response) => {
-      console.log(response.data);
-      setRequests(response.data);
-    });
+    dispatch({ type: "FETCH_REQUESTS" });
   }, []);
 
   return (
@@ -67,24 +58,33 @@ const AdminHome = () => {
                 </TableCell>
                 <TableCell>{request.dog_name}</TableCell>
                 <TableCell>
-                  {format(new Date(request.start_date), "MMMM d, yyyy, h:mm a")}{" "}
-                  to{" "}
-                  {format(new Date(request.end_date), "MMMM d, yyyy, h:mm a")}
+                  {format(new Date(request.start_date), "MM/dd/yyyy, h:mm a")}{" "}
+                  to {format(new Date(request.end_date), "MM/dd/yyyy, h:mm a")}
                 </TableCell>
-                <TableCell>{request.volunteerName}</TableCell>
-                <TableCell>{request.datesAvailable}</TableCell>
+                <TableCell>{request.requester_name}</TableCell>
+                <TableCell>{request.status}</TableCell>
                 <TableCell>
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => onConfirm(request)}
+                    onClick={() =>
+                      dispatch({
+                        type: "SET_CONFIRMATION",
+                        payload: request.request_id,
+                      })
+                    }
                   >
                     Confirm
                   </Button>
                   <Button
                     variant="outlined"
                     color="secondary"
-                    onClick={() => onDeny(request)}
+                    onClick={() =>
+                      dispatch({
+                        type: "DENY_CONFIRMATION",
+                        payload: request.request_id,
+                      })
+                    }
                   >
                     Deny
                   </Button>
