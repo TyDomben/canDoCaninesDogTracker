@@ -30,7 +30,7 @@ router.get("/", (req, res) => {
     `;
 
   pool
-    .query(sqlText)
+    .query(sqlText, )
     .then((result) => {
       res.send(result.rows);
     })

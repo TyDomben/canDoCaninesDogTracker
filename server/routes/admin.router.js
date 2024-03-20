@@ -8,25 +8,52 @@ router.get("/", (req, res) => {
     return res.sendStatus(401);
   }
 
-  const sqlText = `
-  SELECT 
-    hr."id" AS "request_id",
-    hr."dog_id",
-    d."dog_name",
-    hr."user_id",
-    u."name" AS "requester_name",
-    hr."start_date",
-    hr."end_date",
-    hr."date_comments",
-    hr."appointments",
-    hr."status"
-FROM 
-    "hosting_request" hr
+  const sqlText = 
+//   `
+
+//   SELECT 
+//     hr."id" AS "request_id",
+//     hr."dog_id",
+//     d."dog_name",
+//     hr."user_id",
+//     u."name" AS "requester_name",
+//     hr."start_date",
+//     hr."end_date",
+//     hr."date_comments",
+//     hr."appointments",
+//     hr."status"
+// FROM 
+//     "hosting_request" hr
+// JOIN 
+//     "dogs" d ON hr."dog_id" = d."id"
+// JOIN 
+//     "user" u ON hr."user_id" = u."id";
+// `;
+`
+SELECT 
+"volunteer_hosting"."id" as "volunteer_id",
+"dogs"."dog_name",
+"volunteer_hosting"."request_id",
+"hosting_request"."start_date" as "host_start_date",
+"hosting_request"."end_date" as "host_end_date",
+"volunteer_hosting"."start_date" as "volunteer_start_date",
+"volunteer_hosting"."end_date" as "volunteer_end_date",
+"volunteer_user"."name" as "volunteer_name",
+"host_user"."name" as "host_name",
+"user"."id"
+FROM
+"volunteer_hosting"
 JOIN 
-    "dogs" d ON hr."dog_id" = d."id"
+"user" AS "volunteer_user" on "volunteer_hosting"."user_id" = "volunteer_user"."id"
 JOIN 
-    "user" u ON hr."user_id" = u."id";
-`;
+"hosting_request" on "volunteer_hosting"."request_id" = "hosting_request"."id"
+JOIN
+"user" AS "host_user" on "hosting_request"."user_id" = "host_user"."id" 
+JOIN 
+"dogs" on "hosting_request"."dog_id" = "dogs"."id"
+JOIN 
+"user" on "dogs"."user_id" = "user"."id"
+`
 
   pool
     .query(sqlText)

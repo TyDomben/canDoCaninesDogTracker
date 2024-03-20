@@ -21,7 +21,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { useState } from "react";
-import { format } from "date-fns";
+import { format,isFuture,isPast, parseISO } from "date-fns";
 
 const HomePage = () => {
   const history = useHistory();
@@ -29,9 +29,12 @@ const HomePage = () => {
   const doggos = useSelector((store) => store.raiserDogReducer);
   const sitterData = useSelector((store) => store.dog);
   const [sitterDates, setSitterDates] = useState([]);
+  const today = Date.now()
+  let newTime = isFuture(new Date(sitterDates[0]?.end_date))
+  // const past = isPast(new Date(sitterDates[0])
   console.log("doggos", doggos);
-  console.log("sitter date", sitterData);
-
+  console.log("sitter date", sitterDates);
+  console.log("today",today, newTime)
   // State and functions for handling the menu
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -181,8 +184,9 @@ const HomePage = () => {
             >
               Completed Hosting Commitments
             </Typography>
-            {sitterDates.map(
-              (date, index) =>
+            {sitterDates
+              .filter ((date)=> isPast(new Date(date?.end_date) ) === true)
+              .map((date, index) =>
                 index % 3 === 0 && (
                   <Card
                     key={index}
@@ -221,7 +225,7 @@ const HomePage = () => {
               Upcoming Confirmed Commitments
             </Typography>
             {sitterDates
-              .filter((date) => date.status === "confirmed")
+              .filter((date) => date.status === "confirmed" && isFuture(new Date(date?.end_date)) === true)
               .map((date, index) => (
                 <Card
                   key={index}
@@ -263,7 +267,7 @@ const HomePage = () => {
               Hosting Requests Awaiting Admin Confirmation
             </Typography>
             {sitterDates
-              .filter((date) => date.status !== "confirmed")
+              .filter((date) => date.status !== "confirmed" && isFuture(new Date(date?.end_date)) === true)
               .map((date, index) => (
                 <Card
                   key={index}

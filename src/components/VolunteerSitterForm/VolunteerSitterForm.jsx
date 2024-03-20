@@ -14,13 +14,20 @@ import {
   ListItemText,
   
 } from "@mui/material";
+import { format } from "date-fns"
 import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const VolunteerSitterForm = (minStartDate, maxEndDate) => {
+  const { startDate } = useParams();
+  const { endDate } = useParams();
+  const minDate = format(new Date(startDate), 'yyyy-MM-dd');
+  const maxDate = format(new Date(endDate), 'yyyy-MM-dd');
+
   let dispatch = useDispatch("");
   let history = useHistory("");
-  const {requestId } = useParams();
+  const { requestId } = useParams();
+  console.log('date', minDate, maxDate )
   
   // const requestHost = useSelector((state) => state.requestHost)
   // useEffect(() => {
@@ -109,10 +116,12 @@ if (value === "delete"){
           onChange={handleChange}
           sx={{ width: "100%", my: 2 }}
           InputLabelProps={{ shrink: true }}
-          inputProps={{
-            min: minStartDate,
-            max: maxEndDate, 
+           inputProps={{ 
+            min: minDate,
+            max: maxDate
           }}
+            // max: maxDate, 
+          
         />
         <TextField
           label="End Date"
@@ -123,8 +132,8 @@ if (value === "delete"){
           sx={{ width: "100%", my: 2 }}
           InputLabelProps={{ shrink: true }}
           inputProps={{
-            min: minStartDate,
-            max: maxEndDate, 
+            min: minDate,
+            max: maxDate, 
           }}
         />
             <TextField

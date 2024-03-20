@@ -132,9 +132,7 @@ const DataGrid = () => {
                   <TableCell align="center">
                     <Button
                       variant="outlined"
-                      onClick={() =>
-                        history.push(`/volunteerSitterForm/${dog.dog_id}`)
-                      }
+                      onClick={() => history.push(`/volunteerSitterForm/${dog.dog_id}/${dog.start_date}/${dog.end_date}`)}
                       // this should go to the volunteer sitter form based on dog id
                     >
                       Volunteer

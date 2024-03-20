@@ -22,14 +22,14 @@ import axios from "axios";
 const AdminHome = () => {
   const dispatch = useDispatch();
   const requests = useSelector((store) => store.adminReducer);
-
+console.log('requests',requests)
   useEffect(() => {
     dispatch({ type: "FETCH_REQUESTS" });
   }, []);
 
-axios.get('/api/admin-profile').then((response) => {
-  console.log(response.data);
-})
+// axios.get('/api/admin-profile').then((response) => {
+//   console.log(response.data);
+// })
 
   return (
     <>
@@ -40,6 +40,7 @@ axios.get('/api/admin-profile').then((response) => {
               <TableCell>Photo</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Dates Needed</TableCell>
+              <TableCell>Host Name</TableCell>
               <TableCell>Volunteer Name</TableCell>
               <TableCell>Dates Available</TableCell>
               <TableCell>Actions</TableCell>
@@ -63,11 +64,16 @@ axios.get('/api/admin-profile').then((response) => {
                 </TableCell>
                 <TableCell>{request.dog_name}</TableCell>
                 <TableCell>
-                  {format(new Date(request.start_date), "MM/dd/yyyy, h:mm a")}{" "}
-                  to {format(new Date(request.end_date), "MM/dd/yyyy, h:mm a")}
+                  {format(new Date(request.volunteer_start_date), "MM/dd/yyyy, h:mm a")}{" "}
+                  to {format(new Date(request.volunteer_end_date), "MM/dd/yyyy, h:mm a")}
                 </TableCell>
-                <TableCell>{request.requester_name}</TableCell>
-                <TableCell>{request.status}</TableCell>
+                <TableCell>{request.host_name}</TableCell>
+                <TableCell>{request.volunteer_name}</TableCell>
+                {/* <TableCell>{request.status}</TableCell> */}
+                <TableCell>
+                {format(new Date(request.host_start_date), "MM/dd/yyyy, h:mm a")}{" "}
+                  to {format(new Date(request.host_end_date), "MM/dd/yyyy, h:mm a")}
+                </TableCell>
                 <TableCell>
                   <Button
                     variant="contained"
