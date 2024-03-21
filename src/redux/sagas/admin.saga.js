@@ -52,12 +52,24 @@ function* fetchAllUsers(action) {
     }
   }
 
+  function* removeAdmin(action) {
+    try {
+      yield call(axios.put, `/api/admin-profile/${action.payload}`, {
+        status: false,
+      });
+      yield put({ type: "FETCH_ALL_USERS" });
+    } catch (error) {
+      console.log("change user admin failed", error);
+    }
+  }
 function* requestsSaga() {
   yield takeLatest("FETCH_REQUESTS", fetchRequests);
   yield takeLatest("SET_CONFIRMATION", confirmRequest);
   yield takeLatest("DENY_CONFIRMATION", denyRequest);
   yield takeLatest("FETCH_ALL_USERS", fetchAllUsers);
   yield takeLatest("CONFIRM_ADMIN", confirmAdmin);
+  yield takeLatest("REMOVE_ADMIN", removeAdmin);
+
 }
 
 export default requestsSaga;

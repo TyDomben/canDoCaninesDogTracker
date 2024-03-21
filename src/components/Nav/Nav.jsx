@@ -47,6 +47,7 @@ function Nav() {
   ];
     if (isAdmin === true) {
       navLinks.push({ text: "Admin Home", path: "/admin-home" });
+      navLinks.push({ text: "Add Admin ", path: "/allprofiles"})
     }
   
   

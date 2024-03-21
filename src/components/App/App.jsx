@@ -13,6 +13,7 @@ import theme from "../../theme";
 import AboutPage from "../AboutPage/AboutPage";
 import AddDogForm from "../AddDogForm/AddDogForm";
 import AdminHome from "../AdminHome/AdminHome";
+
 import DataGrid from "../DataGrid/DataGrid";
 import DogCards from "../AllDogForm/AllDogForm";
 import DogProfile from "../DogProfile/DogProfile";
@@ -109,9 +110,9 @@ function App() {
 
 
 
-              <ProtectedRoute exact path="/all-profiles">
+              {/* <ProtectedRoute exact path="/all-profiles">
                 <AllProfiles />
-              </ProtectedRoute>
+              </ProtectedRoute> */}
 
               <ProtectedRoute exact path="/dogprofile/:dogId">
                 <DogProfile />
@@ -121,6 +122,13 @@ function App() {
                 <ProtectedRoute exact path="/adminHome">
                   <AdminHome />
                 </ProtectedRoute>
+              }
+
+
+              {isAdmin === true && 
+              <ProtectedRoute exact path="/allprofiles">
+                <AllProfiles />
+              </ProtectedRoute>
               }
               <ProtectedRoute exact path="/profilephoto/:dogId">
                 <PhotoUpload />

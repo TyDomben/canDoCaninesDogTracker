@@ -56,7 +56,7 @@ const HomePage = () => {
                   <Typography gutterBottom variant="h5" component="div">
                     {profile.email}
                   </Typography>
-                  {profile.admin === false && (
+                  {(profile.admin === null || profile.admin === false) && (
                     <>
                       <Typography gutterBottom variant="h5" component="div">
                         Not Admin
@@ -73,6 +73,29 @@ const HomePage = () => {
                       >
                         Make Admin
                       </Button>
+
+
+                    </>
+                  )}
+                  {(profile.admin === true && profile.id !== 1) && (
+                    <>
+                      <Typography gutterBottom variant="h5" component="div">
+                        Admin
+                      </Typography>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() =>
+                          dispatch({
+                            type: "REMOVE_ADMIN",
+                            payload: profile.id,
+                          })
+                        }
+                      >
+                        Remove Admin
+                      </Button>
+
+
                     </>
                   )}
                 </CardContent>
