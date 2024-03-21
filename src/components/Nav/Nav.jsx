@@ -22,6 +22,7 @@ function Nav() {
   const history = useHistory();
   const theme = useTheme();
   const user = useSelector((store) => store.user);
+  const isAdmin = useSelector((store) => store.user.admin)
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   // Drawer toggle function
@@ -43,11 +44,12 @@ function Nav() {
     { text: "Edit Profile", path: "/user-edit" },
     { text: "Info", path: "/info" },
     { text: "About", path: "/about" },
+  ];
     if (isAdmin === true) {
       navLinks.push({ text: "Admin Home", path: "/admin-home" });
     }
-  ,
-  ];
+  
+  
 
   // Nav bar (links)
   return ( 
