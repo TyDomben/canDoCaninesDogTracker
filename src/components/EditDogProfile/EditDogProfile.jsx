@@ -32,23 +32,17 @@ const EditDogProfile = () => {
   const dogProfile = useSelector((store) => store.dog.dogProfile);
   const { dogId } = useParams();
   const history = useHistory();
-  console.log("edit dog initial", editDog);
-  console.log("dog profile set values", dogProfile);
   const handleChange = (event) => {
-    console.log(event.target);
     event.preventDefault();
     const { name, value } = event.target;
-    console.log("name and value", name, value);
     dispatch({
       type: "EDIT_DOG",
       payload: { property: name, value: value },
     });
   };
-  console.log("edit dog:", editDog);
 
   const handleChangeRadioBtn = (event) => {
     const { name, value } = event.target;
-    console.log("radio btn", name, value);
     dispatch({
       type: "EDIT_DOG",
       payload: { property: name, value: Number(value) },
@@ -72,9 +66,7 @@ const EditDogProfile = () => {
   };
 
   const handleChangeCheckBox = (event) => {
-    console.log("inside handleCheckBox");
     const initVal = event.target.checked;
-    console.log("initVal", initVal);
     dispatch({
       type: "EDIT_DOG",
       payload: { property: event.target.name, value: initVal },
@@ -82,12 +74,9 @@ const EditDogProfile = () => {
   };
   const handleSave = (event) => {
     event.preventDefault();
-    console.log("inside handleSave in EditDogProfile", editDog, dogId);
-    // dispatch({ type: 'UPDATE_DOG_PROFILE', payload: editDog })
     axios
       .put(`api/raiser-dog/${dogId}`, editDog)
       .then((response) => {
-        console.log("Success Sending Dog Update");
         dispatch({ type: "EDIT_CLEAR" });
         history.push(`/dogprofile/${dogId}`);
       })
@@ -113,7 +102,6 @@ const EditDogProfile = () => {
         dangerMode: true,
       });
       if (value === "delete") {
-        console.log("going back to dog id:", dogId);
         await swal("Profile was not updated");
         history.push(`/home`);
       } else {

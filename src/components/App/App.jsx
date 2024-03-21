@@ -13,6 +13,7 @@ import theme from "../../theme";
 import AboutPage from "../AboutPage/AboutPage";
 import AddDogForm from "../AddDogForm/AddDogForm";
 import AdminHome from "../AdminHome/AdminHome";
+
 import DataGrid from "../DataGrid/DataGrid";
 import DogCards from "../AllDogForm/AllDogForm";
 import DogProfile from "../DogProfile/DogProfile";
@@ -36,6 +37,7 @@ import "./App.css";
 function App() {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
+  const isAdmin = useSelector((store) => store.user.admin)
   const customTheme = createTheme(theme);
 
   useEffect(() => {
@@ -80,9 +82,7 @@ function App() {
               <ProtectedRoute exact path="/home">
                 <RaiserDogPage />
               </ProtectedRoute>
-              <ProtectedRoute exact path="/adminHome">
-                <AdminHome />
-              </ProtectedRoute>
+
               <ProtectedRoute exact path="/allDogCards">
                 <DogCards />
               </ProtectedRoute>
@@ -98,7 +98,7 @@ function App() {
               <ProtectedRoute exact path="/info">
                 <InfoPage />
               </ProtectedRoute>
-              <ProtectedRoute exact path="/volunteersitterform/:requestId">
+              <ProtectedRoute exact path="/volunteersitterform/:requestId/:startDate/:endDate">
                 <VolunteerSitterForm />
               </ProtectedRoute>
               <ProtectedRoute exact path="/requestcareform/:dogId">
@@ -108,15 +108,28 @@ function App() {
                 <EditDogProfile />
               </ProtectedRoute>
 
-              <ProtectedRoute exact path="/all-profiles">
+
+
+              {/* <ProtectedRoute exact path="/all-profiles">
                 <AllProfiles />
-              </ProtectedRoute>
+              </ProtectedRoute> */}
 
               <ProtectedRoute exact path="/dogprofile/:dogId">
                 <DogProfile />
               </ProtectedRoute>
 
+              {isAdmin === true &&
+                <ProtectedRoute exact path="/adminHome">
+                  <AdminHome />
+                </ProtectedRoute>
+              }
 
+
+              {isAdmin === true && 
+              <ProtectedRoute exact path="/allprofiles">
+                <AllProfiles />
+              </ProtectedRoute>
+              }
               <ProtectedRoute exact path="/profilephoto/:dogId">
                 <PhotoUpload />
               </ProtectedRoute>
