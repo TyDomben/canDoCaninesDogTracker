@@ -43,7 +43,10 @@ function Nav() {
     { text: "Edit Profile", path: "/user-edit" },
     { text: "Info", path: "/info" },
     { text: "About", path: "/about" },
-    { text: "Admin Home", path: "/admin-home" },
+    if (isAdmin === true) {
+      navLinks.push({ text: "Admin Home", path: "/admin-home" });
+    }
+  ,
   ];
 
   // Nav bar (links)

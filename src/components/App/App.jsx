@@ -36,6 +36,7 @@ import "./App.css";
 function App() {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
+  const isAdmin = useSelector((store) => store.user.admin)
   const customTheme = createTheme(theme);
 
   useEffect(() => {
@@ -80,9 +81,7 @@ function App() {
               <ProtectedRoute exact path="/home">
                 <RaiserDogPage />
               </ProtectedRoute>
-              <ProtectedRoute exact path="/adminHome">
-                <AdminHome />
-              </ProtectedRoute>
+
               <ProtectedRoute exact path="/allDogCards">
                 <DogCards />
               </ProtectedRoute>
@@ -108,6 +107,8 @@ function App() {
                 <EditDogProfile />
               </ProtectedRoute>
 
+
+
               <ProtectedRoute exact path="/all-profiles">
                 <AllProfiles />
               </ProtectedRoute>
@@ -116,7 +117,11 @@ function App() {
                 <DogProfile />
               </ProtectedRoute>
 
-
+              {isAdmin === true &&
+                <ProtectedRoute exact path="/adminHome">
+                  <AdminHome />
+                </ProtectedRoute>
+              }
               <ProtectedRoute exact path="/profilephoto/:dogId">
                 <PhotoUpload />
               </ProtectedRoute>
