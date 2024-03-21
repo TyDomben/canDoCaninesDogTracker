@@ -28,5 +28,7 @@ export default function* rootSaga() {
     requestHostSaga(),
     volunteerHostSaga(),
     requestsSaga(),
+    mailSaga()
+
   ]);
 }
