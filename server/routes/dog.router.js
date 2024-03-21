@@ -314,53 +314,54 @@ router.delete("/:id", (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
-  console.log("/dog PUT route");
-  const dogId = req.params.id;
-  const updates = req.body; // All available fields to update ("dogs" table)
+//! Is this route used? I don't think so- but need to verify
+// router.put("/:id", async (req, res) => {
+//   console.log("/dog PUT route");
+//   const dogId = req.params.id;
+//   const updates = req.body; // All available fields to update ("dogs" table)
 
-  if (req.isAuthenticated()) {
-    let connection;
-    try {
-      connection = await pool.connect();
+//   if (req.isAuthenticated()) {
+//     let connection;
+//     try {
+//       connection = await pool.connect();
 
-      //Build the SQL update statement based on the fields the user updates
-      //keys are the db property names  of the fields the user is trying to update
+//       //Build the SQL update statement based on the fields the user updates
+//       //keys are the db property names  of the fields the user is trying to update
 
-      const setClause = Object.keys(updates)
-        .map((key, index) => `"${key}" = $${index + 1}`) //iterate over the keys(db fields) to create an array of string segments for the SET clause
-        //Each segment maps a field name to a placeholder value ($1, $2`).
-        .join(", "); // this combines the segments above and creates a single string. This forms the SET piece of the queryText
+//       const setClause = Object.keys(updates)
+//         .map((key, index) => `"${key}" = $${index + 1}`) //iterate over the keys(db fields) to create an array of string segments for the SET clause
+//         //Each segment maps a field name to a placeholder value ($1, $2`).
+//         .join(", "); // this combines the segments above and creates a single string. This forms the SET piece of the queryText
 
-      const values = Object.values(updates); //This takes the SetClause object and creates an array. Corresponds to new data being put in the db
+//       const values = Object.values(updates); //This takes the SetClause object and creates an array. Corresponds to new data being put in the db
 
-      //construct the SQL Query Text using setClause and values.length +1 = dog id
-      //RETURNING is just asking PostgreSQL to return the updated row of data
-      const queryText = `UPDATE "dogs" SET ${setClause} WHERE "id" = $${values.length + 1
-        } RETURNING *;`;
+//       //construct the SQL Query Text using setClause and values.length +1 = dog id
+//       //RETURNING is just asking PostgreSQL to return the updated row of data
+//       const queryText = `UPDATE "dogs" SET ${setClause} WHERE "id" = $${values.length + 1
+//         } RETURNING *;`;
 
-      // Execute the update query ...values = placeholder values ($1, $2, $3, etc.)
-      const result = await connection.query(queryText, [...values, dogId]);
+//       // Execute the update query ...values = placeholder values ($1, $2, $3, etc.)
+//       const result = await connection.query(queryText, [...values, dogId]);
 
-      if (result.rows.length > 0) {
-        // If the update was successful, return the updated dog profile
-        res.json(result.rows[0]);
-      } else {
-        // If no rows were updated, it means the dog ID was not found
-        res.status(404).send({ message: "Dog not found" });
-      }
-    } catch (error) {
-      console.error("Error updating dog profile", error);
-      res.sendStatus(500);
-    } finally {
-      if (connection) {
-        connection.release();
-      }
-    }
-  } else {
-    res.sendStatus(403); // Not authenticated
-  }
-});
+//       if (result.rows.length > 0) {
+//         // If the update was successful, return the updated dog profile
+//         res.json(result.rows[0]);
+//       } else {
+//         // If no rows were updated, it means the dog ID was not found
+//         res.status(404).send({ message: "Dog not found" });
+//       }
+//     } catch (error) {
+//       console.error("Error updating dog profile", error);
+//       res.sendStatus(500);
+//     } finally {
+//       if (connection) {
+//         connection.release();
+//       }
+//     }
+//   } else {
+//     res.sendStatus(403); // Not authenticated
+//   }
+// });
 
 
 
@@ -377,7 +378,7 @@ const storage = multer.diskStorage({
 // Configure multer instance
 const upload = multer({ storage: storage });
 
-
+// This POST route is to add a profile photo
 router.post("/photo/:id", upload.single('photo'), async (req,res) => {
   console.log("uploaded file:", req.file)
 

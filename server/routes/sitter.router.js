@@ -185,14 +185,13 @@ router.post("/request/:id", async (req, res) => {
   }
 
  const dogId = req.params.id;
-  const userId = req.user.id;
 
   console.log("dogId", dogId)
  
 
  
 
-  const { start_date, end_date, date_comments, appointments, status } =
+  const { start_date, end_date, date_comments, appointments} =
     req.body;
   console.log("req.body", req.body);
 
@@ -204,23 +203,19 @@ router.post("/request/:id", async (req, res) => {
     const query = `
       INSERT INTO "hosting_request" 
       ( "dog_id",
-        "user_id",
         "start_date",
         "end_date",
         "date_comments",
-        "appointments",
-        "status"
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7)
+        "appointments"
+      ) VALUES ($1, $2, $3, $4, $5)
       RETURNING "id";`;
 
     const values = [
       dogId,
-      userId,
       start_date,
       end_date,
       date_comments,
-      appointments,
-      status,
+      appointments
     ];
     const requestResult = await connection.query(query, values);
 console.log("request result", requestResult)
@@ -258,12 +253,10 @@ router.get("/request/:id", async (req, res) => {
 
     const query = ` SELECT 
     "dogs"."id" AS "dog_id",
-    "user"."id" AS "user_id",
     "hosting_request"."start_date",
     "hosting_request"."end_date",
     "hosting_request"."date_comments",
     "hosting_request"."appointments",
-    "hosting_request"."status",
     "photo"."photo" AS "photo"
     FROM 
     "hosting_request"
@@ -330,9 +323,8 @@ router.post("/volunteer/:id", async (req, res) => {
       "user_id",
       "start_date",
       "end_date",
-      "comments",
-      "status"
-    ) VALUES ($1, $2, $3, $4, $5, false)
+      "comments"
+    ) VALUES ($1, $2, $3, $4, $5)
     RETURNING "id";`
 
     const values = [
@@ -419,6 +411,14 @@ router.get("/volunteer/:id", async (req, res) => {
 });
 
 /**
+ * POST route to fill out "hosting" table. 
+ * When a user fills out the volunteer request form the data will fill out this table
+ * It will pull the request id as a use.params from pushing the volunteer button
+ * 
+ */
+
+
+/**
  * DELETE route to cancel a sitter request
  */
 router.delete("/request/:id", async (req, res) => {
@@ -448,5 +448,7 @@ router.delete("/request/:id", async (req, res) => {
     res.sendStatus(403);
   }
 });
+
+
 
 module.exports = router;

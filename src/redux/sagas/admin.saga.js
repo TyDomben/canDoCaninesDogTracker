@@ -12,25 +12,38 @@ function* fetchRequests(action) {
 
 function* confirmRequest(action) {
   try {
-    yield call(axios.put, `/api/admin/${action.payload}`, {
-      status: "confirmed",
+    const { requestId, hostingId, status } = action.payload;
+    const response = yield call(axios.post, `/api/admin/confirm`, { requestId, hostingId, status });
+    
+    // Update Redux state to reflect the new status
+    yield put({ 
+      type: "UPDATE_REQUEST_STATUS", 
+      payload: { requestId, status } 
     });
     yield put({ type: "FETCH_REQUESTS" });
   } catch (error) {
-    console.log("dog get request failed", error);
+    console.log("Confirm request failed", error);
   }
 }
 
 function* denyRequest(action) {
   try {
-    yield call(axios.put, `/api/admin/${action.payload}`, {
-      status: "denied",
+    const { requestId, hostingId, status } = action.payload;
+    const response = yield call(axios.post, `/api/admin/confirm`, { requestId, hostingId, status });
+    
+    // Update Redux state to reflect the new status
+    yield put({ 
+      type: "UPDATE_REQUEST_STATUS", 
+      payload: { requestId, status } 
     });
+
+
     yield put({ type: "FETCH_REQUESTS" });
   } catch (error) {
-    console.log("dog get request failed", error);
+    console.log("Confirm request failed", error);
   }
 }
+
 
 function* fetchAllUsers(action) {
     try {

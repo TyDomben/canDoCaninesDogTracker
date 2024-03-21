@@ -21,15 +21,40 @@ import axios from "axios";
 
 const AdminHome = () => {
   const dispatch = useDispatch();
+
   const requests = useSelector((store) => store.adminReducer);
-console.log('requests',requests)
+  console.log("requests", requests);
+
   useEffect(() => {
     dispatch({ type: "FETCH_REQUESTS" });
   }, []);
 
-// axios.get('/api/admin-profile').then((response) => {
-//   console.log(response.data);
-// })
+  const handleConfirm = (requestId, hostingId) => {
+    if (typeof hostingId === 'undefined') {
+      console.error('hostingId is undefined for requestId:', requestId)
+    return;}
+    // Dispatch an action with requestId and confirmation status
+    dispatch({
+      type: "SET_CONFIRMATION",
+      payload: {
+        requestId,
+        hostingId,
+        status: true, // Assuming true indicates confirmation
+      },
+    });
+  };
+
+  const handleDeny = (requestId, hostingId) => {
+    // Dispatch an action with requestId and denial status
+    dispatch({
+      type: "DENY_CONFIRMATION",
+      payload: {
+        requestId,
+        hostingId,
+        status: false, // Assuming false indicates denial
+      },
+    });
+  };
 
   return (
     <>
@@ -44,6 +69,7 @@ console.log('requests',requests)
               <TableCell>Volunteer Name</TableCell>
               <TableCell>Dates Available</TableCell>
               <TableCell>Actions</TableCell>
+              <TableCell>Confirmed or Denied</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -64,49 +90,53 @@ console.log('requests',requests)
                 </TableCell>
                 <TableCell>{request.dog_name}</TableCell>
                 <TableCell>
-                  {format(new Date(request.volunteer_start_date), "MM/dd/yyyy, h:mm a")}{" "}
-                  to {format(new Date(request.volunteer_end_date), "MM/dd/yyyy, h:mm a")}
+                  {format(
+                    new Date(request.volunteer_start_date),
+                    "MM/dd/yyyy, h:mm a"
+                  )}{" "}
+                  to{" "}
+                  {format(
+                    new Date(request.volunteer_end_date),
+                    "MM/dd/yyyy, h:mm a"
+                  )}
                 </TableCell>
                 <TableCell>{request.host_name}</TableCell>
                 <TableCell>{request.volunteer_name}</TableCell>
-                {/* <TableCell>{request.status}</TableCell> */}
+               
                 <TableCell>
-                {format(new Date(request.host_start_date), "MM/dd/yyyy, h:mm a")}{" "}
-                  to {format(new Date(request.host_end_date), "MM/dd/yyyy, h:mm a")}
+                  {format(
+                    new Date(request.host_start_date),
+                    "MM/dd/yyyy, h:mm a"
+                  )}{" "}
+                  to{" "}
+                  {format(
+                    new Date(request.host_end_date),
+                    "MM/dd/yyyy, h:mm a"
+                  )}
                 </TableCell>
                 <TableCell>
-                  <Button
+                <Button
                     variant="contained"
                     color="primary"
-                    onClick={() =>
-                      dispatch({
-                        type: "SET_CONFIRMATION",
-                        payload: request.request_id,
-                      })
-                    }
+                    onClick={() => handleConfirm(request.request_id, request.hosting_id)}
                   >
                     Confirm
                   </Button>
                   <Button
                     variant="outlined"
                     color="secondary"
-                    onClick={() =>
-                      dispatch({
-                        type: "DENY_CONFIRMATION",
-                        payload: request.request_id,
-                      })
-                    }
+                    onClick={() => handleDeny(request.request_id, request.hosting_id)}
                   >
                     Deny
                   </Button>
                 </TableCell>
+                 <TableCell>{request.status}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
     </>
-    
   );
 };
 

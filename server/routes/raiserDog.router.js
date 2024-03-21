@@ -2,6 +2,7 @@ const express = require("express");
 const pool = require("../modules/pool");
 const router = express.Router();
 
+//This GET router is for the dog profiles that are for the specific user's Landing Page
 router.get("/", (req, res) => {
   // Check if the user is authenticated
   if (!req.isAuthenticated() || !req.user) {
@@ -181,7 +182,6 @@ JOIN
 
 
 //Update Dog Router
-
 router.put('/:id', (req, res) => {
   console.log('in dog UPDATE route')
   console.log('req.body', req.user.id, req.body, req.params.id)
