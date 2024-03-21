@@ -32,6 +32,8 @@ router.get("/", (req, res) => {
 `
 SELECT 
 "volunteer_hosting"."id" as "volunteer_id",
+"volunteer_hosting"."user_id" as "volunteer_user_id",
+
 "dogs"."dog_name",
 "volunteer_hosting"."request_id",
 "hosting_request"."start_date" as "host_start_date",
@@ -66,16 +68,20 @@ JOIN
     });
 });
 
-router.put("/:id", (req, res) => {
+router.put("/:id", async (req, res) => {
+  console.log(req.body)
   const requestId = req.params.id;
   const sqlText = `
     UPDATE "hosting_request"
-    SET "status" = $1
-    WHERE "id" = $2;
+    SET "status" = $1,
+        "confirmed_volunteer_id" = $2
+    WHERE "id" = $3;
   `;
 
+    
   const status = req.body.status;
-  const sqlParams = [status, requestId];
+  const confirmed_volunteer_id =req.body.confirmed_volunteer_id
+  const sqlParams = [status, confirmed_volunteer_id, requestId];
 
   pool
     .query(sqlText, sqlParams)

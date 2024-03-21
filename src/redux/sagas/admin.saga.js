@@ -11,9 +11,11 @@ function* fetchRequests(action) {
 }
 
 function* confirmRequest(action) {
+  console.log('action.payload', action.payload.volunteer_id)
   try {
-    yield call(axios.put, `/api/admin/${action.payload}`, {
+    yield call(axios.put, `/api/admin/${action.payload.request_id}`, {
       status: "confirmed",
+      confirmed_volunteer_id:  action.payload.volunteer_user_id
     });
     yield put({ type: "FETCH_REQUESTS" });
   } catch (error) {

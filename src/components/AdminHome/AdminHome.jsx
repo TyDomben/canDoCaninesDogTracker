@@ -81,7 +81,7 @@ console.log('requests',requests)
                     onClick={() =>
                       dispatch({
                         type: "SET_CONFIRMATION",
-                        payload: request.request_id,
+                        payload: request,
                       })
                     }
                   >

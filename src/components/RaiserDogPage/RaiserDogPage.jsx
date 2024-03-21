@@ -34,16 +34,16 @@ const HomePage = () => {
   // const past = isPast(new Date(sitterDates[0])
   console.log("doggos", doggos);
   console.log("sitter date", sitterDates);
-  console.log("today",today, newTime)
+  // console.log("today",today, newTime)
   // State and functions for handling the menu
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  // const [anchorEl, setAnchorEl] = React.useState(null);
+  // const open = Boolean(anchorEl);
+  // const handleMenu = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
 
   // Add your data fetching and event handling logic here
   useEffect(() => {
