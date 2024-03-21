@@ -25,9 +25,7 @@ function DogProfile() {
   const dogProfile = useSelector((state) => state.fetchOneDogProfile);
   const userId = useSelector((state) => state.user.id)
 
-  console.log("dogProfile", dogProfile);
   const { dogId } = useParams();
-  console.log("dogId front end", dogId);
 
   useEffect(() => {
     if (dogId) {
@@ -38,7 +36,6 @@ function DogProfile() {
   // // Confirm deletion and call onDelete
   const handleDelete = async (event) => {
     event.preventDefault();
-    console.log("delete dog id:", dogId);
     try {
       const value = await swal({
         title: "Are you sure?",
@@ -55,7 +52,6 @@ function DogProfile() {
       });
       if (value === "delete") {
         await axios.delete(`/api/dog/${dogId}`);
-        console.log("Deleted", dogId);
         await swal(
           "Deleted!",
           "The dog profile has been permanently deleted.",
@@ -74,7 +70,6 @@ function DogProfile() {
   };
 
   const onGoBack = () => {
-    console.log("back arrow button pushed");
     history.push("/home");
   };
 

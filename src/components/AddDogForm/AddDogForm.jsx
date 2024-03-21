@@ -39,7 +39,6 @@ const AddDogForm = () => {
     in_heat: 3,
     //pottyHabitis
     potty_routine: '',
-    // potty_indicators: '',
     potty_habits_notes: '',
     //excercise
     limit_water: false,
@@ -48,8 +47,6 @@ const AddDogForm = () => {
     ingest_toys: false,
     keep_away: false,
     shares_toys: false,
-
-
     exercise_equipment: '',
     //crating
     crate_manners: '',
