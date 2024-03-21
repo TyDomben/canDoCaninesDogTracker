@@ -82,7 +82,7 @@ console.log('requests',requests)
                         type: "SET_CONFIRMATION",
                         payload: request,
                       }, 
-                      {type:"EMAIL_CONFIRMATION",
+                  {type:"EMAIL_CONFIRMATION",
                        payload: request.volunteer_email })
                     }
                   >
