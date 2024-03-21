@@ -26,7 +26,6 @@ console.log('requests',requests)
   useEffect(() => {
     dispatch({ type: "FETCH_REQUESTS" });
   }, []);
-
 // axios.get('/api/admin-profile').then((response) => {
 //   console.log(response.data);
 // })
@@ -82,7 +81,9 @@ console.log('requests',requests)
                       dispatch({
                         type: "SET_CONFIRMATION",
                         payload: request,
-                      })
+                      }, 
+                      {type:"EMAIL_CONFIRMATION",
+                       payload: request.volunteer_email })
                     }
                   >
                     Confirm

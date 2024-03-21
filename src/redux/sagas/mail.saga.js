@@ -2,12 +2,13 @@ import axios from "axios";
 import { put, takeLatest } from 'redux-saga/effects';
 
 function* confirmEmail() {
-    try {
-        yield axios.post('/api/mail/confirmation')
-    }
-    catch (err) {
-        console.log('err in confirmEmail mail saga')
-    }
+    console.log('in confirmEmail')
+    // try {
+    //     yield axios.post('/api/mail/confirmation')
+    // }
+    // catch (err) {
+    //     console.log('err in confirmEmail mail saga')
+    // }
 }
 
 function* denialEmail() {

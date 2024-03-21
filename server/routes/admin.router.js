@@ -41,6 +41,7 @@ SELECT
 "volunteer_hosting"."start_date" as "volunteer_start_date",
 "volunteer_hosting"."end_date" as "volunteer_end_date",
 "volunteer_user"."name" as "volunteer_name",
+"volunteer_user"."email" as "volunteer_email",
 "host_user"."name" as "host_name",
 "user"."id"
 FROM
